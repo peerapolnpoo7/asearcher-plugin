@@ -180,7 +180,7 @@
 				</div>
 				<div class="form-group col-md-8 col-sm-6">
 					<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
-					<div class="col-md-4 col-sm-4 no-padding-left">
+					<div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
 						<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
 							<option value="0">เลือก</option>
 							{% for countrycallingcode in countrycallingcodes %}
@@ -194,7 +194,7 @@
 						</select>
 						<span class="help-block"></span>
 					</div>
-					<div class="col-sm-8 no-padding">
+					<div class="col-sm-8 col-xs-8 no-padding">
 						<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
 						<span class="help-block"></span>
 					</div>
@@ -644,6 +644,10 @@
 				{% endfor %}
 				<input type="hidden" name="idSources_Type" value="{{ candidates.idSources_Type }}"/>
 			</fieldset>
+		</div>
+		<div class="form-group col-md-12 col-sm-12 boxComunication hidden">
+			<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
+			<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="" maxlength="10">
 		</div>
 		<div class="col-md-6 col-xs-12">
 			<fieldset>
