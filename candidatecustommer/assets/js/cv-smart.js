@@ -292,6 +292,7 @@ $(document).ready(function(){
         $.request('onGetJobTitle', {
             data: {value: this.value},
             success: function(data) {
+                $(".boxSkillList").addClass('hidden'); 
                 $('#Job_TitleRequire').children('option:not(:first)').remove();
                 $.each(data, function(k, v) {
                     $('#Job_TitleRequire').append($('<option>', {
@@ -302,8 +303,36 @@ $(document).ready(function(){
                 $('select.chosen').trigger("chosen:updated");
             }
         });
-    }).on('change','',function(){
-
+    }).on('change','#Job_TitleRequire',function(){
+        $.request('onGetSkillList', {
+            data: {value: this.value},
+            success: function(data) {
+                $('#idSkill_List').children('option:not(:first)').remove();
+                $.each(data, function(k, v) {
+                    $('#idSkill_List').append($('<option>', {
+                        value: v.id,
+                        text: v.Name_TH
+                    }));
+                });
+                if(data.length > 0){
+                    var instance = $("#ionrangeSkillListLevel").data("ionRangeSlider");
+                    instance.update({
+                        from: 0 ,
+                    });
+                    $("input[name='ionrangeSkillListLevel']").val('0');
+                    $(".boxSkillList").removeClass('hidden'); 
+                }else{
+                    $(".boxSkillList").addClass('hidden'); 
+                }
+                $('select.chosen').trigger("chosen:updated");
+            }
+        });
+    }).on('change','#idSkill_List',function(){
+        var instance = $("#ionrangeSkillListLevel").data("ionRangeSlider");
+        instance.update({
+            from: 0 ,
+        });
+        $("input[name='ionrangeSkillListLevel']").val('0');
     }).on("change","#idInstitute_Detail",function(){
         $.request('onGetEducationLevel', {
             data: {value: this.value},
@@ -428,7 +457,7 @@ $(document).ready(function(){
             $(this).removeClass("btn-outline");
         }
         var spl=this.id.split("_");
-        $('input[name="idJob_Seeking_Status"]').val(spl[1]);
+        $('input[name="idType_of_Employment"]').val(spl[1]);
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
@@ -477,6 +506,12 @@ $(document).ready(function(){
                 $('select.chosen').trigger("chosen:updated");
             }
          });
+    });
+    $("#Provinces").each(function(){
+        callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
+    });
+    $("#District").each(function(){
+        callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
@@ -599,6 +634,28 @@ $(document).ready(function(){
                     }));
                 });
                 $("#Job_TitleRequire").val($("input[name='tempJob_TitleRequire']").val());
+                $('select.chosen').trigger("chosen:updated");
+            }
+        });
+    });
+
+    $("input[name='tempJob_TitleRequire']").each(function(){
+        $.request('onGetSkillList', {
+            data: {value: this.value},
+            success: function(data) {
+                $('#idSkill_List').children('option:not(:first)').remove();
+                $.each(data, function(k, v) {
+                    $('#idSkill_List').append($('<option>', {
+                        value: v.id,
+                        text: v.Name_TH
+                    }));
+                });
+                if(data.length > 0){
+                    $(".boxSkillList").removeClass('hidden'); 
+                }else{
+                    $(".boxSkillList").addClass('hidden'); 
+                }
+                $('#idSkill_List').val($('input[name="tempidSkill_List"]').val());
                 $('select.chosen').trigger("chosen:updated");
             }
         });
