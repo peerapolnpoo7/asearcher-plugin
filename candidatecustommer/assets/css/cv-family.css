@@ -1,0 +1,122 @@
+body {
+	background-color: #FFC650;
+	text-align: center;
+}
+
+form {
+	background-color: #FFC650;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 550px;
+	height: 270px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+/* radio */
+fieldset {
+	width: 100%;
+	text-align: center;
+}
+
+input[type="radio"] {
+	display: none;
+	+label {
+		color: white;
+		font-weight: bold;
+		font-size: 1rem;
+		cursor: pointer;
+		user-select: none;
+		padding-left: 20px;
+		padding-right: 20px;
+		&::before {
+			transition: all 250ms cubic-bezier(.4,.25,.3,1);
+			content: "";
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: white;
+			border: 0px solid white;
+			font-size: 0;
+			position: absolute;
+			bottom: 275%;
+			left: 50%;
+			transform: translate(-50%, 50%);
+		}
+
+		&::after {
+			transition: all 250ms cubic-bezier(.4,.25,.3,1);
+			content: "";
+			width: 0;
+			height: 0;
+			border-radius: 50%;
+			background-color: white;
+			position: absolute;
+			bottom: 275%;
+			left: 50%;
+			transform: translate(-50%, 50%);
+		}
+	}
+	&:checked + label{
+		&::before {
+			background-color: transparent;
+			width: 40px;
+			height: 40px;
+			border-width: 2px;
+		}
+
+		&::after {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+
+/* input */
+section.input-container {
+	label {
+		position: relative;
+		display: block;
+		input {
+			display: block;
+			padding: 20px;
+			width: 300px;
+		  margin-bottom: 10px;
+		  outline: none;
+			transition: all 0.2s ease-in-out;
+			background-color: white;
+			font-weight: bold;
+			color: #FF7975;
+			&::placeholder {
+				transition: all 0.2s ease-in-out;
+				color: #D3D3D3;
+				font-weight: bold;
+			}
+			&:focus, &.populated {
+				padding-top: 28px;
+				padding-bottom: 12px;
+				&::placeholder {
+					color: transparent;
+				}
+				& + span {
+				   opacity: 1;
+				    top: 10px;
+				}
+			}
+		}
+		span {
+			font-size: .8rem;
+			color: #A9A9A9;
+			position: absolute;
+			top: 0px;
+			left: 20px;
+			opacity: 0;
+			transition: all 0.2s ease-in-out;
+		}
+	}
+}

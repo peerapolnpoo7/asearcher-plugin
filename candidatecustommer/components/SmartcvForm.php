@@ -1,5 +1,5 @@
 <?php namespace Asearcher\Candidatecustommer\Components;
- 
+
 use Cms\Classes\ComponentBase;
 use Input;
 use Request;
@@ -104,6 +104,7 @@ class SmartcvForm extends ComponentBase
         $this->educations=$this->loadEducation();
         $this->experiences=$this->loadExperience();
         $this->skilllangs=$this->loadSkillLanguage();
+        $this->skilllangs=$this->loadSkillLanguage();
         $this->skill_basic_coms=$this->loadSkillBasicCom();
         $this->requirement_of_works=$this->loadRequirementOfWork();
         $this->transportation_of_works_btss=$this->loadTransportationOfWork('BTS');
@@ -156,18 +157,16 @@ class SmartcvForm extends ComponentBase
             'idDepartment' => array(''),
             'idMajor_Subject' => array(''),
             'idEducation_Level' => array('required'),
-            'idDegree_and_Certificate' => array('required'),
             'GPA' => array('required','regex:/^[0]|[0-3]\.(\d?\d?)|[4].[0]{2}$/'),
             'Type_Candidate' => array('required'),
             'job_CategoryNew' => array('required'),
             'Job_TitleRequire' => array('required'),
             'LangidCountry_Calling_Code' => array('required'),
-            'idSkill_List' => array(''),
+            'idSkill_List' => array('required'),
             'Expected_Salary' => array('required'),
             'idType_of_Employment' => array('required'),
             'idAvailability_of_Work' => array('required'),
             'idJob_Seeking_Status' => array('required'),
-            'idSources_Type' => array('required')
         );
         $messages = [
             'idGender.required' => 'กรุณาเลือก "เพศ"',
@@ -200,10 +199,9 @@ class SmartcvForm extends ComponentBase
             'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
             'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
             'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
-            'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทการจ้างงาน"',
+            'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทงานที่ต้องการ"',
             'idAvailability_of_Work.required' => 'กรุณาเลือก "ความพร้อมในการเริ่มงาน"',
             'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"',
-            'idSources_Type.required' => 'โปรดบอกว่าคุณรู้จัก aSearcher ได้อย่างไร'
         ];
         if(Input::get('Type_Candidate')=='2'){
             $rules_1 = array(
@@ -242,16 +240,6 @@ class SmartcvForm extends ComponentBase
             throw new ValidationException($validator);
         }
 
-        if(Input::get('idCommunication_Provider')=="5"){
-            $comunications = new CommunicationProvider();
-            $comunications->Name = Input::get('othreComunication');
-            $comunications->Verify = 0;
-            $comunications->save();
-            $idCommunication_Provider=$comunications->id;
-        }else{
-            $idCommunication_Provider=Input::get('idCommunication_Provider');
-        }
-
         $users=Users::find(Input::get('idUser'));
         $users->name = Input::get('FirstName_TH');
         $users->surname = Input::get('LastName_TH');
@@ -266,7 +254,7 @@ class SmartcvForm extends ComponentBase
         $candidate->Date_of_Birth = $this->convertDateToDB(Input::get('Date_of_Birth'));
         $candidate->idCountry_Calling_Code = Input::get('idCountry_Calling_Code');
         $candidate->TelephoneNumber = Input::get('TelephoneNumber');
-        $candidate->idCommunication_Provider = $idCommunication_Provider;
+        $candidate->idCommunication_Provider = Input::get('idCommunication_Provider');
         $candidate->Email = Input::get('Email');
         $candidate->Line_ID = Input::get('Line_ID');
         $candidate->Type_Candidate = Input::get('Type_Candidate');
@@ -275,8 +263,6 @@ class SmartcvForm extends ComponentBase
         $candidate->CV_Publish = 1;
         $candidate->CV_Active = 0;
         $candidate->save();
-
-
 
         $chkImgCV=PhotoProfileCV::where('idCandidate',Session::get('idCandidate'));
         if($chkImgCV->count() > 0)
@@ -475,7 +461,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadImageCV()
     {
-        return PhotoProfileCV::where('idUser',Auth::getUser()->id)->first();
+        return PhotoProfileCV::where('idCandidate',Session::get('idCandidate'))->first();
     }
 
     public function loadPrefix()
@@ -547,7 +533,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadSeniority()
     {
-        return Seniority::whereNotIn('idSeniority',[1,9])->orderBy('Level','ASC')->get();
+        return Seniority::where('idSeniority','!=','1')->get();
     }
 
     public function loadSkillList(){
@@ -782,18 +768,6 @@ class SmartcvForm extends ComponentBase
         return Subdistrict::select('idSubdistricts as id' , 'Name_TH')->where('idDistricts',post('value'))->get();
     }
 
-    public function onGetSeniority()
-    {
-        $return=Seniority::select('idSeniority AS id','Name_TH');
-        if(post('value')==1){
-            $return->whereIn('idSeniority',[1,9]);
-        }else{
-            $return->whereNotIn('idSeniority',[1,9]);
-        }
-        $return->orderBy('Level','ASC');
-        return $return->get();
-    }
-
     public function loadCandidate()
     {
         $get=Candidate::where('idUser',Auth::getUser()->id)->first();
@@ -894,11 +868,6 @@ class SmartcvForm extends ComponentBase
         ->where('transportation_detail.Name_EN','like','%'.$type.'%')
         ->first();
         return $get;
-    }
-
-    public function onGetSkillList()
-    {
-        return SkillList::select('idSkill_List AS id','Name_TH')->where('idJob_Title',post('value'))->get();
     }
 
     public $imgcvs;

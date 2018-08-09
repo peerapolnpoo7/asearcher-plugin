@@ -9,15 +9,16 @@ class Plugin extends PluginBase
     {
         return [
            'Asearcher\CandidateCustommer\Components\Candidates' => 'candidates',
-           'Asearcher\CandidateCustommer\Components\ProfileSession' => 'profilesession',
            'Asearcher\CandidateCustommer\Components\SmartcvForm' => 'smartcvform',
-           'Asearcher\CandidateCustommer\Components\AddressForm' => 'addressform' 
+           'Asearcher\CandidateCustommer\Components\AddressForm' => 'addressform',
+           'Asearcher\CandidateCustommer\Components\Statusfamilyform' => 'statusfamilyform'  
+
         ];
     }
 
     public function registerSettings()
     {
-        
+
     }
 
     public function registerNavigation()
