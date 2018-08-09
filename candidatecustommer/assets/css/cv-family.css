@@ -1,33 +1,16 @@
-body {
-	background-color: #FFC650;
-	text-align: center;
-	text-align: left;
-}
-
-form {
-	background-color: #FFC650;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	width: 550px;
-	height: 270px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-}
-
-/* radio */
-fieldset {
-	width: 100%;
-	text-align: center;
-}
-
-input[type="radio"] {
-	display: none;
-	+label {
-		color: white;
+input[type="radio"].up {
+  appearance: none;
+  margin: 0 40px;
+  width: 24px;
+  height: 24px;
+  background: #eeeeee;
+  box-shadow: inset 0 0 0 .4em white, 0 0 0 .3em;
+  border-radius: 50%;
+  transition: .2s;
+  cursor: pointer;
+  color: #5bc0de;
+  +label {
+		color: #000;
 		font-weight: bold;
 		font-size: 1rem;
 		cursor: pointer;
@@ -62,62 +45,31 @@ input[type="radio"] {
 			transform: translate(-50%, 50%);
 		}
 	}
-	&:checked + label{
-		&::before {
-			background-color: transparent;
-			width: 40px;
-			height: 40px;
-			border-width: 2px;
-		}
-
-		&::after {
-			width: 30px;
-			height: 30px;
-		}
-	}
 }
 
+input[type="radio"].up:hover, input[type="radio"].up:checked {
+  background: #5bc0de;
+  box-shadow: inset 0 0 0 .6em white, 0 0 0 .3em;
+}
+input[type="radio"].up:checked {
+  background: #5bc0de;
+  box-shadow: inset 0 0 0 .4em white, 0 0 0 .3em #5bc0de;
+}
+input[type="radio"].up:focus {
+  outline: 5;
+}
 
-/* input */
-section.input-container {
-	label {
-		position: relative;
-		display: block;
-		input {
-			display: block;
-			padding: 20px;
-			width: 300px;
-		  margin-bottom: 10px;
-		  outline: none;
-			transition: all 0.2s ease-in-out;
-			background-color: white;
-			font-weight: bold;
-			color: #FF7975;
-			&::placeholder {
-				transition: all 0.2s ease-in-out;
-				color: #D3D3D3;
-				font-weight: bold;
-			}
-			&:focus, &.populated {
-				padding-top: 28px;
-				padding-bottom: 12px;
-				&::placeholder {
-					color: transparent;
-				}
-				& + span {
-				   opacity: 1;
-				    top: 10px;
-				}
-			}
-		}
-		span {
-			font-size: .8rem;
-			color: #A9A9A9;
-			position: absolute;
-			top: 0px;
-			left: 20px;
-			opacity: 0;
-			transition: all 0.2s ease-in-out;
-		}
-	}
+.checkboxgroup{
+    display:inline-block;
+    text-align:center;
+}
+.checkboxgroup label {
+    display:block;
+}
+
+label.below{
+  padding: 20px;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
