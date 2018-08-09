@@ -10,7 +10,7 @@ use Auth;
 use ValidationException;
 use Flash;
 
-use Asearcher\CandidateCustommer\Models\Provincessssss; 
+use Asearcher\CandidateCustommer\Models\Province;
 use Asearcher\CandidateCustommer\Models\District;
 use Asearcher\CandidateCustommer\Models\Subdistrict;
 use Asearcher\CandidateCustommer\Models\Postcode;
@@ -69,7 +69,7 @@ class AddressForm extends ComponentBase
                 'idDistricts_1.required' => 'กรุณาเลือก "อำเภอ/เขต" ตามที่อยู่ปัจจุบัน',
                 'idSubdistrict_1.required' => 'กรุณาเลือก "ตำบล/แขวง" ตามที่อยู่ปัจจุบัน',
                 'idPostcode_1.required' => 'กรุณากรอก "รหัสไปรษณีย์" ตามที่อยู่ปัจจุบัน',
-            ]; 
+            ];
             $rules=array_merge($rules, $rules_1);
             $messages=array_merge($messages, $messages_1);
         }
