@@ -11,6 +11,7 @@ class Plugin extends PluginBase
            'Asearcher\CandidateCustommer\Components\Candidates' => 'candidates',
            'Asearcher\CandidateCustommer\Components\SmartcvForm' => 'smartcvform',
            'Asearcher\CandidateCustommer\Components\AddressForm' => 'addressform',
+           'Asearcher\CandidateCustommer\Components\ProfileSession' => 'profilesession',
            'Asearcher\CandidateCustommer\Components\Statusfamilyform' => 'statusfamilyform'  
 
         ];

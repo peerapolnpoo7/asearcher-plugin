@@ -433,6 +433,12 @@ $(document).ready(function(){
         }else{
             $("#"+TranSpl[0]).prop('checked',false).val('');
         }
+    }).on('change','#idCommunication_Provider',function(){
+        if(this.value=="5"){
+            $(".boxComunication").removeClass('hidden');
+        }else{
+            $(".boxComunication").addClass('hidden');
+        }
     });
     $('#idGeography').each(function(){
         $.request('onGetInstituteDetail', {
