@@ -492,8 +492,12 @@ class SmartcvForm extends ComponentBase
 
     public function loadCommunicationProvider()
     {
-        return CommunicationProvider::where('Verify',1)->get();
-        
+        $get=CommunicationProvider::where('Verify',1);
+        $chkCommu=Candidate::where('idUser',Auth::getUser()->id);
+        if($chkCommu->count() > 0){
+            $get->orWhere('idCommunication_Provider',$chkCommu->first()->idCommunication_Provider);
+        }
+        return $get->get();
     }
 
     public function loadJobTitle()
