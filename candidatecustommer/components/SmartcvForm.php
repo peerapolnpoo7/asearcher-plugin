@@ -163,7 +163,7 @@ class SmartcvForm extends ComponentBase
             'job_CategoryNew' => array('required'),
             'Job_TitleRequire' => array('required'),
             'LangidCountry_Calling_Code' => array('required'),
-            'idSkill_List' => array('required'),
+            'idSkill_List' => array(''),
             'Expected_Salary' => array('required'),
             'idType_of_Employment' => array('required'),
             'idAvailability_of_Work' => array('required'),
