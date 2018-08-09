@@ -492,7 +492,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadCommunicationProvider()
     {
-        return CommunicationProvider::all();
+        return CommunicationProvider::where('Verify',1)->get();
         
     }
 
