@@ -268,6 +268,16 @@ class SmartcvForm extends ComponentBase
             $idCommunication_Provider = Input::get('idCommunication_Provider');
         }
 
+        if(Input::get('idSources_Type')=="99"){
+            $source_types = new SourceType();
+            $source_types->Name_TH = Input::get('OtherType');
+            $source_types->Verify = 2;
+            $source_types->save();
+            $idSources_Type = $source_types->id;
+        }else{
+            $idSources_Type = Input::get('idSources_Type');
+        }
+
         $candidate = Candidate::find(Session::get('idCandidate'));
         $candidate->idUser = Input::get('idUser');
         $candidate->idGender = Input::get('idGender');
@@ -282,7 +292,7 @@ class SmartcvForm extends ComponentBase
         $candidate->Line_ID = Input::get('Line_ID');
         $candidate->Type_Candidate = Input::get('Type_Candidate');
         $candidate->Nationality = Input::get('Nationality');
-        $candidate->idSources_Type = Input::get('idSources_Type');
+        $candidate->idSources_Type = $idSources_Type;
         $candidate->CV_Publish = 1;
         $candidate->CV_Active = 0;
         $candidate->save();
@@ -626,7 +636,14 @@ class SmartcvForm extends ComponentBase
 
     public function loadSourceType()
     {
-        return SourceType::all();
+        //return SourceType::all();
+        $get=SourceType::where('Verify',1);
+        $chkSourceType=Candidate::where('idUser',Auth::getUser()->id);
+        if($chkSourceType->count() > 0){
+            $get->orWhere('idSources_Type',$chkSourceType->first()->idSources_Type);
+        }
+        //$get->orderBy('Status','ASC');
+        return $get->get();
     }
 
     public function loadTypeOfEmployment()
