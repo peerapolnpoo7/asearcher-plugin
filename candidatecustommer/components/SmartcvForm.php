@@ -248,8 +248,11 @@ class SmartcvForm extends ComponentBase
 
         if(Input::get('idCommunication_Provider')=="5"){
             $communicattions = new CommunicationProvider();
-            $communicattions->Name = Input::get('idCommunication_Provider');
-            //$communicattions->Name
+            $communicattions->Name = Input::get('Communication_Provider');
+            $communicattions->Status = '2';
+            $communicattions->Verify = '0';
+            $communicattions->save();
+            $idCommunication_Provider=$communicattions->id;
         }else{
             $idCommunication_Provider = Input::get('idCommunication_Provider');
         }
@@ -506,6 +509,7 @@ class SmartcvForm extends ComponentBase
         if($chkCommu->count() > 0){
             $get->orWhere('idCommunication_Provider',$chkCommu->first()->idCommunication_Provider);
         }
+        $get->orderBy('Status','ASC');
         return $get->get();
     }
 
