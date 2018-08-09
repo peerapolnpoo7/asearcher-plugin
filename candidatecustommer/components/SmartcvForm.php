@@ -69,6 +69,7 @@ class SmartcvForm extends ComponentBase
 
     public function onRun(){
         $this->addJs('assets/js/cv-smart.js');
+        $this->addCss('assets/css/cv-address.css');
         $this->prefixs=$this->loadPrefix();
         $this->genders=$this->loadGender();
         $this->religions=$this->loadReligion();
@@ -245,6 +246,14 @@ class SmartcvForm extends ComponentBase
         $users->surname = Input::get('LastName_TH');
         $users->save();
 
+        if(Input::get('idCommunication_Provider')=="5"){
+            $communicattions = new CommunicationProvider();
+            $communicattions->Name = Input::get('idCommunication_Provider');
+            //$communicattions->Name
+        }else{
+            $idCommunication_Provider = Input::get('idCommunication_Provider');
+        }
+
         $candidate = Candidate::find(Session::get('idCandidate'));
         $candidate->idUser = Input::get('idUser');
         $candidate->idGender = Input::get('idGender');
@@ -254,7 +263,7 @@ class SmartcvForm extends ComponentBase
         $candidate->Date_of_Birth = $this->convertDateToDB(Input::get('Date_of_Birth'));
         $candidate->idCountry_Calling_Code = Input::get('idCountry_Calling_Code');
         $candidate->TelephoneNumber = Input::get('TelephoneNumber');
-        $candidate->idCommunication_Provider = Input::get('idCommunication_Provider');
+        $candidate->idCommunication_Provider = $idCommunication_Provider;
         $candidate->Email = Input::get('Email');
         $candidate->Line_ID = Input::get('Line_ID');
         $candidate->Type_Candidate = Input::get('Type_Candidate');
@@ -537,7 +546,8 @@ class SmartcvForm extends ComponentBase
 
     public function loadSeniority()
     {
-        return Seniority::where('idSeniority','!=','1')->get();
+        $get=Seniority::whereIn('idSeniority',[1,9]);
+        return $get->get();
     }
 
     public function loadSkillList(){
@@ -770,6 +780,17 @@ class SmartcvForm extends ComponentBase
     public function onGetSubDistrict()
     {
         return Subdistrict::select('idSubdistricts as id' , 'Name_TH')->where('idDistricts',post('value'))->get();
+    }
+
+    public function onGetSeniority()
+    {   
+        $get=Seniority::select('idSeniority AS id','Name_TH')->orderBy('Level','ASC');
+        if(post('value')=='1'){
+            $get->whereIn('idSeniority',[1,9]);
+        }else{
+            $get->whereNotIn('idSeniority',[1,9]);
+        }
+        return $get->get();
     }
 
     public function loadCandidate()

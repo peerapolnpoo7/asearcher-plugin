@@ -17,6 +17,26 @@ function callComponent(callto,value,box,selected)
         }
     });
 }
+
+function getSeniority($type,$select)
+{
+    $.request("onGetSeniority", {
+        data: {value: $type},
+        success: function(data) {
+            $("#Seniority").children('option:not(:first)').remove();
+            $.each(data, function(k, v) {
+                $("#Seniority").append($('<option>', {
+                    value: v.id,
+                    text: v.Name_TH
+                }));
+            });
+            if($select!=""){
+                $("#Seniority").val($select);
+            }
+            $('select.chosen').trigger("chosen:updated");
+        }
+    });
+}
 $(document).ready(function(){
 	$('select.chosen').chosen({
         width: "100%",
@@ -227,7 +247,7 @@ $(document).ready(function(){
             $("#ImgExp").attr('src',ImgExpReplace);
             $('input[name="Type_Candidate"]').val('1');
             $(".boxRefExperience").addClass('hidden');
-            $(".boxSeniority").addClass('hidden');
+            getSeniority(1,'');
         }else{
             var ImgNewGrad = $("#ImgNewGrad").attr('src');
             var ImgNewGradReplace = ImgNewGrad.replace('NewGrad_hover.png','NewGrad.png');
@@ -238,7 +258,7 @@ $(document).ready(function(){
             $("#ImgExp").attr('src',ImgExpReplace);
             $('input[name="Type_Candidate"]').val('2');
             $(".boxRefExperience").removeClass('hidden');
-            $(".boxSeniority").removeClass('hidden');
+            getSeniority(2,'');
         }
 	}).on("change","#idGeography",function(){
          $.request('onGetInstituteDetail', {
@@ -282,6 +302,8 @@ $(document).ready(function(){
                 $('select.chosen').trigger("chosen:updated");
             }
         });
+    }).on('change','',function(){
+
     }).on("change","#idInstitute_Detail",function(){
         $.request('onGetEducationLevel', {
             data: {value: this.value},
@@ -558,8 +580,10 @@ $(document).ready(function(){
     $("input[name='Type_Candidate']").each(function(){
         if(this.value=="1"){
             $(".boxRefExperience").addClass('hidden');
+             getSeniority(1,$('input[name="temSeniority"]').val());
         }else{
             $(".boxRefExperience").removeClass('hidden');
+             getSeniority(2,$('input[name="temSeniority"]').val());
         }
     });
 
