@@ -532,6 +532,7 @@
 						<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
 						{% endfor %}
 					</select>
+					<input type="hidden" name="temSeniority" value="{{ requirement_of_works.idSeniority }}"/>
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-12 col-xs-12">
@@ -542,7 +543,7 @@
 					<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
+				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
 					<label class="control-label">ทักษะที่ถนัดที่สุด</label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
 						<option value="0">ไม่ระบุ</option>
@@ -556,7 +557,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
+				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
 					<div id="ionrangeSkillListLevel"></div>
 					<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
 				</div>
