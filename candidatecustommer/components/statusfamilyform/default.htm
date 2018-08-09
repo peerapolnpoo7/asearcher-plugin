@@ -1,60 +1,126 @@
 {% set militarys = __SELF__.militarys %}
 {% set maritalstatuss = __SELF__.maritalstatuss %}
 
+
+<style>
+
+.โสด{background-image:url({{ 'assets/img/statusfamily/sf1.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.สมรส{background-image:url({{ 'assets/img/statusfamily/sf2.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.หย่า{background-image:url({{ 'assets/img/statusfamily/sf3.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.หม้าย{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.แยกกันอยู่{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
+
+.mastercard{background-image:url(http://i.imgur.com/SJbRQF7.png);}
+
+</style>
 <h3>สถานะและครอบครัว</h3>
 <form class="m-t-md" action="#">
   <div class="row">
     <div class="col-sm-2">
-
     </div>
     <div class="col-sm-8">
       <div class="form-group">
-        <label>สถานะทางทหาร</label><br>
+
+
+        <label>สถานะทางทหาร</label><br /><br />
+        <div class="row">
         {% for military in militarys %}
-        <div class="radio radio-info col-sm-2 col-xs-6">
-          <input type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}">
+
+        <!-- <div class="col-sm-2 col-xs-6 col-md-3"> -->
+          <!-- <input type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}">
           <label for="{{ military.Name_TH }}">
             {{ military.Name_TH }}
-          </label>
-        </div>
+          </label> -->
+          <div class="checkboxgroup col-sm-2 col-xs-6 col-md-3">
+          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}"/>
+          <label class="below" for="{{ military.Name_TH }}">{{ military.Name_TH }}</label>
+          </div>
+        <!-- </div> -->
         {% endfor %}
+      </div>
       </div>
     </div>
     <div class="col-sm-2">
     </div>
   </div>
-  <div class="row">
+
+  <!-- <div class="row">
     <div class="col-sm-2">
-    </div>
-    <div class="col-sm-8">
-      <div class="form-group">
-        <label>สถานภาพสมรส</label><br>
-        {% for maritalstatus in maritalstatuss %}
+    </div> -->
+
+    <!-- <div class="col-sm-8"> -->
+      <!-- <div class="form-group"> -->
+        <!-- {% for maritalstatus in maritalstatuss %}
         <div class="radio radio-info col-sm-2 col-xs-6">
           <input type="radio" name="typeMarital" id="{{ maritalstatus.Name_TH }}" value="{{ maritalstatus.idMarital_Status }}">
-          <label for="{{ maritalstatus.Name_TH }}">
-            {{ maritalstatus.Name_TH }}
-          </label>
+          <label for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
         </div>
-        {% endfor %}
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-1"/>
-        <br />
-        <label class="below" for="radio-1">11111</label>
+        {% endfor %} -->
+        <div class="cc-selector">
+          <div class="row">
+            <div class=" col-sm-2">
+            </div>
+            <div class=" col-sm-8">
+          <label>สถานภาพสมรส</label><br>
+            </div>
+            <div class=" col-sm-2">
+          </div>
+          </div>
+
+
+          <div class="row">
+            <div class=" col-sm-2 col-md-2">
+            </div>
+            {% for maritalstatus in maritalstatuss %}
+            <div class="checkboxgroup col-sm-1 col-xs-4 col-md-1">
+            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" />
+            <label class="drinkcard-cc below2 {{ maritalstatus.Name_TH }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
+            </div>
+            <div class=" col-sm-1  col-md-1">
+            </div>
+            {% endfor %}
+
+            <!-- <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
+            <input id="sf2" type="radio" name="credit-card" value="mastercard" />
+            <label class="drinkcard-cc sf2 below2" for="sf2">สมรส</label>
+            </div>
+
+            <div class=" col-sm-1 col-xs-6 col-md-1">
+            </div>
+
+            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
+            <input id="sf3" type="radio" name="credit-card" value="mastercard" />
+            <label class="drinkcard-cc sf3 below2" for="sf3">sf3</label>
+            </div>
+
+            <div class=" col-sm-1 col-xs-6 col-md-1">
+            </div>
+
+            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
+            <input id="sf4" type="radio" name="credit-card" value="mastercard" />
+            <label class="drinkcard-cc sf4 below2" for="sf4">sf4</label>
+            </div>
+            <div class=" col-sm-1 col-xs-6 col-md-1">
+            </div>
+
+            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
+            <input id="sf5" type="radio" name="credit-card" value="mastercard" />
+            <label class="drinkcard-cc sf5 below2"  for="sf5">sf5</label>
+            </div> -->
+            <div class=" col-sm-2">
+            </div>
+          </div>
         </div>
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-2"/>
-        <label class="below" for="radio-2">22222</label>
+
+
+
+        <!-- </div> -->
+        <!-- <div class="col-sm-2">
         </div>
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-3"/>
-        <label class="below" for="radio-3">33333</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-    </div>
-  </div>
+      </div> -->
+
+
+
   <span class="hidden boxMarital">
     <div class="row">
       <div class="col-sm-12">
