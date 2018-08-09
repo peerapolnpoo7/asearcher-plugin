@@ -1,0 +1,341 @@
+{% set provinces = __SELF__.provinces %}
+{% set address = __SELF__.address %}
+<form class="m-t-md" data-request="onSave" data-request-flash>
+	<input type="hidden" name="idAddress" value="{{ address.idAddress }}"/>
+	<div class="row">
+		{% flash %}
+		    <p
+		        data-control="flash-message"
+		        class="flash-message fade {{ type }}"
+		        data-interval="5">
+		        {{ message }}
+		    </p>
+		{% endflash %}
+		<div class="col-sm-7">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ประเภทที่อยู่</label>
+
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-xs-4">
+						<button class="btn {% if address.Home_Condo != '1' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Home"><i class="fa fa-home"></i></button>
+						<span>บ้าน, ห้องเช่า</span>
+					</div>
+					<div class="col-sm-5 col-xs-5">
+						<button class="btn {% if address.Home_Condo != '2' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Building"><i class="fa fa-building-o"></i></button>
+						<span>อพาร์ทเม้นท์, คอนโด</span>
+					</div>
+					<input type="hidden" name="Home_Condo" id="Home_Condo" value="{% if address.Home_Condo != '' %}{{address.Home_Condo}}{%else%}1{%endif%}" />
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">เลขที่</label>
+					<input type="text" class="form-control" name="Address_No_TH" id="Address_No_TH" placeholder="" value="{{ address.Address_No_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ซอย</label>
+					<input type="text" class="form-control" name="Soi_TH" id="Soi_TH" placeholder="" value="{{ address.Soi_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">หมู่</label>
+					<input type="text" class="form-control" name="Moo_TH" id="Moo_TH" placeholder="" value="{{ address.Moo_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row hidden boxPerBuilding">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">อาคาร</label>
+					<input type="text" class="form-control" name="Building_TH" id="Building_TH" placeholder="" value="{{ address.Building_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">เลขที่ห้อง</label>
+					<input type="text" class="form-control" name="Room_NO_TH" id="Room_NO_TH" placeholder="" value="{{ address.Room_NO_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ชั้นที่</label>
+					<input type="text" class="form-control" name="Floor_TH" id="Floor_TH" placeholder="" value="{{ address.Floor_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">หมู่บ้าน</label>
+					<input type="text" class="form-control" name="Village_TH" id="Village_TH" placeholder="" value="{{ address.Village_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ถนน</label>
+					<input type="text" class="form-control" name="Road_TH" id="Road_TH" placeholder="" value="{{ address.Road_TH }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">จังหวัด</label>
+					<select class="form-control chosen" name="idProvinces" id="Provinces">
+						<option value="">เลือก</option>
+						{% for province in provinces %}
+						{% set selected = '' %}
+						{% if province.idProvinces == address.idProvinces %}
+						{% set selected = 'selected' %}
+						{% endif %}
+						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
+						{% endfor %}
+					</select>
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">อำเภอ/เขต</label>
+					<select name="idDistricts" id="District" class="form-control chosen">
+						<option value="">เลือก</option>
+					</select>
+					<span class="help-block"></span>
+					<input type="hidden" id="temDistrict" value="{{ address.idDistricts }}"/>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ตำบล/แขวง</label>
+					<select name="idSubdistricts" id="SubDistrict" class="form-control chosen">
+						<option value="">เลือก</option>
+					</select>
+					<span class="help-block"></span>
+					<input type="hidden" id="temSubdistricts" value="{{ address.idSubdistricts }}"/>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">รหัสไปรษณีย์</label>
+					<input type="text" name="idPostcode" id="Postcode" class="form-control" placeholder="" value="{{ address.code }}" >
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-5">
+			<div class="form-group">
+				<label><h3>2.ที่อยู่ปัจจุบัน</h3></label><br>
+				<div class="radio radio-info col-sm-6 col-xs-6">
+					<input type="radio" name="Address_Present" id="radioPer" value="1" {% if address.Address_Present == '1' %}checked="checked"{% endif %} >
+					<label for="radioPer">
+						ตามที่อยู่บัตรประชาชน
+					</label>
+				</div>
+				<div class="radio radio-info col-sm-6 col-xs-6">
+					<input type="radio" name="Address_Present" id="radioPre" value="2" {% if address.Address_Present == '2' %}checked="checked"{% endif %} >
+					<label for="radioPre">
+						ที่อยู่ใหม่
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row hidden boxPre">
+		<div class="col-sm-7">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ประเภทที่อยู่</label>
+
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4 col-xs-4">
+						<button class="btn {% if address.Home_Condo_1 != '1' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Home"><i class="fa fa-home"></i></button>
+						<span>บ้าน, ห้องเช่า</span>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<button class="btn {% if address.Home_Condo_1 != '2' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Building"><i class="fa fa-building-o"></i></button>
+						<span>อพาร์ทเม้นท์, คอนโด</span>
+					</div>
+					<input type="hidden" name="Home_Condo_1" id="Home_Condo_1" value="{% if address.Home_Condo_1 != '' %}{{address.Home_Condo_1}}{%else%}1{%endif%}" />
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row hidden boxPre">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">เลขที่</label>
+					<input type="text" class="form-control" name="Address_No_TH_1" id="Address_No_TH_1" placeholder="" value="{{ address.Address_No_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ซอย</label>
+					<input type="text" class="form-control" name="Soi_TH_1" id="Soi_TH_1" placeholder="" value="{{ address.Soi_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">หมู่</label>
+					<input type="text" class="form-control" name="Moo_TH_1" id="Moo_TH_1" placeholder=""  value="{{ address.Moo_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row  hidden boxPreBuilding">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">อาคาร</label>
+					<input type="text" class="form-control" name="Building_TH_1" id="Building_TH_1" placeholder="" value="{{ address.Building_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">เลขที่ห้อง</label>
+					<input type="text" class="form-control" name="Room_No_TH_1" id="Room_No_TH_1" placeholder="" value="{{ address.Room_No_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ชั้นที่</label>
+					<input type="text" class="form-control" name="Floor_TH_1" id="Floor_TH_1" placeholder="" value="{{ address.Floor_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row hidden boxPre">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">หมู่บ้าน</label>
+					<input type="text" class="form-control" name="Village_TH_1" id="Village_TH_1" placeholder="" value="{{ address.Village_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ถนน</label>
+					<input type="text" class="form-control" name="Road_TH_1" id="Road_TH_1" placeholder="" value="{{ address.Road_TH_1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">จังหวัด</label>
+					<select class="form-control chosen" name="idProvinces_1" id="Provinces1">
+						<option value="0">เลือก</option>
+						{% for province in provinces %}
+						{% set selected = '0' %}
+						{% if province.idProvinces == address.idProvinces_1 %}
+						{% set selected = 'selected' %}
+						{% endif %}
+						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
+						{% endfor %}
+					</select>
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row hidden boxPre">
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">อำเภอ/เขต</label>
+					<select name="idDistricts_1" id="District1" class="form-control chosen">
+						<option value="0">เลือก</option>
+					</select>
+					<span class="help-block"></span>
+					<input type="hidden" id="temDistricts_1" value="{{ address.idDistricts_1 }}"/>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">ตำบล/แขวง</label>
+					<select name="idSubdistrict_1" id="SubDistrict1" class="form-control chosen">
+						<option value="0">เลือก</option>
+					</select>
+					<span class="help-block"></span>
+					<input type="hidden" id="temSubdistrict_1" value="{{ address.idSubdistrict_1 }}"/>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label">รหัสไปรษณีย์</label>
+					<input type="text" name="idPostcode_1" id="Postcode1" class="form-control" placeholder="" value="{{ address.code1 }}">
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 text-center m-t-md">
+			<button type="submit" class="btn btn-info btn-rounded btn-sm">อัพเดทโปรไฟล์</button>
+		</div>
+	</div>
+</form>

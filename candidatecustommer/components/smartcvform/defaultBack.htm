@@ -1,0 +1,828 @@
+{% set prefixs = __SELF__.prefixs %}
+{% set genders = __SELF__.genders %}
+{% set countrycallingcodes = __SELF__.countrycallingcodes %}
+{% set skilllists = __SELF__.skilllists %}
+{% set communication_providers = __SELF__.communication_providers %}
+{% set geographys = __SELF__.geographys %}
+{% set type_of_institues = __SELF__.type_of_institues %}
+{% set education_levels = __SELF__.education_levels %}
+{% set degree_certifidates = __SELF__.degree_certifidates %}
+{% set job_categorys = __SELF__.job_categorys %}
+{% set senioritys = __SELF__.senioritys %}
+{% set salary_ranges = __SELF__.salary_ranges %}
+{% set availability_of_works = __SELF__.availability_of_works %}
+{% set job_seeker_statuses = __SELF__.job_seeker_statuses %}
+{% set provinces = __SELF__.provinces %}
+{% set welfare_types = __SELF__.welfare_types %}
+{% set source_types = __SELF__.source_types %}
+{% set type_of_employments = __SELF__.type_of_employments %}
+{% set transportation_details = __SELF__.transportation_details %}
+{% set expected_details = __SELF__.expected_details %}
+{% set institute_alls = __SELF__.institute_alls %}
+{% set languages = __SELF__.languages %}
+{% set candidates = __SELF__.candidates %}
+{% set job_titles = __SELF__.job_titles %}
+<!-- <form data-request="onSave" class="form-horizontal m-t-md" data-request-files data-request-flash> -->
+	<form class="form-horizontal m-t-md" data-request-files data-request-flash>
+	<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
+	<div class="row">
+		{% flash %}
+		    <p
+		        data-control="flash-message"
+		        class="flash-message fade {{ type }}"
+		        data-interval="5">
+		        {{ message }}
+		    </p>
+		{% endflash %}
+		<div class="col-sm-4 text-center">
+			<fieldset>
+				<img src="{{ 'assets/img/S__6266907meduim.jpg'|theme }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
+				<div class="m-b-md">
+					<h3 class="font-bold no-margins">
+						{{ user.name }} {{ user.surname }}
+					</h3>
+					<small>Marttking</small>
+				</div>
+				<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="#">เปลี่ยนภาพโปรไฟล์</a>
+				<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
+			</fieldset>
+		</div>
+		<div class="col-sm-8">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-2 col-xs-3 control-label">เพศ <span class="text-danger">*</span></label>
+					<p class="visible-xs"></p>
+					<div class="col-sm-1 hidden-xs"></div>
+					{% for gender in genders %}
+					<div class="radio radio-info col-sm-2 col-xs-4">
+						<input type="radio" name="idGender" id="gender{{ gender.idGender }}" value="{{ gender.idGender }}" {% if candidates.idGender == gender.idGender %}checked{% endif %}>
+						<label for="gender{{ gender.idGender }}">
+							{{ gender.Name_TH }}
+						</label>
+					</div>
+					{% endfor %}
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
+					<div class="col-sm-4">
+						<select class="form-control chosen" name="idPrefix" id="idPrefix">
+							<option value="">เลือก</option>
+							{% for prefix in prefixs %}
+							{% set selected = '' %}
+							{% if prefix.idPrefix == candidates.idPrefix %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">ชื่อ <span class="text-danger">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
+						<span class="help-block"></span>
+					</div>
+					<label class="col-sm-2 control-label">นามสกุล <span class="text-danger">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2  col-xs-12 control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
+					<div class="col-sm-4 input-group">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile" value="{{ candidates.Date_of_Birth }}">
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">อีเมล์ <span class="text-danger">*</span></label>
+					<div class="col-sm-5">
+						<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
+						<span class="help-block"></span>
+					</div>
+					<label class="col-sm-2 control-label">ไลน์ไอดี</label>
+					<div class="col-sm-3">
+						<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label>
+					<div class="col-sm-2">
+						<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
+							<option value="0">เลือก</option>
+							{% for countrycallingcode in countrycallingcodes %}
+							{% set selected = '0' %}
+							
+							{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+								{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Code}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="ระบุเบอร์โทรศัพท์" value="{{ candidates.TelephoneNumber }}">
+						<span class="help-block"></span>
+					</div>
+					<label class="col-sm-2 control-label">เครือข่าย <span class="text-danger">*</span></label>
+					<div class="col-sm-3">
+						<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
+							<option value="0">เลือก</option>
+							{% for communication_provider in communication_providers %}
+							{% set selected = '0' %}
+							{% if communication_provider.idCommunication_Provider == '0' and candidates.idCommunication_Provider == "" %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							{% if communication_provider.idCommunication_Provider == candidates.idCommunication_Provider %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{communication_provider.idCommunication_Provider}}" {{ selected }}>{{communication_provider.Name}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">สัญชาติ <span class="text-danger">*</span></label>
+					<div class="col-sm-5">
+						<select name="Nationality" id="Nationality" class="form-control chosen">
+							<optoin value="0">เลือก</optoin>
+							{% for countrycallingcode in countrycallingcodes %}
+							{% set selected = '0' %}
+							{% if countrycallingcode.idCountry_Calling_Code == '0' and candidates.Nationality == "" %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							{% if countrycallingcode.idCountry_Calling_Code == candidates.Nationality %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>การศึกษา / ประสบการณ์ทำงาน</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="col-sm-4">
+					<div class="radio radio-info">
+						<input type="radio" name="Type_Candidate" id="newGraduate" value="1" {% if candidates.Type_Candidate == 1 or candidates.Type_Candidate == '' %} checked {% else %}{% endif %}>
+						<label for="newGraduate">
+							จบใหม่
+						</label>
+					</div>
+					<span class="help-block"></span>
+				</div>
+				<div class="col-sm-4">
+					<div class="radio radio-info">
+						<input type="radio" name="Type_Candidate" id="haveExp" value="2" {% if candidates.Type_Candidate == 2 %} checked {% endif %}>
+						<label for="haveExp">
+							มีประสบการณ์ทำงาน
+						</label>
+					</div>
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h4>การศึกษาสูงสุด</h4>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ที่ตั้งสถาบัน <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="geography" id="geography" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for geography in geographys %}
+							{% set selected = '0' %}
+							{% if geography.idGeography == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{geography.idGeography}}" {{ selected }}>{{geography.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ประเภทสถาบัน <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="type_of_institue" id="type_of_institue" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for type_of_institue in type_of_institues %}
+							{% set selected = '0' %}
+							{% if type_of_institue.idType_of_Institute == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{type_of_institue.idType_of_Institute}}" {{ selected }}>{{type_of_institue.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ชื่อสถาบัน <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idInstitute_Detail" id="idInstitute_Detail" class="form-control chosen">
+							<option value="">เลือก</option>
+							{% for institute_all in institute_alls %}
+							{% set selected = '0' %}
+							{% if institute_all.idInstitute_Detail == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{institute_all.idInstitute_Detail}}" {{ selected }}>{{institute_all.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ระดับการศึกษา <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idEducation_Level" id="idEducation_Level" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for education_level in education_levels %}
+							{% set selected = '0' %}
+							{% if education_level.idEducation_Level == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{education_level.idEducation_Level}}" {{ selected }}>{{education_level.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">วุฒิการศึกษา <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idDegree_and_Certificate" id="idDegree_and_Certificate" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for degree_certifidate in degree_certifidates %}
+							{% set selected = '0' %}
+							{% if degree_certifidate.idDegree_and_Certificate == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{degree_certifidate.idDegree_and_Certificate}}" {{ selected }}>{{degree_certifidate.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">คณะ <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idFaculty_Detail" id="idFaculty_Detail" class="form-control chosen">
+							<option value="0">เลือก</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ภาควิชา <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idDepartment" id="idDepartment" class="form-control chosen">
+							<option value="0">เลือก</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">สาขา/เอกวิชา <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="idMajor_Subject" id="idMajor_Subject" class="form-control chosen">
+							<option value="0">เลือก</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">เกรดเฉลี่ย <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="GPA" id="GPA" placeholder="">
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row hidden boxRefExperience">
+		<div class="col-sm-12">
+			<h4>ประสบการณ์ทำงานล่าสุด</h4>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select name="LastSeniority" id="LastSeniority" class="form-control chosen">
+							<option value="">เลือก</option>
+							{% for seniority in senioritys %}
+							{% set selected = '0' %}
+							{% if seniority.idSeniority == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">ชื่อตำแหน่งาน <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select name="LastJob_Title" id="LastJob_Title" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for job_title in job_titles %}
+							{% set selected = '0' %}
+							{% if job_title.idJob_Title == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{job_title.idJob_Title}}" {{ selected }}>{{job_title.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">ชื่อบริษัท</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="Company_Name" id="Company_Name" value="">
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-3">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">วันที่เริ่ม <span class="text-danger">*</span></label>
+					<div class="col-sm-8 input-group">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" name="Date_Start" id="Date_Start" class="form-control dateMobile" value="">
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-3">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">วันที่สิ้นสุด <span class="text-danger">*</span></label>
+					<div class="col-sm-8 input-group">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input type="text" name="Date_End" id="Date_End" class="form-control dateMobile" value="">
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h4>ตำแหน่งงานที่คาดหวัง</h4>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">หมวดหมู่งาน <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="job_CategoryNew" id="job_CategoryNew" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for job_category in job_categorys %}
+							{% set selected = '0' %}
+							{% if job_category.idJob_Category == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{job_category.idJob_Category}}" {{ selected }}>{{job_category.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4 hidden boxRefExperience">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ระดับการทำงาน  <span class="text-danger">*</span></label>
+					<div class="col-sm-8">
+						<select name="Seniority" id="Seniority" class="form-control chosen">
+							<option value="">เลือก</option>
+							{% for seniority in senioritys %}
+							{% set selected = '0' %}
+							{% if seniority.idSeniority == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">ชื่อตำแหน่ง  <span class="text-danger">*</span></label>
+					<div class="col-sm-10">
+						<select name="Job_TitleRequire" id="Job_TitleRequire" class="form-control chosen">
+							<option value="0">เลือก</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<h4>ความสามารถ</h4>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">ภาษาที่ถนัดที่สุด <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select class="form-control chosen" name="LangidCountry_Calling_Code" id="LangidCountry_Calling_Code">
+							<option value="0">เลือก</option>
+							{% for language in languages %}
+							{% set selected = '0' %}
+							{% if language.idCountry_Calling_Code == '185' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{language.idCountry_Calling_Code}}" {{ selected }}>{{language.Language_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">ฟัง</label>
+					<div class="col-lg-9">
+						<div id="ionrangeListenLevel"></div>
+						<input type="hidden" name="ionrangeListenLevel" class=""  value="0" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">พูด</label>
+					<div class="col-lg-9">
+						<div id="ionrangeSpeakingLevel"></div>
+						<input type="hidden" name="ionrangeSpeakingLevel" class=""  value="0" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">อ่าน</label>
+					<div class="col-lg-9">
+						<div id="ionrangeReadingLevel"></div>
+						<input type="hidden" name="ionrangeReadingLevel" class=""  value="0" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">เขียน</label>
+					<div class="col-lg-9">
+						<div id="ionrangeWritingLevel"></div>
+						<input type="hidden" name="ionrangeWritingLevel" class=""  value="0" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">ทักษะที่ถนัดที่สุด <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
+							<option value="0">เลือก</option>
+							{% for skilllist in skilllists %}
+							{% set selected = '0' %}
+							{% if idSkill_List.Code == '0' %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{skilllist.idSkill_List}}" {{ selected }}>{{skilllist.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label ">ระดับ</label>
+					<div class="col-lg-9">
+						<div id="ionrangeSkillListLevel"></div>
+						<input type="hidden" name="ionrangeSkillListLevel" class=""  value="0" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<h3>3.ความสามารถพื้นฐานด้านคอมพิวเตอร์</h3>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-12 m-t-20
+					">Word</label>
+					<div class="col-sm-10">
+						<div id="Word_Level"></div>
+						<input type="hidden" class="" name="Word_Level" value="" />
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-12 m-t-20
+					">Excel</label>
+					<div class="col-sm-10">
+						<div id="Excel_Level"></div>
+						<input type="hidden" class="" name="Excel_Level" value="" />
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-12 m-t-20
+					">Powerpoint</label>
+					<div class="col-sm-10">
+						<div id="Powerpoint_Level"></div>
+						<input type="hidden" class="" name="Powerpoint_Level" value="" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<h4>ความสามารถด้านการพิมพ์</h4>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-12 m-t-20
+					">การพิมพ์ไทย (คำต่อนาที)</label>
+					<div class="col-sm-10">
+						<div id="Typing_Thai_Level"></div>
+						<input type="hidden" name="Typing_Thai_Level" value="" />
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-sm-12 m-t-20
+					">การพิมพ์อังกฤษ (คำต่อนาที)</label>
+					<div class="col-sm-10">
+						<div id="Typing_English_Level"></div>
+						<input type="hidden" name="Typing_English_Level" value="" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>2.ข้อมูลความต้องการในการทำงาน</h3>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">เงินเดือนที่ต้องการ <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
+								<option value="0">เลือก</option>
+								{% for salary_range in salary_ranges %}
+								{% set selected = '0' %}
+								{% if salary_range.idSalary_Range == '0' %}
+								{% set selected = 'selected' %}
+								{% endif %}
+								<option value="{{salary_range.idSalary_Range}}" {{ selected }}>{{salary_range.Name}}</option>
+								{% endfor %}
+							</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 col-xs-4 control-label">ประเภทงานที่ต้องการ <span class="text-danger">*</span></label>
+					{% for type_of_employment in type_of_employments %}
+					<div class="radio radio-info col-sm-2 col-xs-4">
+						<input type="radio" name="idType_of_Employment" id="Permanent{{ type_of_employment.idType_of_Employment }}" value="{{ type_of_employment.idType_of_Employment }}">
+						<label for="Permanent{{ type_of_employment.idType_of_Employment }}">
+							{{ type_of_employment.Name_TH }}
+						</label>
+					</div>
+					{% endfor %}
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select name="idAvailability_of_Work" id="idAvailability_of_Work" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for availability_of_work in availability_of_works %}
+								{% set selected = '0' %}
+								{% if availability_of_work.idAvailability_of_Work == '0' %}
+								{% set selected = 'selected' %}
+								{% endif %}
+								<option value="{{availability_of_work.idAvailability_of_Work}}" {{ selected }}>{{availability_of_work.Name_TH}}</option>
+								{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label>
+					<div class="col-sm-9">
+						<select name="idJob_Seeking_Status" id="idJob_Seeking_Status" class="form-control chosen">
+							<option value="0">เลือก</option>
+							{% for job_seeker_status in job_seeker_statuses %}
+								{% set selected = '0' %}
+								{% if job_seeker_status.idJob_Seeking_Status == '0' %}
+								{% set selected = 'selected' %}
+								{% endif %}
+								<option value="{{job_seeker_status.idJob_Seeking_Status}}" {{ selected }}>{{job_seeker_status.Name_TH}}</option>
+								{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-12">
+			<h4>สถานที่ที่ต้องการในการทำงาน</h4>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">จังหวัด</label>
+					<div class="col-sm-8">
+						<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
+							<option value="0">ทุกจังหวัด</option>
+							{% for province in provinces %}
+							{% set selected = '0' %}
+							{% if province.idProvinces == address.idProvinces %}
+							{% set selected = 'selected' %}
+							{% endif %}
+							<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
+							{% endfor %}
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">อำเภอ/เขต</label>
+					<div class="col-sm-8">
+						<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
+							<option value="0">ทุกอำเภอ/เขต</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-sm-4">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-4 control-label">ตำบล/แขวง</label>
+					<div class="col-sm-8">
+						<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
+							<option value="0">ทุกตำบล/แขวง</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-5 m-l-md">
+			<div class="form-group">
+				<label>ความคาดหวังในการเดินทาง</label><br>
+				{% for transportation_detail in transportation_details %}
+				<div class="checkbox checkbox-info col-sm-6 col-xs-6">
+					<input type="checkbox" name="idTransportation_Detail[]" id="checkbox{{ transportation_detail.idTransportation_Detail }}" value="{{ transportation_detail.idTransportation_Detail }}">
+					<label for="checkbox{{ transportation_detail.idTransportation_Detail }}">
+						{{ transportation_detail.Name_TH }}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-5 m-l-md">
+			<div class="form-group">
+				<label>ความคาดหวังในการทำงานและการตัดสินใจ</label><br>
+				{% for expected_detail in expected_details %}
+				<div class="checkbox checkbox-info col-sm-6 col-xs-6">
+					<input type="checkbox" name="Expected_Details[]" id="idExpected_Detail{{ expected_detail.idExpected_Detail }}" value="{{ expected_detail.idExpected_Detail }}">
+					<label for="idExpected_Detail{{ expected_detail.idExpected_Detail }}">
+						{{ expected_detail.Name_TH }}
+					</label>
+				</div>
+				{% endfor %}
+				<!-- <div class="checkbox checkbox-info col-sm-6 col-xs-6">
+					<input type="checkbox" name="CheckboxOther" id="CheckboxOther" value="option1">
+					<label for="CheckboxOther">
+						อื่นๆ โปรดระบุ
+					</label>
+				</div> -->
+			</div>
+		</div>
+		<div class="col-sm-12 m-l-md">
+			<div class="form-group">
+				<label>สวัสดิการบริษัท</label><br>
+				{% for welfare_type in welfare_types %}
+				<div class="checkbox checkbox-info col-sm-3 col-xs-6">
+					<input type="checkbox" name="Welfares[]" id="Welfare{{ welfare_type.idWelfare_Type }}" value="{{ welfare_type.idWelfare_Type }}">
+					<label for="Welfare{{ welfare_type.idWelfare_Type }}">
+						{{ welfare_type.Name_TH }}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-12 m-l-md">
+			<div class="form-group">
+				<label>คุณรู้จัก aSearcher ได้อย่างไร</label><br>
+				{% for source_type in source_types %}
+				<div class="radio radio-info col-sm-3 col-xs-6">
+					<input type="radio" name="idSources_Type" id="SourceType{{ source_type.idSources_Type }}" value="{{ source_type.idSources_Type }}">
+					<label for="SourceType{{ source_type.idSources_Type }}">
+						{{ source_type.Name_TH }}
+					</label>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-12 text-center m-t-md">
+			<button type="button" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
+		</div>
+	</div>
+</form>

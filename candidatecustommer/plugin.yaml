@@ -1,0 +1,6 @@
+plugin:
+    name: 'asearcher.candidatecustommer::lang.plugin.name'
+    description: 'asearcher.candidatecustommer::lang.plugin.description'
+    author: aSearcher
+    icon: oc-icon-database
+    homepage: ''

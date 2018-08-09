@@ -1,0 +1,6 @@
+{% set candidates = __SELF__.candidates %}
+<ul>
+	{% for candidate in candidates %}
+		<li>{{ candidate.name }} {{ candidate.email }}</li>
+	{% endfor %}
+</ul>

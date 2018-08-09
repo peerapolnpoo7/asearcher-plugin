@@ -1,0 +1,22 @@
+{% set profiles = __SELF__.profiles %}
+<div class="dropdown profile-element"> <span>
+	{% if profiles.thumb %}
+		<img src="{{ profiles.thumb }}" alt="image" class="img-circle" style="width: 48px;">
+	{% else %}
+		<img src="{{ 'assets/img/default-non-user-no-photo-small.jpg'|theme }}" alt="image" class="img-circle">
+	{% endif %}
+</span>
+<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+	<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ user.name }} {{ str_limit(user.surname, 1,'.') }}</strong>
+	</span> <span class="text-muted text-xs block">{{ profiles.JobTitle }} <b class="caret"></b></span> </span> </a>
+	<ul class="dropdown-menu animated fadeInRight m-t-xs">
+		<li><a href="profile.html">Profile</a></li>
+		<li><a href="contacts.html">Contacts</a></li>
+		<li><a href="mailbox.html">Mailbox</a></li>
+		<li class="divider"></li>
+		<li><a data-request="onLogout" data-request-data="redirect: '/'">Sign out</a></li>
+	</ul>
+</div>
+<div class="logo-element">
+	CV+
+</div>
