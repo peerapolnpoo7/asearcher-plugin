@@ -205,7 +205,7 @@ class SmartcvForm extends ComponentBase
             'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"',
         ];
         if(Input::get('Type_Candidate')=='2'){
-            $rules_1 = array(
+            $rules_more = array(
                 'LastSeniority' => array('required'),
                 'LastJob_Title' => array('required'),
                 'Company_Name' => array(''),
@@ -213,28 +213,39 @@ class SmartcvForm extends ComponentBase
                 'Date_Start' => array('required'),
                 'Seniority' => array('required'),
             );
-            $messages_1 = [
+            $messages_more = [
                 'LastSeniority.required' => 'กรุณาเลือก "ระดับการทำงาน"',
                 'LastJob_Title.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน"',
                 'idExperience_Work_Status.required' => 'กรุณาเลือก "สถานะการทำงาน"',
                 'Date_Start.required' => 'กรุณาเลือก "วันที่เริ่ม"',
-                
                 'Seniority.required' => 'กรุณาเลือก "ระดับการทำงาน" ที่คาดหวัง',
             ];
-            $rules = array_merge($rules,$rules_1);
-            $messages = array_merge($messages,$messages_1);
+            $rules = array_merge($rules,$rules_more);
+            $messages = array_merge($messages,$messages_more);
             if(Input::get('idExperience_Work_Status')=='2'){
-                $rules_2= array( 
+                $rules_more= array( 
                     'Date_End' => array('required'),
                 );
-                $messages_2 = [
+                $messages_more = [
                     'Date_End.required' => 'กรุณาเลือก "วันที่สิ้นสุด"',
                 ];
-                $rules = array_merge($rules,$rules_2);
-                $messages = array_merge($messages,$messages_2);
+                $rules = array_merge($rules,$rules_more);
+                $messages = array_merge($messages,$messages_more);
             }
             
         }
+        
+        if(Input::get('idCommunication_Provider')=="5"){
+            $rules_more= array( 
+                    'Communication_Provider' => array('required'),
+                );
+            $messages_more = [
+                    'Communication_Provider.required' => 'กรุณาระบุ "เครือข่าย อื่นๆ"',
+            ];
+            $rules = array_merge($rules,$rules_more);
+            $messages = array_merge($messages,$messages_more);
+        }
+        
         $validator = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
