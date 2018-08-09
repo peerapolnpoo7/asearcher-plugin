@@ -374,7 +374,7 @@
 						<input type="text" class="form-control" name="Company_Name_TH" id="Company_Name_TH" value="{{ experiences.Company_Name_TH }}">
 						<span class="help-block"></span>
 					</div>
-					<div class="form-group col-md-12 col-xs-12">
+					<div class="form-group col-md-6 col-sm-4 col-xs-12">
 						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
 						{% for experience_work_status in experience_work_statuss %}
 						{% set noselect = 'btn-outline' %}
@@ -394,7 +394,7 @@
 						<input type="hidden" name="idExperience_Work_Status" value="{{ experiences.idExperience_Work_Status ? experiences.idExperience_Work_Status : 1 }}"/>
 						<span class="help-block"></span>
 					</div>
-					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group col-md-6 col-sm-4 col-xs-12">
 						<label class="control-label">วันที่เริ่ม <span class="text-danger">*</span></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -403,7 +403,7 @@
 						</div>
 						<span class="help-block"></span>
 					</div>
-					<div class="form-group col-md-6 col-sm-6 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status != 2 %} hidden {% endif %}">
+					<div class="form-group col-md-6 col-sm-4 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status != 2 %} hidden {% endif %}">
 						<label class="control-label">วันที่สิ้นสุด <span class="text-danger">*</span></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -576,83 +576,18 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-7 col-sm-6 col-xs-12">
-					<fieldset>
-						<h5>ประเภทการจ้างงาน</h5>
-						{% for type_of_employment in type_of_employments %}
-						<a class="btn btn-info btn-rounded btn-sm {% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %} btn-outline {%endif%} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
-							{{type_of_employment.Name_TH}}
-						</a>
-						{% endfor %}
-						<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment }}"/>
-					</fieldset>
+				<div class="form-group col-md-7 col-sm-12 col-xs-12">
+					<label class="control-label">ประเภทการจ้างงาน</label><br/>
+					{% for type_of_employment in type_of_employments %}
+					<a class="btn btn-info btn-rounded btn-sm {% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %} btn-outline {%endif%} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
+						{{type_of_employment.Name_TH}}
+					</a>
+					{% endfor %}
+					<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment }}"/>
+					<span class="help-block"></span>
 				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-6 hidden">
-			<fieldset>
-				<h4>ความคาดหวังในการทำงาน</h4>
-				<div class="form-group col-md-12 col-xs-12 no-padding">
-					<select class="select2_demo_2 form-control" name="Expected_Details[]" multiple="multiple">
-						{% for expected_detail in expected_details %}
-						<option value="{{expected_detail.idExpected_Detail}}" {{ expected_detail.selected }}>
-						{{expected_detail.Name_TH}}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4>สวัสดิการบริษัทที่ต้องการ</h4>
-				<div class="form-group col-md-12 col-xs-12 no-padding">
-					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
-						{% for welfare_type in welfare_types %}
-						<option value="{{welfare_type.idWelfare_Type}}" {{ welfare_type.selected }}>{{welfare_type.Name_TH}}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</fieldset>
-		</div>
-		<div class="form-group col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4>สถานะการค้นหางาน</h4>
-				{% for job_seeker_status in job_seeker_statuses %}
-				<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
-					{{ job_seeker_status.Name_TH}}
-				</a>
-				{% endfor %}
-				<input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/>
-			</fieldset>
-		</div>
-		<div class="form-group col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4>ความพร้อมในการเริ่มงาน</h4>
-				{% for availability_of_work in availability_of_works %}
-				<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
-				{% endfor %}
-				<input type="hidden" name="idAvailability_of_Work" value="{{ requirement_of_works.idAvailability_of_Work }}"/>
-			</fieldset>
-		</div>
-		<div class="form-group col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4>คุณรู้จัก aSearcher ได้อย่างไร</h4>
-				{% for source_type in source_types %}
-				<a class="btn btn-info btn-rounded btn-sm {% if source_type.idSources_Type != candidates.idSources_Type %} btn-outline {%endif%} source_type" id="sourcetype_{{ source_type.idSources_Type}}" href="javascript:void(0)">
-					{{ source_type.Name_TH}}
-				</a>
-				{% endfor %}
-				<input type="hidden" name="idSources_Type" value="{{ candidates.idSources_Type }}"/>
-			</fieldset>
-		</div>
-		<div class="form-group col-md-12 col-sm-12 boxSourceType hidden">
-			<label class="control-label">ระบุ <span class="text-danger">*</span></label>
-			<input type="text" class="form-control" name="" id="" placeholder="" value="" >
-		</div>
-		<div class="col-md-6 col-xs-12">
-			<fieldset>
 				<h4>สถานที่ต้องการทำงาน</h4>
-				<div class="form-group col-md-4 col-sm-4 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12">
 					<label class="control-label">จังหวัด</label>
 					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
 						<option value="0">ทุกจังหวัด</option>
@@ -666,7 +601,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 col-sm-4 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12">
 					<label class="control-label">อำเภอ/เขต</label>
 					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
 						<option value="0">ทุกอำเภอ/เขต</option>
@@ -674,7 +609,7 @@
 					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 col-sm-4 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12">
 					<label class="control-label">ตำบล/แขวง</label>
 					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
 						<option value="0">ทุกตำบล/แขวง</option>
@@ -684,6 +619,62 @@
 				</div>
 			</fieldset>
 		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<fieldset>
+				<h4 class="hidden-xs">&nbsp;</h4>
+				<div class="form-group col-md-12 col-xs-12">
+					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
+					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
+						{% for welfare_type in welfare_types %}
+						<option value="{{welfare_type.idWelfare_Type}}" {{ welfare_type.selected }}>{{welfare_type.Name_TH}}</option>
+						{% endfor %}
+					</select>
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-12 col-xs-12">
+					<label class="control-label">สถานะการค้นหางาน</label><br/>
+					{% for job_seeker_status in job_seeker_statuses %}
+					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
+						{{ job_seeker_status.Name_TH}}
+					</a>
+					{% endfor %}
+					<input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/>
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-12 col-xs-12">
+					<label class="control-label">ความพร้อมในการเริ่มงาน</label><br/>
+					{% for availability_of_work in availability_of_works %}
+					<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
+					{% endfor %}
+					<input type="hidden" name="idAvailability_of_Work" value="{{ requirement_of_works.idAvailability_of_Work }}"/>
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-12 col-xs-12">
+					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร</label><br/>
+					{% for source_type in source_types %}
+				<a class="btn btn-info btn-rounded btn-sm {% if source_type.idSources_Type != candidates.idSources_Type %} btn-outline {%endif%} source_type" id="sourcetype_{{ source_type.idSources_Type}}" href="javascript:void(0)">
+					{{ source_type.Name_TH}}
+				</a>
+				{% endfor %}
+				<input type="hidden" name="idSources_Type" value="{{ candidates.idSources_Type }}"/>
+				<input type="text" class="form-control hidden" name="OtherType" id="OtherType" placeholder="ระบุ" value="" >
+					<span class="help-block"></span>
+				</div>
+			</fieldset>
+		</div>
+		<!-- <div class="col-md-6">
+			<fieldset>
+				<h4>ความคาดหวังในการทำงาน</h4>
+				<div class="form-group col-md-12 col-xs-12 no-padding">
+					<select class="select2_demo_2 form-control" name="Expected_Details[]" multiple="multiple">
+						{% for expected_detail in expected_details %}
+						<option value="{{expected_detail.idExpected_Detail}}" {{ expected_detail.selected }}>
+						{{expected_detail.Name_TH}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</fieldset>
+		</div> -->
 		<div class="col-md-12  col-xs-12 transportation">
 			<fieldset>
 				<h4>ความคาดหวังในการเดินทาง</h4>

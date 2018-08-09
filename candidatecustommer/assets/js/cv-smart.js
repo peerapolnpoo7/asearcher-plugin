@@ -444,6 +444,11 @@ $(document).ready(function(){
         }
         var spl=this.id.split("_");
         $('input[name="idSources_Type"]').val(spl[1]);
+        if(spl[1]=="99"){
+            $("#OtherType").removeClass("hidden");
+        }else{
+            $("#OtherType").addClass("hidden");
+        }
     }).on('click','.JobSeeking',function(){
         $(".JobSeeking").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
