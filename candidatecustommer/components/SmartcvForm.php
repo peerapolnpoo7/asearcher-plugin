@@ -323,7 +323,7 @@ class SmartcvForm extends ComponentBase
             $experience->Job_Title = Input::get('LastJob_Title');
             $experience->idType_of_Employment = 0;
             $experience->idExperience_Work_Status = Input::get('idExperience_Work_Status');
-            $experience->Company_Name = Input::get('Company_Name');
+            $experience->Company_Name_TH = Input::get('Company_Name_TH');
             $experience->Date_Start = $this->convertDateToDB(Input::get('Date_Start'));
             if(Input::get('idExperience_Work_Status')=='2'){
                 $experience->Date_End = $this->convertDateToDB(Input::get('Date_End'));
