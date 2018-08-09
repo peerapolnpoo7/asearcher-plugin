@@ -9,7 +9,6 @@ use Session;
 use Auth;
 use ValidationException;
 use Flash;
-
 use Asearcher\CandidateCustommer\Models\Province;
 use Asearcher\CandidateCustommer\Models\District;
 use Asearcher\CandidateCustommer\Models\Subdistrict;
