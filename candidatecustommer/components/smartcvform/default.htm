@@ -543,18 +543,19 @@
 					<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
-					<label class="control-label">ทักษะที่ถนัดที่สุด</label>
+				<div class="form-group col-md-12 col-xs-12  boxSkillList">
+					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
 						<option value="0">ไม่ระบุ</option>
 						{% for skilllist in skilllists %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if skilllist.idSkill_List == skillspecifics.idSkill_List %}
 						{% set selected = 'selected' %}
 						{% endif %}
 						<option value="{{skilllist.idSkill_List}}" {{ selected }}>{{skilllist.Name_TH}}</option>
 						{% endfor %}
 					</select>
+					<input type="hidden" name="tempidSkill_List" value="{{ skillspecifics.idSkill_List }}"/>
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
@@ -652,7 +653,8 @@
 					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
 						<option value="0">ทุกจังหวัด</option>
 						{% for province in provinces %}
-						{% if province.idProvinces == address.idProvinces %}
+						{% set selected = '' %}
+						{% if province.idProvinces == requirement_of_works.Location_of_Work_Provinces %}
 						{% set selected = 'selected' %}
 						{% endif %}
 						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
@@ -665,6 +667,7 @@
 					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
 						<option value="0">ทุกอำเภอ/เขต</option>
 					</select>
+					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-4 col-sm-4 col-xs-12">
@@ -672,6 +675,7 @@
 					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
 						<option value="0">ทุกตำบล/แขวง</option>
 					</select>
+					<input type="hidden" id="temSubdistricts" value="{{ requirement_of_works.Location_of_Work_Subdistricts }}">
 					<span class="help-block"></span>
 				</div>
 			</fieldset>

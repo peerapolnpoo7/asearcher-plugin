@@ -546,7 +546,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadSeniority()
     {
-        $get=Seniority::whereIn('idSeniority',[1,9]);
+        $get=Seniority::whereNotIn('idSeniority',[1,9]);
         return $get->get();
     }
 
@@ -793,6 +793,11 @@ class SmartcvForm extends ComponentBase
         return $get->get();
     }
 
+    public function onGetSkillList()
+    {
+        return SkillList::select('idSkill_List AS id','Name_TH')->where('idJob_Title',post('value'))->get();
+    }
+
     public function loadCandidate()
     {
         $get=Candidate::where('idUser',Auth::getUser()->id)->first();
@@ -840,8 +845,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadRequirementOfWork()
     {
-        $get=Db::table('requirement_of_work')
-        ->join('job_title','requirement_of_work.idJob_Title','=','job_title.idJob_Title')
+        $get=RequirementOfWork::join('job_title','requirement_of_work.idJob_Title','=','job_title.idJob_Title')
         ->where('idUser',Auth::getUser()->id)->first();
         return $get;
     }
