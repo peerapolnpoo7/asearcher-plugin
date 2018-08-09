@@ -41,7 +41,7 @@ class AddressForm extends ComponentBase
     public function onSave()
     {
         $rules = [
-            'Address_No_TH'    => 'required',
+            'Address_No_TH'    => 'required', 
             'idProvinces'    => 'required',
             'idDistricts'    => 'required',
             'idSubdistricts'    => 'required',
