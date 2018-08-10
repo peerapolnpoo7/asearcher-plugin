@@ -310,15 +310,15 @@
   <div class="row">
     <div class="col-sm-2">
       <label class="control-label">จำนวนพี่น้อง</label>
-      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" mix="10"> <span class="input-group-addon">คน</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" data-mask="9"> <span class="input-group-addon">คน</span></div>
     </div>
   </div>
   <span id="boxBrethren">
     <div class="row hidden">
       <div class="col-sm-2">
         <div class="form-group">
-          <label class="control-label">{=id=} คำนำหน้าชื่อ</label>
-          <select id="TitleNameBrethren_{=id=}" class="form-control Brethren" name="">
+          <label class="control-label"><span class="No">1</span>. คำนำหน้าชื่อ</label>
+          <select id="TitleNameBrethren_1" class="form-control Brethren" name="">
             <option value="1">นาย</option>
             <option value="2">นางสาว</option>
             <option value="3">นาง</option>
@@ -327,22 +327,22 @@
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" id="NameBrethren_{=id=}" name="" class="form-control Brethren" placeholder="">
+        <input type="text" id="NameBrethren_1" name="NameBrethren[]" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" id="SurNameBrethren_{=id=}" name="" class="form-control Brethren" placeholder="">
+        <input type="text" id="SurNameBrethren_1" name="" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-2">
         <label class="control-label">เพศ</label>
-        <select id="GenderBrethren_{=id=}" class="form-control Brethren" name="">
+        <select id="GenderBrethren_1" class="form-control Brethren" name="">
             <option value="1">ชาย</option>
             <option value="2">หญิง</option>
         </select>
       </div>
       <div class="col-sm-2">
         <label class="control-label">สถานะ</label>
-        <select name="" id="BrethrenStatus_{=id=}" class="form-control Brethren BrethrenStatus">
+        <select name="" id="BrethrenStatus_1" class="form-control Brethren BrethrenStatus">
           <option value="0">มีชีวิต</option>
           <option value="1">ถึงแก่กรรม</option>
         </select>
@@ -350,12 +350,12 @@
       <div style="clear:both;"></div>
       <div class="col-sm-2">
         <label class="control-label">อายุ</label>
-        <div class="input-group m-b"><input type="text" name="" id="AgeBrethren_{=id=}" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+        <div class="input-group m-b"><input type="text" name="" id="AgeBrethren_1" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
       </div>
       <div class="col-sm-5">
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
-          <select id="OccupationBrethren_{=id=}" class="form-control Brethren" name="">
+          <select id="OccupationBrethren_1" class="form-control Brethren" name="">
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
