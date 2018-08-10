@@ -132,7 +132,7 @@
 					<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile BirthDate" value="{{ candidates.Date_of_Birth }}">
+						<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile BirthDate" value="{{ candidates.Date_of_Birth!='00/00/0000' ? candidates.Date_of_Birth : '' }}">
 						<span class="help-block"></span>
 					</div>
 					<span class="help-block"></span>
@@ -170,7 +170,7 @@
 				</div>
 				<div class="form-group col-md-6 col-sm-6">
 					<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
-					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
+					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}" {% if candidates.Email !='' %} readonly="readonly"{% endif %}>
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-6 col-sm-6">
@@ -185,7 +185,9 @@
 							<option value="0">เลือก</option>
 							{% for countrycallingcode in countrycallingcodes %}
 							{% set selected = '0' %}
-
+							{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
+							{% set selected = 'selected' %}
+							{% endif %}
 							{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
 							{% set selected = 'selected' %}
 							{% endif %}
@@ -202,16 +204,13 @@
 				<div class="form-group col-md-4 col-sm-6">
 					<label class="control-label">เครือข่าย <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
-						<option value="0">เลือก</option>
+						<option value="">เลือก</option>
 						{% for communication_provider in communication_providers %}
-						{% set selected = '0' %}
-						{% if communication_provider.idCommunication_Provider == '0' and candidates.idCommunication_Provider == "" %}
-						{% set selected = 'selected' %}
+						{% set selected = '' %}
+						{% if candidates.idCommunication_Provider != "5" and candidates.idCommunication_Provider == communication_provider.idCommunication_Provider %}
+							{% set selected = 'selected' %}
 						{% endif %}
-						{% if communication_provider.idCommunication_Provider == candidates.idCommunication_Provider %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{communication_provider.idCommunication_Provider}}" {{ selected }}>{{communication_provider.Name}}</option>
+						<option value="{{ communication_provider.idCommunication_Provider }}" {{ selected }}>{{communication_provider.Name}}</option>
 						{% endfor %}
 					</select>
 					<span class="help-block"></span>
@@ -228,7 +227,7 @@
 				<h3>การศึกษา / ประสบการณ์ทำงาน</h3>
 				<div class="col-md-6 col-sm-6 col-xs-6 text-right">
 					<a href="javascript:void(0);" id="newGraduate" class="Type_Candidate">
-						{% if candidates.Type_Candidate == '1' %}
+						{% if candidates.Type_Candidate == '' or candidates.Type_Candidate == '1' %}
 						<img src="{{ 'assets/img/CV/NewGrad_hover.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
 						{% else %}
 						<img src="{{ 'assets/img/CV/NewGrad.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
@@ -509,9 +508,9 @@
 				<div class="form-group col-md-6 col-xs-12">
 					<label class="control-label">หมวดหมู่งาน  <span class="text-danger">*</span></label>
 					<select name="job_CategoryNew" id="job_CategoryNew" class="form-control chosen">
-						<option value="0">เลือก</option>
+						<option value="">เลือก</option>
 						{% for job_category in job_categorys %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if job_category.idJob_Category == requirement_of_works.idJob_Category %}
 						{% set selected = 'selected' %}
 						{% endif %}
@@ -543,6 +542,7 @@
 					<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
 					<span class="help-block"></span>
 				</div>
+				<input type="hidden" name="chkValidateSkill" value="no"/>
 				<div class="form-group col-md-12 col-xs-12  boxSkillList">
 					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
@@ -565,7 +565,7 @@
 				<div class="form-group col-md-5 col-xs-12">
 					<label class="control-label">เงินเดือนที่ต้องการ</label>
 					<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
-						<option value="0">เลือก</option>
+						<option value="">เลือก</option>
 						{% for salary_range in salary_ranges %}
 						{% set selected = '0' %}
 						{% if salary_range.idSalary_Range == requirement_of_works.Expected_Salary %}

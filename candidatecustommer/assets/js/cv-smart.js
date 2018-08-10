@@ -320,9 +320,11 @@ $(document).ready(function(){
                         from: 0 ,
                     });
                     $("input[name='ionrangeSkillListLevel']").val('0');
+                    $("input[name='chkValidateSkill']").val('yes');
                     $(".boxSkillList").removeClass('hidden'); 
                 }else{
                     $(".boxSkillList").addClass('hidden'); 
+                    $("input[name='chkValidateSkill']").val('no');
                 }
                 $('select.chosen').trigger("chosen:updated");
             }
@@ -434,9 +436,13 @@ $(document).ready(function(){
             }
         });
     }).on('change','#Provinces',function(){
-        callComponent("onGetDistrict",this.value,"#District",'0');
+        if(this.value!=0){
+            callComponent("onGetDistrict",this.value,"#District",'0');
+        }
     }).on('change','#District',function(){
-        callComponent("onGetSubDistrict",this.value,"#SubDistrict",'0');
+        if(this.value!=0){
+            callComponent("onGetSubDistrict",this.value,"#SubDistrict",'0');
+        }
     }).on('click','.source_type',function(){
         $(".source_type").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
@@ -513,10 +519,14 @@ $(document).ready(function(){
          });
     });
     $("#Provinces").each(function(){
-        callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
+        if(this.value!=0){
+            callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
+        }
     });
     $("#District").each(function(){
-        callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
+        if(this.value!=0){
+            callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
+        }
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
@@ -618,7 +628,7 @@ $(document).ready(function(){
     });
 
     $("input[name='Type_Candidate']").each(function(){
-        if(this.value=="1"){
+        if(this.value=="" || this.value=="1"){
             $(".boxRefExperience").addClass('hidden');
              getSeniority(1,$('input[name="temSeniority"]').val());
         }else{
@@ -657,8 +667,10 @@ $(document).ready(function(){
                 });
                 if(data.length > 0){
                     $(".boxSkillList").removeClass('hidden'); 
+                    $("input[name='chkValidateSkill']").val('yes');
                 }else{
                     $(".boxSkillList").addClass('hidden'); 
+                    $("input[name='chkValidateSkill']").val('no');
                 }
                 $('#idSkill_List').val($('input[name="tempidSkill_List"]').val());
                 $('select.chosen').trigger("chosen:updated");
