@@ -98,7 +98,7 @@
 						{% endif %}
 					</a>
 				</div>
-				<input type="hidden" name="idGender" value="{{ candidates.idGender }}"/>
+				<input type="hidden" name="idGender" id="idGender" value="{{ candidates.idGender }}"/>
 			</fieldset>
 		</div>
 		<div class="col-md-6 m-t-40">
@@ -170,7 +170,7 @@
 				</div>
 				<div class="form-group col-md-6 col-sm-6">
 					<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
-					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}" {% if candidates.Email !='' %} readonly="readonly"{% endif %}>
+					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ user.email }}" {% if user.email !='' %} readonly="readonly"{% endif %}>
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-6 col-sm-6">
