@@ -37,7 +37,7 @@ $(document).ready(function(){
 				}
 			}
 		}
-	}).on("keyup","#NumBrethren",function(){
+	}).on("keyup","#NumBrethren",function(){ 
 		$("#boxBrethren").find('.row:not(:first-child)').remove();
 		if(this.value=="" || this.value=="0"){
 			$("#boxBrethren").find('.row:first-child').addClass('hidden');
