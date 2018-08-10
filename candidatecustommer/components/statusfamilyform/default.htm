@@ -1,5 +1,6 @@
 {% set militarys = __SELF__.militarys %}
 {% set maritalstatuss = __SELF__.maritalstatuss %}
+{% set occupations = __SELF__.occupations %}
 
 
 <style>
@@ -20,22 +21,13 @@
     </div>
     <div class="col-sm-8">
       <div class="form-group">
-
-
         <label>สถานะทางทหาร</label><br /><br />
         <div class="row">
         {% for military in militarys %}
-
-        <!-- <div class="col-sm-2 col-xs-6 col-md-3"> -->
-          <!-- <input type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}">
-          <label for="{{ military.Name_TH }}">
-            {{ military.Name_TH }}
-          </label> -->
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-3">
           <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}"/>
           <label class="below" for="{{ military.Name_TH }}">{{ military.Name_TH }}</label>
           </div>
-        <!-- </div> -->
         {% endfor %}
       </div>
       </div>
@@ -79,47 +71,15 @@
             <div class=" col-sm-1  col-md-1">
             </div>
             {% endfor %}
-
-            <!-- <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
-            <input id="sf2" type="radio" name="credit-card" value="mastercard" />
-            <label class="drinkcard-cc sf2 below2" for="sf2">สมรส</label>
-            </div>
-
-            <div class=" col-sm-1 col-xs-6 col-md-1">
-            </div>
-
-            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
-            <input id="sf3" type="radio" name="credit-card" value="mastercard" />
-            <label class="drinkcard-cc sf3 below2" for="sf3">sf3</label>
-            </div>
-
-            <div class=" col-sm-1 col-xs-6 col-md-1">
-            </div>
-
-            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
-            <input id="sf4" type="radio" name="credit-card" value="mastercard" />
-            <label class="drinkcard-cc sf4 below2" for="sf4">sf4</label>
-            </div>
-            <div class=" col-sm-1 col-xs-6 col-md-1">
-            </div>
-
-            <div class="checkboxgroup col-sm-1 col-xs-6 col-md-1">
-            <input id="sf5" type="radio" name="credit-card" value="mastercard" />
-            <label class="drinkcard-cc sf5 below2"  for="sf5">sf5</label>
-            </div> -->
             <div class=" col-sm-2">
             </div>
           </div>
         </div>
 
-
-
         <!-- </div> -->
         <!-- <div class="col-sm-2">
         </div>
       </div> -->
-
-
 
   <span class="hidden boxMarital">
     <div class="row">
@@ -128,15 +88,11 @@
           <label>สถานะการจดทะเบียน</label><br>
           <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPer" value="Per">
-            <label for="radioPer">
-              จดทะเบียน
-            </label>
+            <label for="radioPer">จดทะเบียน</label>
           </div>
           <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPre" value="Pre">
-            <label for="radioPre">
-              ไม่ได้จดทะเบียน
-            </label>
+            <label for="radioPre">ไม่ได้จดทะเบียน</label>
           </div>
         </div>
       </div>
@@ -170,9 +126,10 @@
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
           <select id="TitleName" class="form-control" name="TitleName">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
+            <option value="0"> เลือก </option>
+            {% for occupation in occupations %}
+            <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -353,14 +310,14 @@
   <div class="row">
     <div class="col-sm-2">
       <label class="control-label">จำนวนพี่น้อง</label>
-      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren"> <span class="input-group-addon">คน</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" mix="10"> <span class="input-group-addon">คน</span></div>
     </div>
   </div>
   <span id="boxBrethren">
     <div class="row hidden">
       <div class="col-sm-2">
         <div class="form-group">
-          <label class="control-label">{=id=}คำนำหน้าชื่อ</label>
+          <label class="control-label">{=id=} คำนำหน้าชื่อ</label>
           <select id="TitleNameBrethren_{=id=}" class="form-control Brethren" name="">
             <option value="1">นาย</option>
             <option value="2">นางสาว</option>
