@@ -4,6 +4,7 @@ use Cms\Classes\ComponentBase;
 
 use Asearcher\CandidateCustommer\Models\Military;
 use Asearcher\CandidateCustommer\Models\MaritalStatus;
+use Asearcher\CandidateCustommer\Models\Occupation;
 
 class Statusfamilyform extends ComponentBase
 {
@@ -25,6 +26,7 @@ class Statusfamilyform extends ComponentBase
       $this->addCss('assets/css/cv-family.css');
       $this->militarys=$this->loadmilitary();
       $this->maritalstatuss=$this->loadMarital_status();
+      $this->occupations=$this->loadOccupation();
     }
 
     public function loadmilitary()
@@ -40,6 +42,12 @@ class Statusfamilyform extends ComponentBase
        return MaritalStatus::all();
     }
 
+    public function loadOccupation()
+    {
+       return Occupation::all();
+    }
+
     public $militarys;
     public $maritalstatuss;
+    public $occupations;
 }

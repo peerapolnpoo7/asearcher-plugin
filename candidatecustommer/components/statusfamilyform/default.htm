@@ -1,60 +1,86 @@
 {% set militarys = __SELF__.militarys %}
 {% set maritalstatuss = __SELF__.maritalstatuss %}
+{% set occupations = __SELF__.occupations %}
 
+
+<style>
+
+.โสด{background-image:url({{ 'assets/img/statusfamily/sf1.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.สมรส{background-image:url({{ 'assets/img/statusfamily/sf2.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.หย่า{background-image:url({{ 'assets/img/statusfamily/sf3.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.หม้าย{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.แยกกันอยู่{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
+
+.mastercard{background-image:url(http://i.imgur.com/SJbRQF7.png);}
+
+</style>
 <h3>สถานะและครอบครัว</h3>
 <form class="m-t-md" action="#">
   <div class="row">
     <div class="col-sm-2">
-
     </div>
     <div class="col-sm-8">
       <div class="form-group">
-        <label>สถานะทางทหาร</label><br>
+        <label>สถานะทางทหาร</label><br /><br />
+        <div class="row">
         {% for military in militarys %}
-        <div class="radio radio-info col-sm-2 col-xs-6">
-          <input type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}">
-          <label for="{{ military.Name_TH }}">
-            {{ military.Name_TH }}
-          </label>
-        </div>
+          <div class="checkboxgroup col-sm-2 col-xs-6 col-md-3">
+          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}"/>
+          <label class="below" for="{{ military.Name_TH }}">{{ military.Name_TH }}</label>
+          </div>
         {% endfor %}
+      </div>
       </div>
     </div>
     <div class="col-sm-2">
     </div>
   </div>
-  <div class="row">
+
+  <!-- <div class="row">
     <div class="col-sm-2">
-    </div>
-    <div class="col-sm-8">
-      <div class="form-group">
-        <label>สถานภาพสมรส</label><br>
-        {% for maritalstatus in maritalstatuss %}
+    </div> -->
+
+    <!-- <div class="col-sm-8"> -->
+      <!-- <div class="form-group"> -->
+        <!-- {% for maritalstatus in maritalstatuss %}
         <div class="radio radio-info col-sm-2 col-xs-6">
           <input type="radio" name="typeMarital" id="{{ maritalstatus.Name_TH }}" value="{{ maritalstatus.idMarital_Status }}">
-          <label for="{{ maritalstatus.Name_TH }}">
-            {{ maritalstatus.Name_TH }}
-          </label>
+          <label for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
         </div>
-        {% endfor %}
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-1"/>
-        <br />
-        <label class="below" for="radio-1">11111</label>
+        {% endfor %} -->
+        <div class="cc-selector">
+          <div class="row">
+            <div class=" col-sm-2">
+            </div>
+            <div class=" col-sm-8">
+          <label>สถานภาพสมรส</label><br>
+            </div>
+            <div class=" col-sm-2">
+          </div>
+          </div>
+
+
+          <div class="row">
+            <div class=" col-sm-2 col-md-2">
+            </div>
+            {% for maritalstatus in maritalstatuss %}
+            <div class="checkboxgroup col-sm-1 col-xs-4 col-md-1">
+            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" />
+            <label class="drinkcard-cc below2 {{ maritalstatus.Name_TH }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
+            </div>
+            <div class=" col-sm-1  col-md-1">
+            </div>
+            {% endfor %}
+            <div class=" col-sm-2">
+            </div>
+          </div>
         </div>
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-2"/>
-        <label class="below" for="radio-2">22222</label>
+
+        <!-- </div> -->
+        <!-- <div class="col-sm-2">
         </div>
-        <div class="checkboxgroup">
-        <input class="up" type="radio" name="a" id="radio-3"/>
-        <label class="below" for="radio-3">33333</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-    </div>
-  </div>
+      </div> -->
+
   <span class="hidden boxMarital">
     <div class="row">
       <div class="col-sm-12">
@@ -62,15 +88,11 @@
           <label>สถานะการจดทะเบียน</label><br>
           <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPer" value="Per">
-            <label for="radioPer">
-              จดทะเบียน
-            </label>
+            <label for="radioPer">จดทะเบียน</label>
           </div>
           <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPre" value="Pre">
-            <label for="radioPre">
-              ไม่ได้จดทะเบียน
-            </label>
+            <label for="radioPre">ไม่ได้จดทะเบียน</label>
           </div>
         </div>
       </div>
@@ -104,9 +126,10 @@
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
           <select id="TitleName" class="form-control" name="TitleName">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
+            <option value="0"> เลือก </option>
+            {% for occupation in occupations %}
+            <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -287,15 +310,15 @@
   <div class="row">
     <div class="col-sm-2">
       <label class="control-label">จำนวนพี่น้อง</label>
-      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren"> <span class="input-group-addon">คน</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" data-mask="9"> <span class="input-group-addon">คน</span></div>
     </div>
   </div>
   <span id="boxBrethren">
     <div class="row hidden">
       <div class="col-sm-2">
         <div class="form-group">
-          <label class="control-label">{=id=}คำนำหน้าชื่อ</label>
-          <select id="TitleNameBrethren_{=id=}" class="form-control Brethren" name="">
+          <label class="control-label"><span class="No">1</span>. คำนำหน้าชื่อ</label>
+          <select id="TitleNameBrethren_1" class="form-control Brethren" name="">
             <option value="1">นาย</option>
             <option value="2">นางสาว</option>
             <option value="3">นาง</option>
@@ -304,22 +327,22 @@
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" id="NameBrethren_{=id=}" name="" class="form-control Brethren" placeholder="">
+        <input type="text" id="NameBrethren_1" name="NameBrethren[]" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" id="SurNameBrethren_{=id=}" name="" class="form-control Brethren" placeholder="">
+        <input type="text" id="SurNameBrethren_1" name="" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-2">
         <label class="control-label">เพศ</label>
-        <select id="GenderBrethren_{=id=}" class="form-control Brethren" name="">
+        <select id="GenderBrethren_1" class="form-control Brethren" name="">
             <option value="1">ชาย</option>
             <option value="2">หญิง</option>
         </select>
       </div>
       <div class="col-sm-2">
         <label class="control-label">สถานะ</label>
-        <select name="" id="BrethrenStatus_{=id=}" class="form-control Brethren BrethrenStatus">
+        <select name="" id="BrethrenStatus_1" class="form-control Brethren BrethrenStatus">
           <option value="0">มีชีวิต</option>
           <option value="1">ถึงแก่กรรม</option> 
         </select>
@@ -327,12 +350,12 @@
       <div style="clear:both;"></div>
       <div class="col-sm-2">
         <label class="control-label">อายุ</label>
-        <div class="input-group m-b"><input type="text" name="" id="AgeBrethren_{=id=}" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+        <div class="input-group m-b"><input type="text" name="" id="AgeBrethren_1" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
       </div>
       <div class="col-sm-5">
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
-          <select id="OccupationBrethren_{=id=}" class="form-control Brethren" name="">
+          <select id="OccupationBrethren_1" class="form-control Brethren" name="">
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
