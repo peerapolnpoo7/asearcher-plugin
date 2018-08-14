@@ -520,7 +520,7 @@ class SmartcvForm extends ComponentBase
         }else{
             return Prefix::whereIN('idGender',[$chkGender->first()->idGender,99])->get();
         }*/
-        return Prefix::all();
+        return Prefix::whereNotIn('idPrefix',['7','8'])->get();
     }
 
     public function loadGender()
