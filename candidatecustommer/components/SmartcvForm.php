@@ -151,6 +151,7 @@ class SmartcvForm extends ComponentBase
             'LastName_TH' => array('required','min:2','regex:/^[\ก-์\s]+$/u'),
             'Date_of_Birth' => array('required'),
             'Email' => array('required','email'),
+            'idCountry_Calling_Code' => array('required'),
             'TelephoneNumber' => array('required','min:9','max:10'),
             'idCommunication_Provider' => array('required'),
             'Nationality' => array('required'),
@@ -183,6 +184,7 @@ class SmartcvForm extends ComponentBase
             'Date_of_Birth.required' => 'กรุณาเลือก "วันเกิด"',
             'Email.required' => 'กรุณากรอก "อีเมล์"',
             'Email.email' => 'รูปแบบ "อีเมล์" ไม่ถูกต้อง',
+            'idCountry_Calling_Code.required' => 'กรุณาเลือก "รหัสประเทศ"',
             'TelephoneNumber.required' => 'กรุณากรอก "เบอร์โทรศัพท์"',
             'TelephoneNumber.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
             'TelephoneNumber.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
@@ -191,7 +193,7 @@ class SmartcvForm extends ComponentBase
             'Type_Candidate.required' => 'กรุณาเลือก "จบใหม่/ฝึกงาน หรือ มีประสบการณ์"',
             'idGeography.required' => 'กรุณาเลือก "ที่ตั้งสถาบัน"',
             'type_of_institue.required' => 'กรุณาเลือก "ประเภทสถาบัน"',
-            'idInstitute_Detail.required' => 'กรุณากรอก "ชื่อสถาบัน"',
+            'idInstitute_Detail.required' => 'กรุณาเลือก "ชื่อสถาบัน"',
             'idEducation_Level.required' => 'กรุณาเลือก "ระดับการศึกษา"',
             'idDegree_and_Certificate.required' => 'กรุณาเลือก "วุฒิการศึกษา"',
             'idFaculty_Detail.required' => 'กรุณาเลือก "คณะ"',
@@ -441,6 +443,7 @@ class SmartcvForm extends ComponentBase
 
         if(post('idTransportation_Detail')){
             TransportationOfWork::where('idCandidate',Session::get('idCandidate'))->delete();
+            
             foreach (post('idTransportation_Detail') as $idTransportation_Detail) {
                 if($idTransportation_Detail!=""){
                     $transportation_of_work = new TransportationOfWork();
