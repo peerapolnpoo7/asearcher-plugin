@@ -14,30 +14,47 @@ $(document).ready(function(){
 	}).on("change","#StatusFather",function(){
 		if(this.value=="1"){
 			$('.FatherRelateStatus').prop('disabled',true);
+			$('#idCountry_Calling_Code_Father').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.FatherRelateStatus').prop('disabled',false);
+			$('#idCountry_Calling_Code_Father').prop('disabled', false).trigger("chosen:updated");
 		}
 	}).on("change","#StatusMother",function(){
 		if(this.value=="1"){
 			$('.MotherRelateStatus').prop('disabled',true);
+			$('#idCountry_Calling_Code_Mother').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.MotherRelateStatus').prop('disabled',false);
+			$('#idCountry_Calling_Code_Mother').prop('disabled', false).trigger("chosen:updated");
 		}
 	}).on("keyup","#NumChildren",function(){
+
+
+
 		$("#boxChildren").find('.row:not(:first-child)').remove();
 		if(this.value=="" || this.value=="0"){
 			$("#boxChildren").find('.row:first-child').addClass('hidden');
 		}else{
 			$("#boxChildren").find('.row:first-child').removeClass('hidden');
 			if(this.value > 1){
-				$("#boxChildren").find('.row:first-child label:contains("{=id=}")').text(1+".คำนำหน้าชื่อ");
+				// $("#boxChildren").find('.row:first-child label:contains("{=id=}")').text(1+".คำนำหน้าชื่อ");
+				// for(var i=2;i<=this.value;i++){
+				// 	$("#boxChildren").find('.row:last-child').clone().appendTo("#boxChildren");
+				// 	$("#boxChildren").find('.row:last-child label:contains("{=id=}")').text(i+".คำนำหน้าชื่อ");
+				// }
 				for(var i=2;i<=this.value;i++){
-					$("#boxChildren").find('.row:last-child').clone().appendTo("#boxChildren");
-					$("#boxChildren").find('.row:last-child label:contains("{=id=}")').text(i+".คำนำหน้าชื่อ");
+					$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
+					$("#boxChildren .row:last-child").find(".No").text(i);
+					$("#boxChildren .row:last-child").find(".Children").each(function(){
+						var idExp=this.id.split("_");
+						$(this).attr('id',idExp[0]+'_'+i);
+						// $(".chosen").chosen({width: "100%"});
+						// $(".chosen").trigger("chosen:updated");
+					});
 				}
 			}
 		}
-	}).on("keyup","#NumBrethren",function(){ 
+	}).on("keyup","#NumBrethren",function(){
 		$("#boxBrethren").find('.row:not(:first-child)').remove();
 		if(this.value=="" || this.value=="0"){
 			$("#boxBrethren").find('.row:first-child').addClass('hidden');
@@ -64,4 +81,27 @@ $(document).ready(function(){
 			$('#OccupationBrethren_'+idBox[1]).prop('disabled',false);
 		}
 	});
+
+	var now = new Date();
+	$('.BirthDate').scroller({
+			theme: 'android-ics light',
+			startYear: now.getFullYear()-100,
+			endYear: now.getFullYear()-18,
+	});
+	$('.dateMobileStart').scroller({
+			theme: 'android-ics light',
+			startYear: now.getFullYear()-100,
+			endYear: now.getFullYear(),
+	});
+	$('.dateMobileEnd').scroller({
+			theme: 'android-ics light',
+			startYear: now.getFullYear()-100,
+			endYear: now.getFullYear(),
+	});
+	$('select.chosen').chosen({
+				width: "100%",
+				search_contains: true
+		});
+		$('.chosen-select').chosen({width: "100%",height:"100%"});
+
 });
