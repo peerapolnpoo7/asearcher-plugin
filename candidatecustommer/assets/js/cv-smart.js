@@ -271,6 +271,20 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                if(data.length > 0){
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                }else{
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('#idFaculty_Detail').val('');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                }
                 $('select.chosen').trigger("chosen:updated");
             }
          });
