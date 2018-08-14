@@ -137,7 +137,7 @@
 					</div>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 hidden">
+				<div class="form-group col-md-4 hidden" id="boxidReligion">
 					<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
 					<select class="form-control chosen " name="idReligion" id="idReligion">
 						<option value="">เลือก</option>
@@ -182,9 +182,9 @@
 					<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
 					<div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
 						<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
-							<option value="">เลือก</option>
+							<option value="0">เลือก</option>
 							{% for countrycallingcode in countrycallingcodes %}
-							{% set selected = '' %}
+							{% set selected = '0' %}
 							{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
 							{% set selected = 'selected' %}
 							{% endif %}
@@ -201,7 +201,7 @@
 						<span class="help-block"></span>
 					</div>
 				</div>
-				<div class="form-group col-md-4 col-sm-6" id="boxidCommunication_Provider">
+				<div class="form-group col-md-4 col-sm-6" id="idCommunication_Provider">
 					<label class="control-label">เครือข่าย <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
 						<option value="">เลือก</option>
@@ -247,9 +247,9 @@
 				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20" id="boxidGeography">
 					<label class="control-label">ที่ตั้งสถาบัน <span class="text-danger">*</span></label>
 					<select name="idGeography" id="idGeography" class="form-control chosen">
-						<option value="0">เลือก</option>
+						<option value="">เลือก</option>
 						{% for geography in geographys %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if geography.idGeography == educations.idGeography %}
 						{% set selected = 'selected' %}
 						{% endif %}
@@ -261,9 +261,9 @@
 				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20" id="boxtype_of_institue">
 					<label class="control-label">ประเภทสถาบัน <span class="text-danger">*</span></label>
 					<select name="type_of_institue" id="type_of_institue" class="form-control chosen">
-						<option value="0">เลือก</option>
+						<option value="">เลือก</option>
 						{% for type_of_institue in type_of_institues %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if type_of_institue.idType_of_Institute == educations.idType_of_Institute %}
 						{% set selected = 'selected' %}
 						{% endif %}
@@ -296,7 +296,7 @@
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-6 col-sm-6 col-xs-12 Department hidden" id="boxidDepartment">
-					<label class="control-label">ภาควิชา</label>
+					<label class="control-label">ภาควิชา / สาขาวิชา</label>
 					<select name="idDepartment" id="idDepartment" class="form-control chosen">
 						<option value="0">เลือก</option>
 					</select>
@@ -304,7 +304,7 @@
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-6 col-sm-6 col-xs-12 Major_Subject hidden" id="boxidMajor_Subject">
-					<label class="control-label">สาขา/เอกวิชา</label>
+					<label class="control-label">วิชาเอก</label>
 					<select name="idMajor_Subject" id="idMajor_Subject" class="form-control chosen">
 						<option value="0">เลือก</option>
 					</select>
@@ -327,7 +327,7 @@
 					<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 col-sm-4 col-xs-12">
+				<div class="form-group col-md-4 col-sm-4 col-xs-12" id="boxidDegree_and_Certificate">
 					<label class="control-label">วุฒิการศึกษา <span class="text-danger">*</span></label>
 					<select name="idDegree_and_Certificate" id="idDegree_and_Certificate" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -349,7 +349,7 @@
 				</div>
 				<span class="hidden boxRefExperience">
 					<h4>ประสบการณ์ทำงานล่าสุด</h4>
-					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group col-md-6 col-sm-6 col-xs-12" id="boxLastSeniority">
 						<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
 						<select name="LastSeniority" id="LastSeniority" class="form-control chosen">
 							<option value="">เลือก</option>
@@ -417,7 +417,7 @@
 		<div class="col-md-6 col-sm-6">
 			<fieldset>
 				<h3>ความสามารถ</h3>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 m-t-20">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 m-t-20" id="boxLangidCountry_Calling_Code">
 					<label class="control-label">ภาษาที่ถนัดที่สุด</label>
 					<select class="form-control chosen" name="LangidCountry_Calling_Code" id="LangidCountry_Calling_Code">
 						<option value="">เลือก</option>
@@ -505,7 +505,7 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<fieldset>
 				<h4>ตำแหน่งงานที่คาดหวัง</h4>
-				<div class="form-group col-md-6 col-xs-12">
+				<div class="form-group col-md-6 col-xs-12" id="boxjob_CategoryNew">
 					<label class="control-label">หมวดหมู่งาน  <span class="text-danger">*</span></label>
 					<select name="job_CategoryNew" id="job_CategoryNew" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -519,7 +519,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-6 col-xs-12 boxSeniority">
+				<div class="form-group col-md-6 col-xs-12 boxSeniority" id="boxSeniority">
 					<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
 					<select name="Seniority" id="Seniority" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -534,7 +534,7 @@
 					<input type="hidden" name="temSeniority" value="{{ requirement_of_works.idSeniority }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
+				<div class="form-group col-md-12 col-xs-12" id="boxJob_TitleRequire">
 					<label class="control-label">ชื่อตำแหน่ง <span class="text-danger">*</span></label>
 					<select name="Job_TitleRequire" id="Job_TitleRequire" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -543,7 +543,7 @@
 					<span class="help-block"></span>
 				</div>
 				<input type="hidden" name="chkValidateSkill" value="no"/>
-				<div class="form-group col-md-12 col-xs-12  boxSkillList">
+				<div class="form-group col-md-12 col-xs-12  boxSkillList" id="boxidSkill_List">
 					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
 						<option value="0">ไม่ระบุ</option>
@@ -562,7 +562,7 @@
 					<div id="ionrangeSkillListLevel"></div>
 					<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
 				</div>
-				<div class="form-group col-md-5 col-xs-12">
+				<div class="form-group col-md-5 col-xs-12" id="boxExpected_Salary">
 					<label class="control-label">เงินเดือนที่ต้องการ</label>
 					<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -587,7 +587,7 @@
 					<span class="help-block"></span>
 				</div>
 				<h4>สถานที่ต้องการทำงาน</h4>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="boxLocation_of_Work_Provinces">
 					<label class="control-label">จังหวัด</label>
 					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
 						<option value="0">ทุกจังหวัด</option>
@@ -601,7 +601,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_Districts">
 					<label class="control-label">อำเภอ/เขต</label>
 					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
 						<option value="0">ทุกอำเภอ/เขต</option>
@@ -609,7 +609,7 @@
 					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12">
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_SubDistricts">
 					<label class="control-label">ตำบล/แขวง</label>
 					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
 						<option value="0">ทุกตำบล/แขวง</option>
@@ -686,7 +686,7 @@
 						</label><br/>
 						MRT
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxMRT_Station">
 						<select name="MRT_Station" id="MRT_Station" class="form-control chosen chooseTran">
 							<option value="">สถานี</option>
 							{% for transportation_mrt in transportation_mrts %}
@@ -711,7 +711,7 @@
 						</label><br/>
 						BTS
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxBTS_Station">
 						<select name="BTS_Station" id="BTS_Station" class="form-control chosen chooseTran">
 							<option value="">สถานี</option>
 							{% for transportation_bts in transportation_btss %}
@@ -736,7 +736,7 @@
 						</label><br/>
 						BRT
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxBRT_Station">
 						<select name="BRT_Station" id="BRT_Station" class="form-control chosen chooseTran">
 							<option value="">สถานี</option>
 							{% for transportation_brt in transportation_brts %}
@@ -761,7 +761,7 @@
 						</label><br/>
 						รถโดยสารสาธารณะ
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxBUS_Station">
 						<select name="BUS_Station" id="BUS_Station" class="form-control chosen chooseTran">
 							<option value="">ป้าย</option>
 							{% for transportation_bus in transportation_buss %}
@@ -788,7 +788,7 @@
 						</label><br/>
 						เรือ
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxFerry_Station">
 						<select name="Ferry_Station" id="Ferry_Station" class="form-control chosen chooseTran">
 							<option value="">ท่าเรือ</option>
 							{% for transportation_ferry in transportation_ferrys %}
@@ -813,7 +813,7 @@
 						</label><br/>
 						รถไฟฟ้าเชื่อมท่าอากาศยาน
 					</div>
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-12 col-xs-12" id="boxAirportRailLink_Station">
 						<select name="AirportRailLink_Station" id="AirportRailLink_Station" class="form-control chosen chooseTran">
 							<option value="">สถานี</option>
 							{% for transportation_airlink in transportation_airlinks %}
