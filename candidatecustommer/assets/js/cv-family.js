@@ -6,12 +6,24 @@ $(document).ready(function(){
 			$('#detailMilitary').prop('disabled',true);
 		}
 	}).on('click','input[name="typeMarital"]',function(){
-		if ($('#สมรส').is(':checked')) {
+		if ($('#สมรส').is(':checked') || $('#หย่า').is(':checked') || $('#หม้าย').is(':checked') || $('#แยกกันอยู่').is(':checked') ){
 			$('.boxMarital').removeClass('hidden');
+			$("#boxChildren").removeClass('hidden');
 		}else{
 			$('.boxMarital').addClass('hidden');
+			$("#boxChildren").addClass('hidden');
 		}
-	}).on("change","#StatusFather",function(){
+
+		if ($('#หม้าย').is(':checked')){
+			$('.widow').prop('disabled',true);
+			$('#idCountry_Calling_Code_Spouse').prop('disabled', true).trigger("chosen:updated");
+		}else{
+			$('.widow').prop('disabled',false);
+			$('#idCountry_Calling_Code_Spouse').prop('disabled', false).trigger("chosen:updated");
+		}
+
+
+	}).on("change","#Status_Father",function(){
 		if(this.value=="1"){
 			$('.FatherRelateStatus').prop('disabled',true);
 			$('#idCountry_Calling_Code_Father').prop('disabled', true).trigger("chosen:updated");
@@ -19,7 +31,7 @@ $(document).ready(function(){
 			$('.FatherRelateStatus').prop('disabled',false);
 			$('#idCountry_Calling_Code_Father').prop('disabled', false).trigger("chosen:updated");
 		}
-	}).on("change","#StatusMother",function(){
+	}).on("change","#Status_Mother",function(){
 		if(this.value=="1"){
 			$('.MotherRelateStatus').prop('disabled',true);
 			$('#idCountry_Calling_Code_Mother').prop('disabled', true).trigger("chosen:updated");

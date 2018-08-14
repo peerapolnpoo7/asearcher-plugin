@@ -70,11 +70,9 @@ class Statusfamilyform extends ComponentBase
       $families->Amount_of_Children = Input::get('Amount_of_Children');
 
      //บุตร
-       // print_r(post('idPrefix_Children'));
+       print_r(post());
 
-     // for ($i=0; $i < $families->Amount_of_Children ; $i++) {
        if($families->Amount_of_Children !="" || $families->Amount_of_Children !="0"){
-
          // $idPrefix_Children = Input::get('idPrefix_Children');
          // $FirstName_TH_Children = Input::get('FirstName_TH_Children');
          // $LastName_TH_Children = Input::get('LastName_TH_Children');
@@ -88,8 +86,6 @@ class Statusfamilyform extends ComponentBase
          // $Children = array_merge($array1,$array2,$array3,$array4);
 
          for ($i=0; $i < $families->Amount_of_Children ; $i++) {
-
-
            $families_children = new Families();
            $families_children->idCandidate = Session::get('idCandidate');
            $families_children->idUser = Auth::getUser()->id;
@@ -98,35 +94,87 @@ class Statusfamilyform extends ComponentBase
            $families_children->LastName_TH_Children = post('LastName_TH_Children')[$i];
            $families_children->AgeChildren = post('AgeChildren')[$i];
            $families_children->idRelationship_type = '5';
-           echo $families_children->idCandidate;
-           echo $families_children->idUser;
-           echo $families_children->idPrefix_Children;
-           echo $families_children->FirstName_TH_Children;
-           echo $families_children->LastName_TH_Children;
-           echo $families_children->AgeChildren;
-           echo $families_children->idRelationship_type;
+           // echo $families_children->idCandidate;
+           // echo $families_children->idUser;
+           // echo $families_children->idPrefix_Children;
+           // echo $families_children->FirstName_TH_Children;
+           // echo $families_children->LastName_TH_Children;
+           // echo $families_children->AgeChildren;
+           // echo $families_children->idRelationship_type;
            // echo "-----";
          }
         }
 
-
-
-      // }
-     // if(post('idTransportation_Detail')){
-     //     TransportationOfWork::where('idCandidate',Session::get('idCandidate'))->delete();
-     //     foreach (post('idTransportation_Detail') as $idTransportation_Detail) {
-     //         if($idTransportation_Detail!=""){
-     //             $transportation_of_work = new TransportationOfWork();
-     //             $transportation_of_work->idCandidate = Session::get('idCandidate');
-     //             $transportation_of_work->idUser = Auth::getUser()->id;
-     //             $transportation_of_work->idTransportation_Detail = $idTransportation_Detail;
-     //             $transportation_of_work->save();
-     //         }
-     //     }
-
      //บิดา
 
-     //มารดา
+     $families_father = new Families();
+     $families_father->idCandidate = Session::get('idCandidate');
+     $families_father->idUser = Auth::getUser()->id;
+     $families_father->idPrefix = post('TitleNameFather');
+     $families_father->FirstName_TH = post('FirstName_TH_Father');
+     $families_father->LastName_TH = post('LastName_TH_Father');
+     //ชื่อเล่น
+     $families_father->idLife_Status = post('Status_Father');
+     //วันเกิด
+     // $families_father->idRelationship_type = post('Age_Father');
+     $families_father->idOccupation = post('idOccupation_Father');
+     $families_father->idCountry_Calling_Codes = post('idCountry_Calling_Code_Father');
+     $families_father->TelephoneNumber = post('TelephoneNumber_Father');
+     // TitleNameFather
+     // FirstName_TH_Father
+     // LastName_TH_Father
+     // Status_Father
+     // Age_Father
+     // idOccupation_Father
+     // idCountry_Calling_Code_Father
+     // TelephoneNumber_Father
+
+     // //มารดา
+
+     // $families_Mother = new Families();
+     // $families_Mother->idCandidate = Session::get('idCandidate');
+     // $families_Mother->idUser = Auth::getUser()->id;
+     // $families_Mother->idPrefix = post('TitleNameMother');
+     // $families_Mother->FirstName_TH = post('FirstName_TH_Mother');
+     // $families_Mother->LastName_TH = post('LastName_TH_Mother');
+     // //ชื่อเล่น
+     // $families_Mother->idLife_Status = post('Status_Mother');
+     // //วันเกิด
+     // // $families_Mother->idRelationship_type = post('Age_Mother');
+     // $families_Mother->idOccupation = post('idOccupation_Mother');
+     // $families_Mother->idCountry_Calling_Codes = post('idCountry_Calling_Code_Mother');
+     // $families_Mother->TelephoneNumber = post('TelephoneNumber_Mother');
+
+     // TitleNameMother
+     // FirstName_TH_Mother
+     // LastName_TH_Mother
+     // Status_Mother
+     // Age_Mother
+     // idOccupation_Mother
+     // idCountry_Calling_Code_Mother
+     // TelephoneNumber_Mother
+
+
+     //พี่น้อง
+
+     $families->NumBrethren = Input::get('NumBrethren');
+
+     if($families->$families->NumBrethren !="" || $families->NumBrethren !="0"){
+       for ($i=0; $i < $families->NumBrethren ; $i++) {
+         $families_brethren = new Families();
+         $families_brethren->idCandidate = Session::get('idCandidate');
+         $families_brethren->idUser = Auth::getUser()->id;
+         $families_brethren->idPrefix_Children = post('TitleNameBrethren')[$i];
+         $families_brethren->FirstName_TH_Children = post('FirstName_TH_Brethren')[$i];
+         $families_brethren->LastName_TH_Children = post('LastName_TH_Brethren')[$i];
+         $families_brethren->Gender_Brethren = post('Gender_Brethren')[$i];
+         $families_brethren->Status_Brethren = post('Status_Brethren')[$i];
+         $families_brethren->Age_Brethren = post('Age_Brethren')[$i];
+         $families_brethren->idOccupation_Brethren = post('idOccupation_Brethren')[$i];
+
+         // $families_brethren->idRelationship_type = '5';
+       }
+      }
 
      }
 
