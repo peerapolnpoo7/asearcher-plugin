@@ -501,6 +501,8 @@ $(document).ready(function(){
         }else{
             $(".boxComunication").addClass('hidden');
         }
+    }).on('click','#chooseWelfare',function(){
+        $('#myModal5').modal();
     });
     $('#idGeography').each(function(){
         $.request('onGetInstituteDetail', {
