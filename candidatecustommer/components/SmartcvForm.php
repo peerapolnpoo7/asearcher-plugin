@@ -116,7 +116,7 @@ class SmartcvForm extends ComponentBase
         $this->transportation_of_works_brts=$this->loadTransportationOfWork('BRT');
         $this->transportation_of_works_airports=$this->loadTransportationOfWork('Airport');
         $this->transportation_of_works_ferrys=$this->loadTransportationOfWork('Ferry');
-        $this->transportation_of_works_trains=$this->loadTransportationOfWork('Train');
+        $this->transportation_of_works_trains=$this->loadTransportationOfWork('SRT');
         $this->transportation_of_works_personals=$this->loadTransportationOfWork('Personal');
         $this->transportation_of_works_buss=$this->loadTransportationOfWork('Bus');
         $this->skillspecifics=$this->loadSkillSpecific();
@@ -514,13 +514,13 @@ class SmartcvForm extends ComponentBase
 
     public function loadPrefix()
     {
-        /*$chkGender=Candidate::where('idGender','!=','')->where('idCandidate',Session::get('idCandidate'));
+        $chkGender=Candidate::where('idGender','!=','')->where('idUser',Auth::getUser()->id);
         if($chkGender->count()==0){
-            return Prefix::all();
+            return Prefix::where('Type','C')->get();
         }else{
-            return Prefix::whereIN('idGender',[$chkGender->first()->idGender,99])->get();
-        }*/
-        return Prefix::whereNotIn('idPrefix',['7','8'])->get();
+            return Prefix::whereIN('idGender',[$chkGender->first()->idGender,99])->where('Type','C')->get();
+        }
+        //return Prefix::whereNotIn('idPrefix',['7','8'])->get();
     }
 
     public function loadGender()
@@ -923,11 +923,8 @@ class SmartcvForm extends ComponentBase
             case strpos($type, 'Ferry') !== false:
                 return 'Ferry';
             break;
-            case strpos($type, 'Train') !== false:
-                return 'Train';
-            break;
-            case strpos($type, 'Train') !== false:
-                return 'Train';
+            case strpos($type, 'SRT') !== false:
+                return 'SRT';
             break;
             case strpos($type, 'Personal') !== false:
                 return 'Personal';

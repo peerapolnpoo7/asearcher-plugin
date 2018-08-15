@@ -537,8 +537,9 @@ $(document).ready(function(){
             callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
         }
     });
-    $("#District").each(function(){
+    $("#temDistrict").each(function(){
         if(this.value!=0){
+           
             callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
         }
     });
