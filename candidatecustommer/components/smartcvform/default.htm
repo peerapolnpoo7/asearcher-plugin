@@ -242,7 +242,7 @@
 						<img src="{{ 'assets/img/CV/Exp.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
 						{% endif %}
 					</a>
-					<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!=""? }}"/>
+					<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!="" ? candidates.Type_Candidate : '1' }}"/>
 				</div>
 				<div class="form-group col-md-6 col-sm-4 col-xs-12 m-t-20" id="boxidEducation_Level">
 					<label class="control-label">ระดับการศึกษา <span class="text-danger">*</span></label>
@@ -564,7 +564,7 @@
 					<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
 				</div>
 				<div class="form-group col-md-5 col-xs-12" id="boxExpected_Salary">
-					<label class="control-label">เงินเดือนที่ต้องการ</label>
+					<label class="control-label">เงินเดือนที่ต้องการ <span class="text-danger">*</span></label>
 					<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
 						<option value="">เลือก</option>
 						{% for salary_range in salary_ranges %}
@@ -577,8 +577,8 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-7 col-sm-12 col-xs-12">
-					<label class="control-label">ประเภทการจ้างงาน</label><br/>
+				<div class="form-group col-md-7 col-sm-12 col-xs-12" id="boxidType_of_Employment">
+					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
 					<a class="btn btn-info btn-rounded btn-sm {% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %} btn-outline {%endif%} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
 						{{type_of_employment.Name_TH}}
@@ -632,8 +632,8 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
-					<label class="control-label">สถานะการค้นหางาน</label><br/>
+				<div class="form-group col-md-12 col-xs-12" id="boxidJob_Seeking_Status">
+					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
 					{% for job_seeker_status in job_seeker_statuses %}
 					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
 						{{ job_seeker_status.Name_TH}}
@@ -642,16 +642,16 @@
 					<input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
-					<label class="control-label">ความพร้อมในการเริ่มงาน</label><br/>
+				<div class="form-group col-md-12 col-xs-12" id="boxidAvailability_of_Work">
+					<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
 					{% for availability_of_work in availability_of_works %}
 					<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
 					{% endfor %}
 					<input type="hidden" name="idAvailability_of_Work" value="{{ requirement_of_works.idAvailability_of_Work }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12">
-					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร</label><br/>
+				<div class="form-group col-md-12 col-xs-12" id="boxidSources_Type">
+					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
 					{% for source_type in source_types %}
 				<a class="btn btn-info btn-rounded btn-sm {% if source_type.idSources_Type != candidates.idSources_Type %} btn-outline {%endif%} source_type" id="sourcetype_{{ source_type.idSources_Type}}" href="javascript:void(0)">
 					{{ source_type.Name_TH}}
