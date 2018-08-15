@@ -16,6 +16,7 @@ class StatusCandidate extends Model
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
+    protected $primaryKey = 'idStatus_Candidate';
 
     /**
      * @var array Fillable fields

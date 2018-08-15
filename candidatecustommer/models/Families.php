@@ -11,6 +11,7 @@ class Families extends Model
      * @var string The database table used by the model.
      */
     public $table = 'families';
+    protected $primaryKey = 'idFamilies';
 
     /**
      * @var array Guarded fields
