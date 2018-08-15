@@ -515,6 +515,11 @@ $(document).ready(function(){
         }else{
             $(".boxComunication").addClass('hidden');
         }
+    }).on('change','#LangidCountry_Calling_Code',function(){
+        $("#ionrangeListenLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeSpeakingLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeReadingLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeWritingLevel").data("ionRangeSlider").update({from: 0});
     });
     $('#idGeography').each(function(){
         $.request('onGetInstituteDetail', {
