@@ -162,17 +162,17 @@ $(document).ready(function(){
         autoclose: true
     });
     var now = new Date();
-    $('.BirthDate').scroller({
+    $('.BirthDate').scroller({ 
         theme: 'android-ics light',
         startYear: now.getFullYear()-100,
         endYear: now.getFullYear()-18,
     });
-    $('.dateMobileStart').scroller({
+    $('.dateMobileStart').scroller({ 
         theme: 'android-ics light',
         startYear: now.getFullYear()-100,
         endYear: now.getFullYear(),
     });
-    $('.dateMobileEnd').scroller({
+    $('.dateMobileEnd').scroller({ 
         theme: 'android-ics light',
         startYear: now.getFullYear()-100,
         endYear: now.getFullYear(),
@@ -184,7 +184,7 @@ $(document).ready(function(){
             }
         });*/
     }).on('click','#upImage',function(){
-        $('#PhotoFile').trigger('click');
+        $('#PhotoFile').trigger('click'); 
     }).on('change','#PhotoFile',function(){
         $('form').request('onUpload', {
             success: function(data) {
@@ -306,7 +306,7 @@ $(document).ready(function(){
         $.request('onGetJobTitle', {
             data: {value: this.value},
             success: function(data) {
-                $(".boxSkillList").addClass('hidden');
+                $(".boxSkillList").addClass('hidden'); 
                 $('#Job_TitleRequire').children('option:not(:first)').remove();
                 $.each(data, function(k, v) {
                     $('#Job_TitleRequire').append($('<option>', {
@@ -335,9 +335,9 @@ $(document).ready(function(){
                     });
                     $("input[name='ionrangeSkillListLevel']").val('0');
                     $("input[name='chkValidateSkill']").val('yes');
-                    $(".boxSkillList").removeClass('hidden');
+                    $(".boxSkillList").removeClass('hidden'); 
                 }else{
-                    $(".boxSkillList").addClass('hidden');
+                    $(".boxSkillList").addClass('hidden'); 
                     $("input[name='chkValidateSkill']").val('no');
                 }
                 $('select.chosen').trigger("chosen:updated");
@@ -387,7 +387,7 @@ $(document).ready(function(){
                     $('.Major_Subject').addClass('hidden');
                     $('#idMajor_Subject').val('');
                 }
-
+                
                 $('select.chosen').trigger("chosen:updated");
              }
          });
@@ -695,10 +695,10 @@ $(document).ready(function(){
                     }));
                 });
                 if(data.length > 0){
-                    $(".boxSkillList").removeClass('hidden');
+                    $(".boxSkillList").removeClass('hidden'); 
                     $("input[name='chkValidateSkill']").val('yes');
                 }else{
-                    $(".boxSkillList").addClass('hidden');
+                    $(".boxSkillList").addClass('hidden'); 
                     $("input[name='chkValidateSkill']").val('no');
                 }
                 $('#idSkill_List').val($('input[name="tempidSkill_List"]').val());
