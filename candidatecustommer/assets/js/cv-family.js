@@ -1,5 +1,13 @@
 $(document).ready(function(){
-	$("body").on('click','input[name="typeMilitary"]',function(){
+	$("body").on('click','.save',function(){
+		// $('form').request('onSave', {
+		//
+		// 		success: function(data) {
+		// 				console.log(data);
+		// 		}
+		// });
+
+	}).on('click','input[name="typeMilitary"]',function(){
 		if ($('#radioOther').is(':checked')) {
 			$('#detailMilitary').prop('disabled',false);
 		}else{
@@ -9,9 +17,11 @@ $(document).ready(function(){
 		if ($('#สมรส').is(':checked') || $('#หย่า').is(':checked') || $('#หม้าย').is(':checked') || $('#แยกกันอยู่').is(':checked') ){
 			$('.boxMarital').removeClass('hidden');
 			$("#boxChildren").removeClass('hidden');
+			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',true);
 		}else{
 			$('.boxMarital').addClass('hidden');
 			$("#boxChildren").addClass('hidden');
+			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',false);
 		}
 
 		if ($('#หม้าย').is(':checked')){
@@ -115,5 +125,27 @@ $(document).ready(function(){
 				search_contains: true
 		});
 		$('.chosen-select').chosen({width: "100%",height:"100%"});
+
+
+		// $('form').request('onCandidate',{
+		// 		success: function(data) {
+		// 				console.log(data);
+		// 				if (data.idGender == 2) {
+		// 						$('.boxMilitary').addClass('hidden');
+		// 				}
+		// 		}
+		// });
+		//
+		$('form').request('onStatusCandidate',{
+				success: function(data) {
+						console.log(data.idMarital_Status);
+						if (data.idMarital_Status != 1) {
+								$('.boxMarital').removeClass('hidden');
+						}
+				}
+		});
+
+
+
 
 });
