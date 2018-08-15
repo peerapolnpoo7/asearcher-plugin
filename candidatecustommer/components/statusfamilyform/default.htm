@@ -1,6 +1,20 @@
 {% set militarys = __SELF__.militarys %}
 {% set maritalstatuss = __SELF__.maritalstatuss %}
 {% set occupations = __SELF__.occupations %}
+{% set maritalregiterstatus = __SELF__.maritalregiterstatus %}
+{% set countrycallingcodes = __SELF__.countrycallingcodes %}
+{% set relationshiptypes = __SELF__.relationshiptypes %}
+{% set prefixs = __SELF__.prefixs %}
+{% set prefixsfa = __SELF__.prefixsfa %}
+{% set prefixsmo = __SELF__.prefixsmo %}
+{% set prefixsspo = __SELF__.prefixsspo %}
+{% set statuscandidates = __SELF__.statuscandidates %}
+{% set onstatuscandidates = __SELF__.onstatuscandidates %}
+{% set candidates = __SELF__.candidates %}
+{% set familiess = __SELF__.familiess %}
+{% set father = __SELF__.father %}
+{% set mother = __SELF__.mother %}
+{% set spouse = __SELF__.spouse %}
 
 
 <style>
@@ -11,21 +25,38 @@
 .หม้าย{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
 .แยกกันอยู่{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
 
-.mastercard{background-image:url(http://i.imgur.com/SJbRQF7.png);}
+.จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/regi.png'|theme }}); background-size: 70px 55px; background-position: top;}
+.ไม่ได้จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/unregi.png'|theme }}); background-size: 70px 55px; background-position: top;}
+
 
 </style>
 <h3>สถานะและครอบครัว</h3>
-<form class="m-t-md" action="#">
-  <div class="row">
-    <div class="col-sm-2">
+<form data-request="onSave"  class="m-t-md" data-request-files data-request-flash>
+  <!-- <form id="formsave"> -->
+  {% flash %}
+  <p
+  data-control="flash-message"
+  class="flash-message fade {{ type }}"
+  data-interval="5">
+  {{ message }}
+</p>
+{% endflash %}
+
+  <div class="row boxMilitary"  {{ candidates.idGender ==  2 ? 'hidden' :'' }} >
+
+    <div class="col-sm-1">
     </div>
     <div class="col-sm-8">
       <div class="form-group">
+
         <label>สถานะทางทหาร</label><br /><br />
         <div class="row">
         {% for military in militarys %}
+        {% if military.idMilitary == '5'%}
+        <div style="clear:both;"></div>
+        {% endif %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-3">
-          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}"/>
+          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary  }}" {{ statuscandidates.idMilitary ==  military.idMilitary ? 'checked' :'' }}/>
           <label class="below" for="{{ military.Name_TH }}">{{ military.Name_TH }}</label>
           </div>
         {% endfor %}
@@ -36,21 +67,9 @@
     </div>
   </div>
 
-  <!-- <div class="row">
-    <div class="col-sm-2">
-    </div> -->
-
-    <!-- <div class="col-sm-8"> -->
-      <!-- <div class="form-group"> -->
-        <!-- {% for maritalstatus in maritalstatuss %}
-        <div class="radio radio-info col-sm-2 col-xs-6">
-          <input type="radio" name="typeMarital" id="{{ maritalstatus.Name_TH }}" value="{{ maritalstatus.idMarital_Status }}">
-          <label for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
-        </div>
-        {% endfor %} -->
         <div class="cc-selector">
           <div class="row">
-            <div class=" col-sm-2">
+            <div class=" col-sm-1">
             </div>
             <div class=" col-sm-8">
           <label>สถานภาพสมรส</label><br>
@@ -58,14 +77,12 @@
             <div class=" col-sm-2">
           </div>
           </div>
-
-
           <div class="row">
-            <div class=" col-sm-2 col-md-2">
+            <div class=" col-sm-1 col-md-1">
             </div>
             {% for maritalstatus in maritalstatuss %}
             <div class="checkboxgroup col-sm-1 col-xs-4 col-md-1">
-            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" />
+            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" {{ statuscandidates.idMarital_Status ==  maritalstatus.idMarital_Status ? 'checked' :'' }}/>
             <label class="drinkcard-cc below2 {{ maritalstatus.Name_TH }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
             </div>
             <div class=" col-sm-1  col-md-1">
@@ -76,56 +93,75 @@
           </div>
         </div>
 
-        <!-- </div> -->
-        <!-- <div class="col-sm-2">
-        </div>
-      </div> -->
-
   <span class="hidden boxMarital">
-    <div class="row">
-      <div class="col-sm-12">
+    <div class="cc-selector">
+
+      <div class="row">
+        <div class=" col-sm-12">
+        <label>สถานะการจดทะเบียน</label><br>
+        </div>
+      </div>
+
+    <div class="row" style="padding-bottom: 25px;">
+      <div class=" col-sm-1">
+      </div>
+      <div class="col-sm-11">
         <div class="form-group">
-          <label>สถานะการจดทะเบียน</label><br>
-          <div class="radio radio-info col-sm-2 col-xs-6">
+
+          {% for marital_regiter_status in maritalregiterstatus %}
+          <div class="checkboxgroup col-sm-2 col-xs-6 col-md-2">
+          <input id="{{ marital_regiter_status.Name_TH }}"  type="radio" name="typeMarital_register_status"  value="{{ marital_regiter_status.idMarital_Register_Status }}" {{ statuscandidates.idMarital_Register_Status ==  marital_regiter_status.idMarital_Register_Status ? 'checked' :'' }}/>
+          <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_TH }} MaritalRegister"  for="{{ marital_regiter_status.Name_TH }}">{{ marital_regiter_status.Name_TH }}</label>
+          </div>
+          {% endfor %}
+          <!-- <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPer" value="Per">
             <label for="radioPer">จดทะเบียน</label>
           </div>
           <div class="radio radio-info col-sm-2 col-xs-6">
             <input type="radio" name="typeMarriage" id="radioPre" value="Pre">
             <label for="radioPre">ไม่ได้จดทะเบียน</label>
-          </div>
+          </div> -->
         </div>
       </div>
+      <!-- <div class=" col-sm-2">
+      </div> -->
+    </div>
     </div>
     <div class="row">
+        <div class="col-sm-1">
+        </div>
       <div class="col-sm-2">
         <div class="form-group">
           <label class="control-label">คำนำหน้าชื่อ</label>
-          <select id="TitleName" class="form-control" name="TitleName">
-            <option value="1">นาย</option>
-            <option value="2">นางสาว</option>
-            <option value="3">นาง</option>
+          <select id="TitleName" class="form-control chosen" name="idPrefix_Spouse">
+            <option value="0"> เลือก </option>
+            {% for prefixssp in prefixsspo %}
+            <option value="{{ prefixssp.idPrefix }}">{{ prefixssp.Name_TH }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" name="" class="form-control" placeholder="">
+        <input type="text" name="FirstName_TH_Spouse" class="form-control" value="{{ spouse.FirstName_TH }}" >
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" name="" class="form-control" placeholder="">
+        <input type="text" name="LastName_TH_Spouse" class="form-control" value="{{ spouse.LastName_TH }}">
       </div>
       <div class="col-sm-2">
         <label class="control-label">ชื่อเล่น</label>
-        <input type="text" name="" class="form-control" placeholder="">
+        <input type="text" name="NickName_TH_Spouse" class="form-control" value="{{ spouse.NickName_TH }}">
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-3">
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
-          <select id="TitleName" class="form-control" name="TitleName">
+          <select id="Occupation" class="form-control widow" name="idOccupation_Spouse">
             <option value="0"> เลือก </option>
             {% for occupation in occupations %}
             <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
@@ -133,117 +169,160 @@
           </select>
         </div>
       </div>
-      <div class="col-sm-3">
-        <label class="control-label">วัน เดือน ปีเกิด</label>
-        <input type="text" name="" class="form-control" placeholder="">
+      <div class="col-sm-2">
+
+        <label class="control-label">วัน เดือน ปี เกิด</label>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+          <input type="text" name="Date_of_Birth_Spouse" id="Date_of_Birth" class="form-control dateMobile BirthDate widow" value="{{ candidates.Date_of_Birth!='00/00/0000' ? candidates.Date_of_Birth : '' }}">
+          <span class="help-block"></span>
+        </div>
+        <span class="help-block"></span>
+
       </div>
-      <div class="col-sm-3">
-        <label class="control-label">เบอร์โทรศัพท์</label>
-        <div class="input-group m-b">
-          <div class="input-group-btn">
-            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">+66 <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a href="#">+66</a></li>
-              <li><a href="#">+77</a></li>
-              <li><a href="#">+88</a></li>
-              <li><a href="#">+99</a></li>
-            </ul>
-          </div>
-          <input type="text" class="form-control"></div>
+      <div class="form-group col-md-6 col-sm-6">
+        <label class="control-label">เบอร์โทรศัพท์</label><br/>
+        <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
+          <select class="form-control chosen widow" name="idCountry_Calling_Code_Spouse" id="idCountry_Calling_Code_Spouse">
+            <option value="0">เลือก</option>
+            {% for countrycallingcode in countrycallingcodes %}
+            {% set selected = '0' %}
+            {% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            {% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
+            {% endfor %}
+          </select>
+          <span class="help-block"></span>
+        </div>
+        <div class="col-sm-6 col-xs-6 no-padding">
+          <input type="text" class="form-control widow" name="TelephoneNumber_Spouse" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
+          <span class="help-block"></span>
         </div>
       </div>
+      </div>
       <div class="row">
+        <div class="col-sm-1">
+          </div>
         <div class="col-sm-2">
           <label class="control-label">จำนวนบุตร</label>
-          <div class="input-group m-b"><input type="text" name="" class="form-control" id="NumChildren"><span class="input-group-addon">คน</span></div>
+          <div class="input-group m-b"><input type="text" name="Amount_of_Children" class="form-control" id="NumChildren" data-mask="9"><span class="input-group-addon">คน</span></div>
         </div>
       </div>
     </span>
   <span id="boxChildren">
     <div class="row hidden">
+      <div class="col-sm-1">
+        </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <label class="control-label">{=id=}คำนำหน้าชื่อ</label>
-          <select id="TitleName" class="form-control" name="TitleName">
-            <option value="1">นาย</option>
-            <option value="2">นางสาว</option>
-            <option value="3">นาง</option>
+          <label class="control-label"><span class="No">1</span>. คำนำหน้าชื่อ</label>
+          <select id="TitleNameChildren_1" class="form-control Brethren" name="TitleNameChildren[]">
+            <option value="">เลือก</option>
+            {% for prefix in prefixs %}
+            <!-- {% set selected = '' %}
+            {% if prefix.idPrefix == candidates.idPrefix %}
+            {% set selected = 'selected' %}
+            {% endif %} -->
+            <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" name="" class="form-control" placeholder="">
+        <input type="text" id="NameChildren_1" name="FirstName_TH_Children[]" class="form-control" placeholder="">
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" name="" class="form-control" placeholder="">
+        <input type="text" id="NameChildren_1" name="LastName_TH_Children[]" class="form-control" placeholder="">
       </div>
       <div class="col-sm-2">
         <label class="control-label">อายุ</label>
-        <div class="input-group m-b"><input type="text" class="form-control"> <span class="input-group-addon">ปี</span></div>
+        <div class="input-group m-b"><input type="text"  id="AgeChildren_1 "class="form-control" name="AgeChildren[]"> <span class="input-group-addon">ปี</span></div>
       </div>
     </div>
   </span>
   <hr/>
+
   <div class="row">
     <div class="col-sm-1">
       <label class="control-label"><h3>บิดา</h3></label>
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-1">
+    </div>
     <div class="col-sm-2">
       <div class="form-group">
         <label class="control-label">คำนำหน้าชื่อ</label>
-        <select id="TitleName" class="form-control" name="TitleName">
-          <option value="1">นาย</option>
+        <select id="TitleName" class="form-control chosen" name="TitleNameFather">
+          <option value="0"> เลือก </option>
+          {% for prefixsf in prefixsfa %}
+          <option value="{{ prefixsf.idPrefix }}">{{ prefixsf.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
     <div class="col-sm-3">
       <label class="control-label">ชื่อ</label>
-      <input type="text" name="" class="form-control" placeholder="">
+      <input type="text" name="FirstName_TH_Father" class="form-control" placeholder="">
     </div>
     <div class="col-sm-3">
       <label class="control-label">นามสกุล</label>
-      <input type="text" name="" class="form-control" placeholder="">
+      <input type="text" name="LastName_TH_Father" class="form-control" placeholder="">
     </div>
     <div class="col-sm-2">
       <label class="control-label">สถานะ</label>
-      <select name="" id="StatusFather" class="form-control">
+      <select name="Status_Father" id="Status_Father" class="form-control">
         <option value="0">มีชีวิต</option>
         <option value="1">ถึงแก่กรรม</option>
       </select>
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-1">
+    </div>
     <div class="col-sm-2">
       <label class="control-label">อายุ</label>
-      <div class="input-group m-b"><input type="text" class="form-control FatherRelateStatus" id="AgeFather"> <span class="input-group-addon">ปี</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control FatherRelateStatus" id="Age_Father" name="Age_Father" > <span class="input-group-addon">ปี</span></div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-3">
       <div class="form-group">
         <label class="control-label">อาชีพ</label>
-        <select id="TitleName" class="form-control FatherRelateStatus" name="TitleName" id="OccupationFather">
-          <option value="1"></option>
-          <option value="2"></option>
-          <option value="3"></option>
+        <select id="TitleName" class="form-control FatherRelateStatus" name="idOccupation_Father" id="idOccupation_Father">
+          <option value="0"> เลือก </option>
+          {% for occupation in occupations %}
+          <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
-    <div class="col-sm-3">
-      <label class="control-label">เบอร์โทรศัพท์</label>
-      <div class="input-group m-b">
-        <div class="input-group-btn">
-          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">+66 <span class="caret"></span></button>
-          <ul class="dropdown-menu">
-            <li><a href="#">+66</a></li>
-            <li><a href="#">+77</a></li>
-            <li><a href="#">+88</a></li>
-            <li><a href="#">+99</a></li>
-          </ul>
-        </div>
-        <input type="text" class="form-control FatherRelateStatus" id="TelFathaer"></div>
+    <div class="form-group col-md-6 col-sm-6">
+      <label class="control-label">เบอร์โทรศัพท์</label><br/>
+      <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <select class="form-control chosen FatherRelateStatus" name="idCountry_Calling_Code_Father" id="idCountry_Calling_Code_Father">
+          <option value="0">เลือก</option>
+          {% for countrycallingcode in countrycallingcodes %}
+          {% set selected = '0' %}
+          {% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
+          {% set selected = 'selected' %}
+          {% endif %}
+          {% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+          {% set selected = 'selected' %}
+          {% endif %}
+          <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
+          {% endfor %}
+        </select>
+        <span class="help-block"></span>
+      </div>
+      <div class="col-sm-6 col-xs-6 no-padding">
+        <input type="text" class="form-control FatherRelateStatus" name="TelephoneNumber_Father" id="TelephoneNumber_Father" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
+        <span class="help-block"></span>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -252,113 +331,154 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-1">
+    </div>
     <div class="col-sm-2">
       <div class="form-group">
         <label class="control-label">คำนำหน้าชื่อ</label>
-        <select id="TitleName" class="form-control" name="TitleName">
-          <option value="2">นางสาว</option>
-          <option value="3">นาง</option>
+        <select id="TitleName" class="form-control chosen" name="TitleNameMother">
+          <option value="0"> เลือก </option>
+          {% for prefixsm in prefixsmo %}
+          <option value="{{ prefixsf.idPrefix }}">{{ prefixsm.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
     <div class="col-sm-3">
       <label class="control-label">ชื่อ</label>
-      <input type="text" name="" class="form-control" placeholder="">
+      <input type="text" name="FirstName_TH_Mother" class="form-control" placeholder="">
     </div>
     <div class="col-sm-3">
       <label class="control-label">นามสกุล</label>
-      <input type="text" name="" class="form-control" placeholder="">
+      <input type="text" name="LastName_TH_Mother" class="form-control" placeholder="">
     </div>
     <div class="col-sm-2">
       <label class="control-label">สถานะ</label>
-      <select name="" id="StatusMother" class="form-control">
+      <select name="Status_Mother" id="Status_Mother" class="form-control">
         <option value="0">มีชีวิต</option>
         <option value="1">ถึงแก่กรรม</option>
       </select>
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-1">
+    </div>
     <div class="col-sm-2">
       <label class="control-label">อายุ</label>
-      <div class="input-group m-b"><input type="text" class="form-control MotherRelateStatus"> <span class="input-group-addon">ปี</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control MotherRelateStatus" name="Age_Mother"><span class="input-group-addon">ปี</span></div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-3">
       <div class="form-group">
         <label class="control-label">อาชีพ</label>
-        <select id="TitleName" class="form-control MotherRelateStatus" name="TitleName">
-          <option value="1"></option>
-          <option value="2"></option>
-          <option value="3"></option>
+        <select id="TitleName" class="form-control MotherRelateStatus" name="idOccupation_Mother">
+          <option value="0"> เลือก </option>
+          {% for occupation in occupations %}
+          <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="form-group col-md-6 col-sm-6">
+      <label class="control-label">เบอร์โทรศัพท์</label><br/>
+      <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
+        <select class="form-control chosen MotherRelateStatus" name="idCountry_Calling_Code_Mother" id="idCountry_Calling_Code_Mother">
+          <option value="0">เลือก</option>
+          {% for countrycallingcode in countrycallingcodes %}
+          {% set selected = '0' %}
+          {% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
+          {% set selected = 'selected' %}
+          {% endif %}
+          {% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+          {% set selected = 'selected' %}
+          {% endif %}
+          <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
+          {% endfor %}
+        </select>
+        <span class="help-block"></span>
+      </div>
+      <div class="col-sm-6 col-xs-6 no-padding">
+        <input type="text" class="form-control chosen MotherRelateStatus" name="TelephoneNumber_Mother" id="TelephoneNumber_Mother" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
+        <span class="help-block"></span>
+      </div>
+    </div>
+    <!-- <div class="col-sm-3">
       <label class="control-label">เบอร์โทรศัพท์</label>
       <div class="input-group m-b">
         <div class="input-group-btn">
           <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">+66 <span class="caret"></span></button>
           <ul class="dropdown-menu">
-            <li><a href="#">+66</a></li>
-            <li><a href="#">+77</a></li>
-            <li><a href="#">+88</a></li>
-            <li><a href="#">+99</a></li>
+            {% for countrycallingcode in countrycallingcodes %}
+              <li><a href="#">+{{countrycallingcode.Code}}</a></li>
+              {% endfor %}
           </ul>
         </div>
         <input type="text" class="form-control MotherRelateStatus"></div>
-    </div>
+    </div> -->
   </div>
   <div class="row">
+    <div class="col-sm-1">
+    </div>
     <div class="col-sm-2">
       <label class="control-label">จำนวนพี่น้อง</label>
-      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" data-mask="9"> <span class="input-group-addon">คน</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control" id="NumBrethren" name="NumBrethren" data-mask="9"> <span class="input-group-addon">คน</span></div>
     </div>
   </div>
   <span id="boxBrethren">
     <div class="row hidden">
+      <div class="col-sm-1">
+      </div>
       <div class="col-sm-2">
         <div class="form-group">
           <label class="control-label"><span class="No">1</span>. คำนำหน้าชื่อ</label>
-          <select id="TitleNameBrethren_1" class="form-control Brethren" name="">
-            <option value="1">นาย</option>
-            <option value="2">นางสาว</option>
-            <option value="3">นาง</option>
+          <select id="TitleNameBrethren_1" class="form-control Brethren" name="TitleNameBrethren[]">
+            <option value="">เลือก</option>
+            {% for prefix in prefixs %}
+            <!-- {% set selected = '' %}
+            {% if prefix.idPrefix == candidates.idPrefix %}
+            {% set selected = 'selected' %}
+            {% endif %} -->
+            <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" id="NameBrethren_1" name="NameBrethren[]" class="form-control Brethren" placeholder="">
+        <input type="text" id="NameBrethren_1" name="FirstName_TH_Brethren[]" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" id="SurNameBrethren_1" name="" class="form-control Brethren" placeholder="">
+        <input type="text" id="SurNameBrethren_1" name="LastName_TH_Brethren[]" class="form-control Brethren" placeholder="">
       </div>
       <div class="col-sm-2">
         <label class="control-label">เพศ</label>
-        <select id="GenderBrethren_1" class="form-control Brethren" name="">
+        <select id="GenderBrethren_1" name="Gender_Brethren[]" class="form-control Brethren" name="">
             <option value="1">ชาย</option>
             <option value="2">หญิง</option>
         </select>
       </div>
+      <div style="clear:both;"></div>
+      <div class="col-sm-1">
+      </div>
       <div class="col-sm-2">
         <label class="control-label">สถานะ</label>
-        <select name="" id="BrethrenStatus_1" class="form-control Brethren BrethrenStatus">
+        <select name="Status_Brethren[]" id="BrethrenStatus_1"   class="form-control Brethren BrethrenStatus">
           <option value="0">มีชีวิต</option>
-          <option value="1">ถึงแก่กรรม</option> 
+          <option value="1">ถึงแก่กรรม</option>
         </select>
       </div>
-      <div style="clear:both;"></div>
       <div class="col-sm-2">
         <label class="control-label">อายุ</label>
-        <div class="input-group m-b"><input type="text" name="" id="AgeBrethren_1" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+        <div class="input-group m-b"><input type="Age_Brethren[]" name="" id="AgeBrethren_1" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-3">
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
-          <select id="OccupationBrethren_1" class="form-control Brethren" name="">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
+          <select id="OccupationBrethren_1" class="form-control Brethren" name="idOccupation_Brethren[]">
+            <option value="0"> เลือก </option>
+            {% for occupation in occupations %}
+            <option value="{{ occupation.idOccupation }}">{{ occupation.Name_TH }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -366,7 +486,8 @@
   </span>
   <div class="row">
     <div class="col-sm-12 text-center m-t-md">
-      <a class="btn btn-info btn-rounded btn-sm" href="#">บันทึกข้อมูล</a>
+      <button type="submit" class="btn btn-info btn-rounded btn-sm save">บันทึกข้อมูล</button>
+      <!-- <a class="btn btn-info btn-rounded btn-sm" href="#">บันทึกข้อมูล</a> -->
     </div>
   </div>
 </form>
