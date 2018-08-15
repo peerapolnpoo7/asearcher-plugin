@@ -12,7 +12,9 @@
 {% set onstatuscandidates = __SELF__.onstatuscandidates %}
 {% set candidates = __SELF__.candidates %}
 {% set familiess = __SELF__.familiess %}
-{% set fa = __SELF__.fa %}
+{% set father = __SELF__.father %}
+{% set mother = __SELF__.mother %}
+{% set spouse = __SELF__.spouse %}
 
 
 <style>
@@ -142,15 +144,15 @@
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" name="FirstName_TH_Spouse" class="form-control" value="{{ fa.FirstName_TH }}" >
+        <input type="text" name="FirstName_TH_Spouse" class="form-control" value="{{ spouse.FirstName_TH }}" >
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" name="LastName_TH_Spouse" class="form-control" value="{{ fa.LastName_TH }}">
+        <input type="text" name="LastName_TH_Spouse" class="form-control" value="{{ spouse.LastName_TH }}">
       </div>
       <div class="col-sm-2">
         <label class="control-label">ชื่อเล่น</label>
-        <input type="text" name="NickName_TH_Spouse" class="form-control" value="{{ fa.NickName_TH }}">
+        <input type="text" name="NickName_TH_Spouse" class="form-control" value="{{ spouse.NickName_TH }}">
       </div>
     </div>
     <div class="row">

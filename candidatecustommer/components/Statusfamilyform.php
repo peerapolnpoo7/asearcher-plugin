@@ -22,6 +22,16 @@ class Statusfamilyform extends ComponentBase
     }
 
     public function onRun(){
+
+      $this->father = $this->loadfami(1);
+      $this->mother = $this->loadfami(2);
+
+      // if (condition) {
+      //   $this->spouse = $this->loadfami(4);
+      // }else {
+      //   $this->spouse = $this->loadfami(3);
+      // }
+
       $this->addJs('assets/js/cv-family.js');
       $this->addCss('assets/css/cv-family.css');
       $this->militarys=$this->loadmilitary();
@@ -50,4 +60,20 @@ class Statusfamilyform extends ComponentBase
     public $militarys;
     public $maritalstatuss;
     public $occupations;
+
+    public $maritalregiterstatus;
+    public $countrycallingcodes;
+    public $familiess;
+    public $relationshiptypes;
+    public $prefixs;
+    public $prefixsfa;
+    public $prefixsmo;
+    public $prefixsspo;
+    public $statuscandidates;
+    public $onstatuscandidates;
+    public $candidates;
+    public $father;
+    public $mother;
+    public $spouse;
+
 }
