@@ -317,7 +317,7 @@
 					<select name="idEducation_Level" id="idEducation_Level" class="form-control chosen">
 						<option value="">เลือก</option>
 						{% for education_level in education_levels %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if education_level.idEducation_Level == '' %}
 						{% set selected = 'selected' %}
 						{% endif %}

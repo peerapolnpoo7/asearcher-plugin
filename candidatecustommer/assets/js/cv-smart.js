@@ -350,7 +350,7 @@ $(document).ready(function(){
         });
         $("input[name='ionrangeSkillListLevel']").val('0');
     }).on("change","#idInstitute_Detail",function(){
-        $.request('onGetEducationLevel', {
+        /*$.request('onGetEducationLevel', {
             data: {value: this.value},
              success: function(data) {
                 $('#idEducation_Level').children('option:not(:first)').remove();
@@ -362,7 +362,7 @@ $(document).ready(function(){
                 });
                 $('select.chosen').trigger("chosen:updated");
              }
-        });
+        });*/
         $.request('onGetFaculty', {
             data: {value: this.value},
              success: function(data) {
@@ -544,7 +544,7 @@ $(document).ready(function(){
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
-            $.request('onGetEducationLevel', {
+            /*$.request('onGetEducationLevel', {
                 data: {value: this.value},
                  success: function(data) {
                     $('#idEducation_Level').children('option:not(:first)').remove();
@@ -557,7 +557,7 @@ $(document).ready(function(){
                     $("#idEducation_Level").val($("#tempidEducation_Level").val());
                     $('select.chosen').trigger("chosen:updated");
                  }
-            });
+            });*/
             $.request('onGetFaculty', {
                 data: {value: this.value},
                  success: function(data) {
@@ -624,7 +624,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#tempidEducation_Level").each(function(){
+    /*$("#tempidEducation_Level").each(function(){
         $.request('onGetDegreeAndCertificate', {
             data: {value: this.value},
             success: function(data) {
@@ -639,7 +639,7 @@ $(document).ready(function(){
                 $('select.chosen').trigger("chosen:updated");
             }
         });
-    });
+    });*/
 
     $("input[name='Type_Candidate']").each(function(){
         if(this.value=="" || this.value=="1"){
