@@ -116,7 +116,7 @@ class SmartcvForm extends ComponentBase
         $this->transportation_of_works_brts=$this->loadTransportationOfWork('BRT');
         $this->transportation_of_works_airports=$this->loadTransportationOfWork('Airport');
         $this->transportation_of_works_ferrys=$this->loadTransportationOfWork('Ferry');
-        $this->transportation_of_works_trains=$this->loadTransportationOfWork('Train');
+        $this->transportation_of_works_trains=$this->loadTransportationOfWork('SRT');
         $this->transportation_of_works_personals=$this->loadTransportationOfWork('Personal');
         $this->transportation_of_works_buss=$this->loadTransportationOfWork('Bus');
         $this->skillspecifics=$this->loadSkillSpecific();
@@ -148,14 +148,16 @@ class SmartcvForm extends ComponentBase
         $rules = array(
             'idGender' => array('required'),
             'idPrefix' => array('required'),
-            'FirstName_TH' => array('required','min:2','regex:/^[ก-์]+$/u'),
-            'LastName_TH' => array('required','min:2','regex:/^[\ก-์\s]+$/u'),
+            'FirstName_TH' => array('required','min:2','max:64','regex:/^[ก-์]+$/u'),
+            'LastName_TH' => array('required','min:2','max:64','regex:/^[\ก-์\s]+$/u'),
             'Date_of_Birth' => array('required'),
             'Email' => array('required','email'),
-            'TelephoneNumber' => array('required','min:9','max:10'),
+            'Line_ID' => array('max:20'),
+            'TelephoneNumber' => array('required','min:9','max:10','regex:/\d{10}|\d{9}$/'),
             'idCommunication_Provider' => array('required'),
             'Nationality' => array('required'),
             'idGeography' => array('required'),
+            'idSources_Type' => array('required'),
             'Type_Candidate' => array('required'),
             'type_of_institue' => array('required'),
             'idInstitute_Detail' => array('required'),
@@ -178,15 +180,19 @@ class SmartcvForm extends ComponentBase
             'idPrefix.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
             'FirstName_TH.required' => 'กรุณากรอก "ชื่อ"',
             'FirstName_TH.min' => 'กรุณากรอก "ชื่อ" 2 ตัวอักษรขึ้นไป',
+            'FirstName_TH.max' => 'กรุณากรอก "ชื่อ" น้อยกว่า 64 ตัวอักษร',
             'FirstName_TH.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
             'LastName_TH.required' => 'กรุณากรอก "นามสกุล"',
+            'FirstName_TH.max' => 'กรุณากรอก "นามสกุล" น้อยกว่า 64 ตัวอักษร',
             'LastName_TH.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
             'Date_of_Birth.required' => 'กรุณาเลือก "วันเกิด"',
             'Email.required' => 'กรุณากรอก "อีเมล์"',
             'Email.email' => 'รูปแบบ "อีเมล์" ไม่ถูกต้อง',
+            'Line_ID.max' => '"ไลน์ไอดี" ต้องไม่เกิน 20 ตัวอักษร',
             'TelephoneNumber.required' => 'กรุณากรอก "เบอร์โทรศัพท์"',
             'TelephoneNumber.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
             'TelephoneNumber.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
+            'TelephoneNumber.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
             'idCommunication_Provider.required' => 'กรุณาเลือก "เครื่อข่ายโทรศัพท์มือถือที่ใช้"',
             'Nationality.required' => 'กรุณาเลือก "สัญชาติ"',
             'Type_Candidate.required' => 'กรุณาเลือก "จบใหม่/ฝึกงาน หรือ มีประสบการณ์"',
@@ -204,8 +210,10 @@ class SmartcvForm extends ComponentBase
             'Job_TitleRequire.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน" ที่คาดหวัง',
             'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
 
+            'idSources_Type.required'=> 'กรุณาบอก "คุณรู้จัก aSearcher ได้อย่างไร"',
+
             'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
-            'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทงานที่ต้องการ"',
+            'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทการจ้างงาน"',
             'idAvailability_of_Work.required' => 'กรุณาเลือก "ความพร้อมในการเริ่มงาน"',
             'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"',
         ];
@@ -252,11 +260,24 @@ class SmartcvForm extends ComponentBase
         }
 
         if(Input::get('chkValidateSkill')=="yes"){
-            $rules_more= array(
-                    //'idSkill_List' => array('between:0,0'),
+
+            $rules_more= array( 
+                    'idSkill_List' => array('required'),
                 );
             $messages_more = [
-                    //'idSkill_List.between' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
+                    'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
+            ];
+            $rules = array_merge($rules,$rules_more);
+            $messages = array_merge($messages,$messages_more);
+
+        }
+
+        if(Input::get('idSources_Type')=="99"){
+            $rules_more= array( 
+                    'OtherType' => array('required'),
+                );
+            $messages_more = [
+                    'OtherType.required' => 'กรุณาระุบ "คุณรู้จัก aSearcher ได้อย่างไร"',
             ];
             $rules = array_merge($rules,$rules_more);
             $messages = array_merge($messages,$messages_more);
@@ -267,6 +288,13 @@ class SmartcvForm extends ComponentBase
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
+
+        if(Input::get('chkValidateSkill')=="yes"){
+            $idSkillList = Input::get('idSkill_List');
+        }else{
+            $idSkillList = 0;
+        }
+
 
         $users=Users::find(Input::get('idUser'));
         $users->name = Input::get('FirstName_TH');
@@ -288,6 +316,7 @@ class SmartcvForm extends ComponentBase
             $source_types = new SourceType();
             $source_types->Name_TH = Input::get('OtherType');
             $source_types->Verify = 0;
+            $source_types->Status = 2;
             $source_types->save();
             $idSources_Type = $source_types->id;
         }else{
@@ -396,7 +425,8 @@ class SmartcvForm extends ComponentBase
         }
         $skillspecific->idCandidate = Session::get('idCandidate');
         $skillspecific->idUser = Auth::getUser()->id;
-        $skillspecific->idSkill_List = Input::get('idSkill_List');
+        //$skillspecific->idSkill_List = Input::get('idSkill_List');
+        $skillspecific->idSkill_List = $idSkillList;
         $skillspecific->idSkill_Level_Detail = Input::get('ionrangeSkillListLevel')+1;
         $skillspecific->save();
 
@@ -515,13 +545,13 @@ class SmartcvForm extends ComponentBase
 
     public function loadPrefix()
     {
-        /*$chkGender=Candidate::where('idGender','!=','')->where('idCandidate',Session::get('idCandidate'));
+        $chkGender=Candidate::where('idGender','!=','')->where('idUser',Auth::getUser()->id);
         if($chkGender->count()==0){
-            return Prefix::all();
+            return Prefix::where('Type','C')->get();
         }else{
-            return Prefix::whereIN('idGender',[$chkGender->first()->idGender,99])->get();
-        }*/
-        return Prefix::whereNotIn('idPrefix',['7','8'])->get();
+            return Prefix::whereIN('idGender',[$chkGender->first()->idGender,99])->where('Type','C')->get();
+        }
+        //return Prefix::whereNotIn('idPrefix',['7','8'])->get();
     }
 
     public function loadGender()
@@ -658,7 +688,7 @@ class SmartcvForm extends ComponentBase
         if($chkSourceType->count() > 0){
             $get->orWhere('idSources_Type',$chkSourceType->first()->idSources_Type);
         }
-        //$get->orderBy('Status','ASC');
+        $get->orderBy('Status','ASC');
         return $get->get();
     }
 
@@ -924,11 +954,8 @@ class SmartcvForm extends ComponentBase
             case strpos($type, 'Ferry') !== false:
                 return 'Ferry';
             break;
-            case strpos($type, 'Train') !== false:
-                return 'Train';
-            break;
-            case strpos($type, 'Train') !== false:
-                return 'Train';
+            case strpos($type, 'SRT') !== false:
+                return 'SRT';
             break;
             case strpos($type, 'Personal') !== false:
                 return 'Personal';

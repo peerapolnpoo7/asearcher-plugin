@@ -350,7 +350,7 @@ $(document).ready(function(){
         });
         $("input[name='ionrangeSkillListLevel']").val('0');
     }).on("change","#idInstitute_Detail",function(){
-        $.request('onGetEducationLevel', {
+        /*$.request('onGetEducationLevel', {
             data: {value: this.value},
              success: function(data) {
                 $('#idEducation_Level').children('option:not(:first)').remove();
@@ -362,7 +362,7 @@ $(document).ready(function(){
                 });
                 $('select.chosen').trigger("chosen:updated");
              }
-        });
+        });*/
         $.request('onGetFaculty', {
             data: {value: this.value},
              success: function(data) {
@@ -392,7 +392,17 @@ $(document).ready(function(){
              }
          });
     }).on('change','#idEducation_Level',function(){
-        $.request('onGetDegreeAndCertificate', {
+        if(this.value==1){
+            $('#boxidGeography').addClass('hidden');
+            $('#boxtype_of_institue').addClass('hidden');
+            $('#boxidInstitute_Detail').addClass('hidden');
+        }else{
+            $('#boxidGeography').removeClass('hidden');
+            $('#boxtype_of_institue').removeClass('hidden');
+            $('#boxidInstitute_Detail').removeClass('hidden');
+            $('#idGeography').val('');
+        }
+        /*$.request('onGetDegreeAndCertificate', {
             data: {value: this.value},
             success: function(data) {
                 $('#idDegree_and_Certificate').children('option:not(:first)').remove();
@@ -404,7 +414,7 @@ $(document).ready(function(){
                 });
                 $('select.chosen').trigger("chosen:updated");
             }
-        });
+        });*/
     }).on('change','#idFaculty_Detail',function(){
         $.request('onGetDepartment', {
             data: {value: this.value},
@@ -515,6 +525,11 @@ $(document).ready(function(){
         }else{
             $(".boxComunication").addClass('hidden');
         }
+    }).on('change','#LangidCountry_Calling_Code',function(){
+        $("#ionrangeListenLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeSpeakingLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeReadingLevel").data("ionRangeSlider").update({from: 0});
+        $("#ionrangeWritingLevel").data("ionRangeSlider").update({from: 0});
     });
     $('#idGeography').each(function(){
         $.request('onGetInstituteDetail', {
@@ -537,14 +552,14 @@ $(document).ready(function(){
             callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
         }
     });
-    $("#District").each(function(){
+    $("#temDistrict").each(function(){
         if(this.value!=0){
             callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
         }
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
-            $.request('onGetEducationLevel', {
+            /*$.request('onGetEducationLevel', {
                 data: {value: this.value},
                  success: function(data) {
                     $('#idEducation_Level').children('option:not(:first)').remove();
@@ -557,8 +572,8 @@ $(document).ready(function(){
                     $("#idEducation_Level").val($("#tempidEducation_Level").val());
                     $('select.chosen').trigger("chosen:updated");
                  }
-            });
-            $.request('onGetFaculty', {
+            });*/
+            /*$.request('onGetFaculty', {
                 data: {value: this.value},
                  success: function(data) {
                     $('#idFaculty_Detail').children('option:not(:first)').remove();
@@ -576,12 +591,12 @@ $(document).ready(function(){
                     }
                     $('select.chosen').trigger("chosen:updated");
                 }
-            });
+            });*/
         }
     });
 
     $("#tempidFaculty_Detail").each(function(){
-        $.request('onGetDepartment', {
+        /*$.request('onGetDepartment', {
             data: {value: this.value},
             success: function(data) {
                 $('#idDepartment').children('option:not(:first)').remove();
@@ -599,7 +614,7 @@ $(document).ready(function(){
                 }
                 $('select.chosen').trigger("chosen:updated");
             }
-        });
+        });*/
     });
 
     $("#tempidDepartment").each(function(){
