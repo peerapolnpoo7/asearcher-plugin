@@ -5,6 +5,14 @@
 {% set countrycallingcodes = __SELF__.countrycallingcodes %}
 {% set relationshiptypes = __SELF__.relationshiptypes %}
 {% set prefixs = __SELF__.prefixs %}
+{% set prefixsfa = __SELF__.prefixsfa %}
+{% set prefixsmo = __SELF__.prefixsmo %}
+{% set prefixsspo = __SELF__.prefixsspo %}
+{% set statuscandidates = __SELF__.statuscandidates %}
+{% set onstatuscandidates = __SELF__.onstatuscandidates %}
+{% set candidates = __SELF__.candidates %}
+{% set familiess = __SELF__.familiess %}
+{% set fa = __SELF__.fa %}
 
 
 <style>
@@ -21,12 +29,24 @@
 
 </style>
 <h3>สถานะและครอบครัว</h3>
-<form data-request="onSave"  class="m-t-md">
-  <div class="row">
+<form data-request="onSave"  class="m-t-md" data-request-files data-request-flash>
+  <!-- <form id="formsave"> -->
+  {% flash %}
+  <p
+  data-control="flash-message"
+  class="flash-message fade {{ type }}"
+  data-interval="5">
+  {{ message }}
+</p>
+{% endflash %}
+
+  <div class="row boxMilitary"  {{ candidates.idGender ==  2 ? 'hidden' :'' }} >
+
     <div class="col-sm-1">
     </div>
     <div class="col-sm-8">
       <div class="form-group">
+
         <label>สถานะทางทหาร</label><br /><br />
         <div class="row">
         {% for military in militarys %}
@@ -34,7 +54,7 @@
         <div style="clear:both;"></div>
         {% endif %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-3">
-          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary }}"/>
+          <input class="up" type="radio" name="typeMilitary" id="{{ military.Name_TH }}" value="{{ military.idMilitary  }}" {{ statuscandidates.idMilitary ==  military.idMilitary ? 'checked' :'' }}/>
           <label class="below" for="{{ military.Name_TH }}">{{ military.Name_TH }}</label>
           </div>
         {% endfor %}
@@ -60,7 +80,7 @@
             </div>
             {% for maritalstatus in maritalstatuss %}
             <div class="checkboxgroup col-sm-1 col-xs-4 col-md-1">
-            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" />
+            <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" {{ statuscandidates.idMarital_Status ==  maritalstatus.idMarital_Status ? 'checked' :'' }}/>
             <label class="drinkcard-cc below2 {{ maritalstatus.Name_TH }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
             </div>
             <div class=" col-sm-1  col-md-1">
@@ -88,8 +108,8 @@
 
           {% for marital_regiter_status in maritalregiterstatus %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-2">
-          <input id="{{ marital_regiter_status.Name_TH }}"  type="radio" name="typeMarital_regiter_status"  value="{{ marital_regiter_status.idMarital_Register_Status }}" />
-          <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_TH }}"  for="{{ marital_regiter_status.Name_TH }}">{{ marital_regiter_status.Name_TH }}</label>
+          <input id="{{ marital_regiter_status.Name_TH }}"  type="radio" name="typeMarital_register_status"  value="{{ marital_regiter_status.idMarital_Register_Status }}" {{ statuscandidates.idMarital_Register_Status ==  marital_regiter_status.idMarital_Register_Status ? 'checked' :'' }}/>
+          <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_TH }} MaritalRegister"  for="{{ marital_regiter_status.Name_TH }}">{{ marital_regiter_status.Name_TH }}</label>
           </div>
           {% endfor %}
           <!-- <div class="radio radio-info col-sm-2 col-xs-6">
@@ -112,24 +132,25 @@
       <div class="col-sm-2">
         <div class="form-group">
           <label class="control-label">คำนำหน้าชื่อ</label>
-          <select id="TitleName" class="form-control" name="idPrefix_Spouse">
-            <option value="1">นาย</option>
-            <option value="2">นางสาว</option>
-            <option value="3">นาง</option>
+          <select id="TitleName" class="form-control chosen" name="idPrefix_Spouse">
+            <option value="0"> เลือก </option>
+            {% for prefixssp in prefixsspo %}
+            <option value="{{ prefixssp.idPrefix }}">{{ prefixssp.Name_TH }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
       <div class="col-sm-3">
         <label class="control-label">ชื่อ</label>
-        <input type="text" name="FirstName_TH_Spouse" class="form-control" placeholder="">
+        <input type="text" name="FirstName_TH_Spouse" class="form-control" value="{{ fa.FirstName_TH }}" >
       </div>
       <div class="col-sm-3">
         <label class="control-label">นามสกุล</label>
-        <input type="text" name="LastName_TH_Spouse" class="form-control" placeholder="">
+        <input type="text" name="LastName_TH_Spouse" class="form-control" value="{{ fa.LastName_TH }}">
       </div>
       <div class="col-sm-2">
         <label class="control-label">ชื่อเล่น</label>
-        <input type="text" name="NickName_TH_Spouse" class="form-control" placeholder="">
+        <input type="text" name="NickName_TH_Spouse" class="form-control" value="{{ fa.NickName_TH }}">
       </div>
     </div>
     <div class="row">
@@ -236,8 +257,11 @@
     <div class="col-sm-2">
       <div class="form-group">
         <label class="control-label">คำนำหน้าชื่อ</label>
-        <select id="TitleName" class="form-control" name="TitleNameFather">
-          <option value="1">นาย</option>
+        <select id="TitleName" class="form-control chosen" name="TitleNameFather">
+          <option value="0"> เลือก </option>
+          {% for prefixsf in prefixsfa %}
+          <option value="{{ prefixsf.idPrefix }}">{{ prefixsf.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
@@ -298,20 +322,6 @@
         <span class="help-block"></span>
       </div>
     </div>
-    <!-- <div class="col-sm-3">
-      <label class="control-label">เบอร์โทรศัพท์</label>
-      <div class="input-group m-b">
-        <div class="input-group-btn">
-          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" aria-expanded="false">+66 <span class="caret"></span></button>
-          <ul class="dropdown-menu">
-            {% for countrycallingcode in countrycallingcodes %}
-              <li><a href="#">+{{countrycallingcode.Code}}</a></li>
-              {% endfor %}
-          </ul>
-        </div>
-        <input type="text" class="form-control FatherRelateStatus" id="TelFathaer">
-      </div>
-    </div> -->
   </div>
   <div class="row">
     <div class="col-sm-1">
@@ -324,9 +334,11 @@
     <div class="col-sm-2">
       <div class="form-group">
         <label class="control-label">คำนำหน้าชื่อ</label>
-        <select id="TitleName" class="form-control" name="TitleNameMother">
-          <option value="2">นางสาว</option>
-          <option value="3">นาง</option>
+        <select id="TitleName" class="form-control chosen" name="TitleNameMother">
+          <option value="0"> เลือก </option>
+          {% for prefixsm in prefixsmo %}
+          <option value="{{ prefixsf.idPrefix }}">{{ prefixsm.Name_TH }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
