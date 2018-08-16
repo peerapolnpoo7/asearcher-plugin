@@ -350,7 +350,7 @@ $(document).ready(function(){
         });
         $("input[name='ionrangeSkillListLevel']").val('0');
     }).on("change","#idInstitute_Detail",function(){
-        $.request('onGetEducationLevel', {
+        /*$.request('onGetEducationLevel', {
             data: {value: this.value},
              success: function(data) {
                 $('#idEducation_Level').children('option:not(:first)').remove();
@@ -362,7 +362,7 @@ $(document).ready(function(){
                 });
                 $('select.chosen').trigger("chosen:updated");
              }
-        });
+        });*/
         $.request('onGetFaculty', {
             data: {value: this.value},
              success: function(data) {
@@ -392,19 +392,28 @@ $(document).ready(function(){
              }
          });
     }).on('change','#idEducation_Level',function(){
+        if(this.value ==""){
+            $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail,#boxidFaculty_Detail,#boxidDepartment,#boxidMajor_Subject,#boxidDegree_and_Certificate,#boxGPA').addClass('hidden');
+        }else if(this.value=="1"){
+            $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail,#boxidFaculty_Detail,#boxidDepartment,#boxidMajor_Subject').addClass('hidden');
+            $('#boxidDegree_and_Certificate,#boxGPA').removeClass('hidden');
+        }else{
+            $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail').removeClass('hidden');
+            $('#boxidDegree_and_Certificate,#boxGPA').removeClass('hidden');
+        }
         $.request('onGetDegreeAndCertificate', {
             data: {value: this.value},
-            success: function(data) {
-                $('#idDegree_and_Certificate').children('option:not(:first)').remove();
-                $.each(data, function(k, v) {
-                    $('#idDegree_and_Certificate').append($('<option>', {
-                        value: v.id,
-                        text: v.Name_TH
-                    }));
-                });
-                $('select.chosen').trigger("chosen:updated");
-            }
-        });
+                success: function(data) {
+                    $('#idDegree_and_Certificate').children('option:not(:first)').remove();
+                    $.each(data, function(k, v) {
+                        $('#idDegree_and_Certificate').append($('<option>', {
+                            value: v.id,
+                            text: v.Name_TH
+                        }));
+                    });
+                    $('select.chosen').trigger("chosen:updated");
+                }
+            });
     }).on('change','#idFaculty_Detail',function(){
         $.request('onGetDepartment', {
             data: {value: this.value},
@@ -549,7 +558,7 @@ $(document).ready(function(){
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
-            $.request('onGetEducationLevel', {
+            /*$.request('onGetEducationLevel', {
                 data: {value: this.value},
                  success: function(data) {
                     $('#idEducation_Level').children('option:not(:first)').remove();
@@ -562,7 +571,7 @@ $(document).ready(function(){
                     $("#idEducation_Level").val($("#tempidEducation_Level").val());
                     $('select.chosen').trigger("chosen:updated");
                  }
-            });
+            });*/
             $.request('onGetFaculty', {
                 data: {value: this.value},
                  success: function(data) {

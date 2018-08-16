@@ -150,30 +150,84 @@ class SmartcvForm extends ComponentBase
             'FirstName_TH' => array('required','min:2','max:64','regex:/^[ก-์]+$/u'),
             'LastName_TH' => array('required','min:2','max:64','regex:/^[\ก-์\s]+$/u'),
             'Date_of_Birth' => array('required'),
-            'Email' => array('required','email'),
+            'Nationality' => array('required'),
+            'Email' => array('required','email','between:6,255'),
             'Line_ID' => array('max:20'),
             'TelephoneNumber' => array('required','min:9','max:10','regex:/\d{10}|\d{9}$/'),
             'idCommunication_Provider' => array('required'),
-            'Nationality' => array('required'),
-            'idGeography' => array('required'),
-            'idSources_Type' => array('required'),
+        );
+        if(Input::get('idCommunication_Provider')=="5"){
+            $rules_more= array( 
+                    'Communication_Provider' => array('required'),
+                );
+            $rules = array_merge($rules,$rules_more);
+        }
+        $rules_more=array(
             'Type_Candidate' => array('required'),
-            'type_of_institue' => array('required'),
-            'idInstitute_Detail' => array('required'),
-            'idFaculty_Detail' => array(''),
-            'idDepartment' => array(''),
-            'idMajor_Subject' => array(''),
             'idEducation_Level' => array('required'),
+        );
+        $rules = array_merge($rules,$rules_more);
+        if(Input::get('idEducation_Level')!='1'){
+            $rules_more=array(
+                'idGeography' => array('required'),
+                'type_of_institue' => array('required'),
+                'idInstitute_Detail' => array('required'),
+                'idFaculty_Detail' => array(''),
+                'idDepartment' => array(''),
+                'idMajor_Subject' => array('')
+            );
+            $rules = array_merge($rules,$rules_more);
+        }
+        $rules_more=array(
             'idDegree_and_Certificate' => array('required'),
             'GPA' => array('required','regex:/^[0]|[0-3]\.(\d{2})|[4].[0]{2}$/'),
+        );
+        $rules = array_merge($rules,$rules_more);
+        if(Input::get('Type_Candidate')=='2'){
+            $rules_more = array(
+                'LastSeniority' => array('required'),
+                'LastJob_Title' => array('required'),
+                'Company_Name' => array(''),
+                'idExperience_Work_Status' => array('required'),
+                'Date_Start' => array('required'),
+            );
+            $rules = array_merge($rules,$rules_more);
+            if(Input::get('idExperience_Work_Status')=='2'){
+                $rules_more= array( 
+                    'Date_End' => array('required'),
+                );
+                $rules = array_merge($rules,$rules_more);
+            }
+            
+        }
+        $rules_more=array(
             'job_CategoryNew' => array('required'),
+            'Seniority' => array('required'),
             'Job_TitleRequire' => array('required'),
+        );
+        $rules = array_merge($rules,$rules_more);
+        if(Input::get('chkValidateSkill')=="yes"){
+            $rules_more= array( 
+                'idSkill_List' => array('required'),
+            );
+            $rules = array_merge($rules,$rules_more);
+
+        }
+        $rules_more=array(
             'LangidCountry_Calling_Code' => array('required'),
             'Expected_Salary' => array('required'),
             'idType_of_Employment' => array('required'),
             'idAvailability_of_Work' => array('required'),
+            'idSources_Type' => array('required'),
             'idJob_Seeking_Status' => array('required'),
         );
+        $rules = array_merge($rules,$rules_more);
+        if(Input::get('idSources_Type')=="99"){
+            $rules_more= array( 
+                    'OtherType' => array('required'),
+                );
+            $rules = array_merge($rules,$rules_more);
+        }
         $messages = [
             'idGender.required' => 'กรุณาเลือก "เพศ"',
             'idPrefix.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
@@ -187,97 +241,43 @@ class SmartcvForm extends ComponentBase
             'Date_of_Birth.required' => 'กรุณาเลือก "วันเกิด"',
             'Email.required' => 'กรุณากรอก "อีเมล์"',
             'Email.email' => 'รูปแบบ "อีเมล์" ไม่ถูกต้อง',
+            'Email.between' => '"อีเมล์" ต้องมีความยาวระหว่าง 6-255 อักษร',
             'Line_ID.max' => '"ไลน์ไอดี" ต้องไม่เกิน 20 ตัวอักษร',
             'TelephoneNumber.required' => 'กรุณากรอก "เบอร์โทรศัพท์"',
             'TelephoneNumber.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
             'TelephoneNumber.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
             'TelephoneNumber.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
             'idCommunication_Provider.required' => 'กรุณาเลือก "เครื่อข่ายโทรศัพท์มือถือที่ใช้"',
+            'Communication_Provider.required' => 'กรุณาระบุ "เครือข่าย อื่นๆ"',
             'Nationality.required' => 'กรุณาเลือก "สัญชาติ"',
             'Type_Candidate.required' => 'กรุณาเลือก "จบใหม่/ฝึกงาน หรือ มีประสบการณ์"',
+            'idEducation_Level.required' => 'กรุณาเลือก "ระดับการศึกษา"',
             'idGeography.required' => 'กรุณาเลือก "ที่ตั้งสถาบัน"',
             'type_of_institue.required' => 'กรุณาเลือก "ประเภทสถาบัน"',
             'idInstitute_Detail.required' => 'กรุณากรอก "ชื่อสถาบัน"',
-            'idEducation_Level.required' => 'กรุณาเลือก "ระดับการศึกษา"',
-            'idDegree_and_Certificate.required' => 'กรุณาเลือก "วุฒิการศึกษา"',
             'idFaculty_Detail.required' => 'กรุณาเลือก "คณะ"',
             'idDepartment.required' => 'กรุณาเลือก "ภาควิชา"',
+            'idDegree_and_Certificate.required' => 'กรุณาเลือก "วุฒิการศึกษา"',
             'GPA.required' => 'กรุณากรอก "GPA"',
             'GPA.between' => 'กรุณากรอก "GPA" ไม่เกิน 4.00',
             'GPA.regex' => 'รปูแบบของ "GPA" ไม่ถูกต้อง',
-            'job_CategoryNew.required' => 'กรุณาเลือก "หมวดหมู่งาน"',
+            'LastSeniority.required' => 'กรุณาเลือก "ระดับการทำงาน"',
+            'LastJob_Title.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน"',
+            'idExperience_Work_Status.required' => 'กรุณาเลือก "สถานะการทำงาน"',
+            'Date_Start.required' => 'กรุณาเลือก "วันที่เริ่ม"',
+            'Date_End.required' => 'กรุณาเลือก "วันที่สิ้นสุด"',
+            'job_CategoryNew.required' => 'กรุณาเลือก "หมวดหมู่งาน" ที่คาดหวัง',
+            'Seniority.required' => 'กรุณาเลือก "ระดับการทำงาน" ที่คาดหวัง',
             'Job_TitleRequire.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน" ที่คาดหวัง',
+            'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
             'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
-            'idSources_Type.required'=> 'กรุณาบอก "คุณรู้จัก aSearcher ได้อย่างไร"',
             'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
             'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทการจ้างงาน"',
             'idAvailability_of_Work.required' => 'กรุณาเลือก "ความพร้อมในการเริ่มงาน"',
             'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"',
+            'idSources_Type.required'=> 'กรุณาบอก "คุณรู้จัก aSearcher ได้อย่างไร"',
+            'OtherType.required' => 'กรุณาระบุ "คุณรู้จัก aSearcher ได้อย่างไร"',
         ];
-        if(Input::get('Type_Candidate')=='2'){
-            $rules_more = array(
-                'LastSeniority' => array('required'),
-                'LastJob_Title' => array('required'),
-                'Company_Name' => array(''),
-                'idExperience_Work_Status' => array('required'),
-                'Date_Start' => array('required'),
-                'Seniority' => array('required'),
-            );
-            $messages_more = [
-                'LastSeniority.required' => 'กรุณาเลือก "ระดับการทำงาน"',
-                'LastJob_Title.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน"',
-                'idExperience_Work_Status.required' => 'กรุณาเลือก "สถานะการทำงาน"',
-                'Date_Start.required' => 'กรุณาเลือก "วันที่เริ่ม"',
-                'Seniority.required' => 'กรุณาเลือก "ระดับการทำงาน" ที่คาดหวัง',
-            ];
-            $rules = array_merge($rules,$rules_more);
-            $messages = array_merge($messages,$messages_more);
-            if(Input::get('idExperience_Work_Status')=='2'){
-                $rules_more= array( 
-                    'Date_End' => array('required'),
-                );
-                $messages_more = [
-                    'Date_End.required' => 'กรุณาเลือก "วันที่สิ้นสุด"',
-                ];
-                $rules = array_merge($rules,$rules_more);
-                $messages = array_merge($messages,$messages_more);
-            }
-            
-        }
-        
-        if(Input::get('idCommunication_Provider')=="5"){
-            $rules_more= array( 
-                    'Communication_Provider' => array('required'),
-                );
-            $messages_more = [
-                    'Communication_Provider.required' => 'กรุณาระบุ "เครือข่าย อื่นๆ"',
-            ];
-            $rules = array_merge($rules,$rules_more);
-            $messages = array_merge($messages,$messages_more);
-        }
-
-        if(Input::get('chkValidateSkill')=="yes"){
-            $rules_more= array( 
-                    'idSkill_List' => array('required'),
-                );
-            $messages_more = [
-                    'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
-            ];
-            $rules = array_merge($rules,$rules_more);
-            $messages = array_merge($messages,$messages_more);
-
-        }
-
-        if(Input::get('idSources_Type')=="99"){
-            $rules_more= array( 
-                    'OtherType' => array('required'),
-                );
-            $messages_more = [
-                    'OtherType.required' => 'กรุณาระุบ "คุณรู้จัก aSearcher ได้อย่างไร"',
-            ];
-            $rules = array_merge($rules,$rules_more);
-            $messages = array_merge($messages,$messages_more);
-        }
         
         $validator = Validator::make(Input::all(), $rules, $messages);
 
@@ -290,7 +290,6 @@ class SmartcvForm extends ComponentBase
         }else{
             $idSkillList = 0;
         }
-
 
         $users=Users::find(Input::get('idUser'));
         $users->name = Input::get('FirstName_TH');
@@ -360,15 +359,25 @@ class SmartcvForm extends ComponentBase
         }
         $education->idCandidate = Session::get('idCandidate');
         $education->idUser = Input::get('idUser');
-        $education->idInstitute_Detail = Input::get('idInstitute_Detail');
         $education->idEducation_Level = Input::get('idEducation_Level');
+        if(Input::get('idEducation_Level')!=1){
+            $education->idInstitute_Detail = Input::get('idInstitute_Detail');
+            $education->idEducation_Status = Input::get('idEducation_Status');
+            $education->idFaculty_Detail = Input::get('idFaculty_Detail');
+            $education->idDepartment = Input::get('idDepartment');
+            $education->idMajor_Subject = Input::get('idMajor_Subject');
+            $education->Year_of_Admission = '0000-00-00';
+            $education->Year_of_Graduation = '0000-00-00';
+        }else{
+            $education->idInstitute_Detail = NULL;
+            $education->idEducation_Status = NULL;
+            $education->idFaculty_Detail = NULL;
+            $education->idDepartment = NULL;
+            $education->idMajor_Subject = NULL;
+            $education->Year_of_Admission = NULL;
+            $education->Year_of_Graduation = NULL;
+        }
         $education->idDegree_and_Certificate = Input::get('idDegree_and_Certificate');
-        $education->idEducation_Status = Input::get('idEducation_Status');
-        $education->idFaculty_Detail = Input::get('idFaculty_Detail');
-        $education->idDepartment = Input::get('idDepartment');
-        $education->idMajor_Subject = Input::get('idMajor_Subject');
-        $education->Year_of_Admission = '0000-00-00';
-        $education->Year_of_Graduation = '0000-00-00';
         $education->GPA = Input::get('GPA');
         $education->save();
 
@@ -648,21 +657,28 @@ class SmartcvForm extends ComponentBase
 
     public function chkWelfareSelected($idWelfare_Type)
     {
-
-        $chk=Db::table('welfare_of_work')->where('idCandidate',Session::get('idCandidate'));
+        $chk=WelfareOfWork::where('idUser',Auth::getUser()->id);
         if($chk->count() == 0){
-            $chkCandidate=Candidate::where('TelephoneNumber',NULL)->where('idCandidate',Session::get('idCandidate'));
-            if($chkCandidate->count() > 0){
-                if($idWelfare_Type==1 or $idWelfare_Type==2 or $idWelfare_Type==3 or $idWelfare_Type==5 or $idWelfare_Type==8 or $idWelfare_Type==18){
-                    return "selected";
+            $chkCandidate=Candidate::where('TelephoneNumber',NULL)->where('idUser',Auth::getUser()->id);
+            if($chkCandidate->count() == 0){
+                switch ($idWelfare_Type) {
+                    case '5':
+                    case '28':
+                    case '29':
+                    case '35':
+                    case '44':
+                    case '45':
+                        return "selected";
+                    break;
                 }
             }
+        }else{
+            $chk->where('idWelfare_Type',$idWelfare_Type);
+            if($chk->count() > 0){
+                return "selected";
+            }    
         }
-        $chk->where('idWelfare_Type',$idWelfare_Type);
-        if($chk->count() > 0){
-            return "selected";
-        }
-        return "";
+        
     }
 
     public function loadWelfareType()
@@ -884,12 +900,15 @@ class SmartcvForm extends ComponentBase
 
     public function loadEducation()
     {
-        $get=Db::table('education')
-        ->join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
+        /*$get=Education::join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
         ->join('geography','institute_detail.idGeography','=','geography.idGeography')
-        ->where('idUser',Auth::getUser()->id)->first();
-        //dd($get);
-        return $get;
+        ->where('idUser',Auth::getUser()->id)->first();*/
+        $get=Education::where('idUser',Auth::getUser()->id);
+        if($get->count() > 0 and $get->first()->idEducation_Level!=1){
+            $get->join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
+            ->join('geography','institute_detail.idGeography','=','geography.idGeography');
+        }
+        return $get->first();
     }
 
     public function loadExperience()
