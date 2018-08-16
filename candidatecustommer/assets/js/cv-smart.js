@@ -400,6 +400,8 @@ $(document).ready(function(){
         }else{
             $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail').removeClass('hidden');
             $('#boxidDegree_and_Certificate,#boxGPA').removeClass('hidden');
+            $('#idGeography,#type_of_institue,#idInstitute_Detail,#idFaculty_Detail,#idDepartment,#idMajor_Subject,#idDegree_and_Certificate,#GPA').val('');
+            $('select.chosen').trigger("chosen:updated");
         }
         $.request('onGetDegreeAndCertificate', {
             data: {value: this.value},

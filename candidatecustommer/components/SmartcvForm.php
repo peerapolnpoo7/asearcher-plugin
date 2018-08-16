@@ -217,9 +217,9 @@ class SmartcvForm extends ComponentBase
             'LangidCountry_Calling_Code' => array('required'),
             'Expected_Salary' => array('required'),
             'idType_of_Employment' => array('required'),
+            'idJob_Seeking_Status' => array('required'),
             'idAvailability_of_Work' => array('required'),
             'idSources_Type' => array('required'),
-            'idJob_Seeking_Status' => array('required'),
         );
         $rules = array_merge($rules,$rules_more);
         if(Input::get('idSources_Type')=="99"){
