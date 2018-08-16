@@ -34,7 +34,7 @@ $(document).ready(function(){
 
 
 	}).on("change","#Status_Father",function(){
-		if(this.value=="1"){
+		if(this.value=="2"){
 			$('.FatherRelateStatus').prop('disabled',true);
 			$('#idCountry_Calling_Code_Father').prop('disabled', true).trigger("chosen:updated");
 		}else{
@@ -42,7 +42,7 @@ $(document).ready(function(){
 			$('#idCountry_Calling_Code_Father').prop('disabled', false).trigger("chosen:updated");
 		}
 	}).on("change","#Status_Mother",function(){
-		if(this.value=="1"){
+		if(this.value=="2"){
 			$('.MotherRelateStatus').prop('disabled',true);
 			$('#idCountry_Calling_Code_Mother').prop('disabled', true).trigger("chosen:updated");
 		}else{
@@ -54,7 +54,7 @@ $(document).ready(function(){
 
 
 		$("#boxChildren").find('.row:not(:first-child)').remove();
-		if(this.value=="" || this.value=="0"){
+		if(this.value=="" || this.value=="0" || this.value=="_"){
 			$("#boxChildren").find('.row:first-child').addClass('hidden');
 		}else{
 			$("#boxChildren").find('.row:first-child').removeClass('hidden');
