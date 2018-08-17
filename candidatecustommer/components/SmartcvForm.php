@@ -835,7 +835,7 @@ class SmartcvForm extends ComponentBase
 
     public function onGetPrefix()
     {
-        return Prefix::select('idPrefix AS id','Name_TH')->whereIn('idGender',[post('value'),'99'])->get();
+        return Prefix::select('idPrefix AS id','Name_TH')->whereIn('idGender',[post('value'),'99'])->where('Type','C')->get();
     }
 
     public function onGetInstituteDetail()
