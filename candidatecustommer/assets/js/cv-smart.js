@@ -303,7 +303,7 @@ $(document).ready(function(){
             }
         });
     }).on("change","#job_CategoryNew",function(){
-        $('#boxJob_TitleRequireOther').addClass('hidden');
+        $('#boxJob_TitleRequireOther,#boxSkill_ListOther').addClass('hidden');
         $.request('onGetJobTitle', {
             data: {value: this.value},
             success: function(data) {
@@ -323,10 +323,12 @@ $(document).ready(function(){
             }
         });
     }).on('change','#Job_TitleRequire',function(){
+        $('#boxSkill_ListOther').addClass('hidden');
         if(this.value=="other"){
             $('#boxJob_TitleRequireOther').removeClass('hidden');
-            $(".boxSkillList").addClass('hidden'); 
+            $(".boxSkillList").addClass('hidden');
             $("input[name='chkValidateSkill']").val('no');
+            $('#Job_TitleRequireOther').focus();
         }else{
             $('#boxJob_TitleRequireOther').addClass('hidden');
             $.request('onGetSkillList', {
@@ -344,37 +346,33 @@ $(document).ready(function(){
                         instance.update({
                             from: 0 ,
                         });
+                        $('#idSkill_List').append($('<option>', {
+                            value: 'other',
+                            text: 'อื่นๆ'
+                        }));
                         $("input[name='ionrangeSkillListLevel']").val('0');
                         $("input[name='chkValidateSkill']").val('yes');
-                        $(".boxSkillList").removeClass('hidden'); 
+                        $(".boxSkillList").removeClass('hidden');
                     }else{
                         $(".boxSkillList").addClass('hidden'); 
                         $("input[name='chkValidateSkill']").val('no');
                     }
                     $('select.chosen').trigger("chosen:updated");
+
                 }
             });
         }
     }).on('change','#idSkill_List',function(){
+        if(this.value=="other"){
+            $('#boxSkill_ListOther').removeClass('hidden');
+            $('input#idSkill_ListOther').focus();
+        }
         var instance = $("#ionrangeSkillListLevel").data("ionRangeSlider");
         instance.update({
             from: 0 ,
         });
         $("input[name='ionrangeSkillListLevel']").val('0');
     }).on("change","#idInstitute_Detail",function(){
-        /*$.request('onGetEducationLevel', {
-            data: {value: this.value},
-             success: function(data) {
-                $('#idEducation_Level').children('option:not(:first)').remove();
-                $.each(data, function(k, v) {
-                    $('#idEducation_Level').append($('<option>', {
-                        value: v.id,
-                        text: v.Name_TH
-                    }));
-                });
-                $('select.chosen').trigger("chosen:updated");
-             }
-        });*/
         $.request('onGetFaculty', {
             data: {value: this.value},
              success: function(data) {
@@ -573,20 +571,6 @@ $(document).ready(function(){
     });
     $('#tempidInstitute_Detail').each(function(){
         if(this.value!=""){
-            /*$.request('onGetEducationLevel', {
-                data: {value: this.value},
-                 success: function(data) {
-                    $('#idEducation_Level').children('option:not(:first)').remove();
-                    $.each(data, function(k, v) {
-                        $('#idEducation_Level').append($('<option>', {
-                            value: v.id,
-                            text: v.Name_TH
-                        }));
-                    });
-                    $("#idEducation_Level").val($("#tempidEducation_Level").val());
-                    $('select.chosen').trigger("chosen:updated");
-                 }
-            });*/
             $.request('onGetFaculty', {
                 data: {value: this.value},
                  success: function(data) {
@@ -691,10 +675,12 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
-                 $('#Job_TitleRequire').append($('<option>', {
+                if(data.length > 0){
+                    $('#Job_TitleRequire').append($('<option>', {
                         value: 'other',
                         text: 'อื่นๆ'
                     }));
+                }
                 $("#Job_TitleRequire").val($("input[name='tempJob_TitleRequire']").val());
                 $('select.chosen').trigger("chosen:updated");
             }
@@ -715,6 +701,10 @@ $(document).ready(function(){
                 if(data.length > 0){
                     $(".boxSkillList").removeClass('hidden'); 
                     $("input[name='chkValidateSkill']").val('yes');
+                    $('#idSkill_List').append($('<option>', {
+                            value: 'other',
+                            text: 'อื่นๆ'
+                        }));
                 }else{
                     $(".boxSkillList").addClass('hidden'); 
                     $("input[name='chkValidateSkill']").val('no');

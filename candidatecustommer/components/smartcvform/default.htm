@@ -555,16 +555,14 @@
 					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
 						<option value="">ไม่ระบุ</option>
-						{% for skilllist in skilllists %}
-						{% set selected = '' %}
-						{% if skilllist.idSkill_List == skillspecifics.idSkill_List %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{skilllist.idSkill_List}}" {{ selected }}>{{skilllist.Name_TH}}</option>
-						{% endfor %}
+						
 					</select>
 					<input type="hidden" name="tempidSkill_List" value="{{ skillspecifics.idSkill_List }}"/>
 					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-12 col-xs-12 hidden" id="boxSkill_ListOther">
+					<label class="control-label">ระบุทักษะที่คุณถนัดที่สุด <span class="text-danger">*</span></label>
+					<input type="text" name="Skill_ListOther" id="Skill_ListOther" class="form-control">
 				</div>
 				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
 					<div id="ionrangeSkillListLevel"></div>
