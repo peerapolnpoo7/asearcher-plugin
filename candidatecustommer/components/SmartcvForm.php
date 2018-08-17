@@ -536,14 +536,16 @@ class SmartcvForm extends ComponentBase
             }
         }
 
-        WelfareOfWork::where('idCandidate',Session::get('idCandidate'))->delete();
-        if(post('Welfares')){
-            foreach (post('Welfares') as $Welfare) {
-                $welfare_of_work = new WelfareOfWork();
-                $welfare_of_work->idCandidate = Session::get('idCandidate');
-                $welfare_of_work->idUser = Auth::getUser()->id;
-                $welfare_of_work->idWelfare_Type = $Welfare;
-                $welfare_of_work->save();
+        if(Input::get('idType_of_Employment')=='1'){
+            WelfareOfWork::where('idCandidate',Session::get('idCandidate'))->delete();
+            if(post('Welfares')){
+                foreach (post('Welfares') as $Welfare) {
+                    $welfare_of_work = new WelfareOfWork();
+                    $welfare_of_work->idCandidate = Session::get('idCandidate');
+                    $welfare_of_work->idUser = Auth::getUser()->id;
+                    $welfare_of_work->idWelfare_Type = $Welfare;
+                    $welfare_of_work->save();
+                }
             }
         }
         Flash::success('บันทึกข้อมูลเรียบร้อยแล้ว');
