@@ -206,6 +206,12 @@ class SmartcvForm extends ComponentBase
             'Job_TitleRequire' => array('required'),
         );
         $rules = array_merge($rules,$rules_more);
+        if(Input::get('Job_TitleRequire')=='other'){
+            $rules_more=array(
+                'Job_TitleRequireOther' => array('required'),
+            );
+            $rules = array_merge($rules,$rules_more); 
+        }
         if(Input::get('chkValidateSkill')=="yes"){
             $rules_more= array( 
                 'idSkill_List' => array('required'),
@@ -269,6 +275,7 @@ class SmartcvForm extends ComponentBase
             'job_CategoryNew.required' => 'กรุณาเลือก "หมวดหมู่งาน" ที่คาดหวัง',
             'Seniority.required' => 'กรุณาเลือก "ระดับการทำงาน" ที่คาดหวัง',
             'Job_TitleRequire.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน" ที่คาดหวัง',
+            'Job_TitleRequireOther.required' => 'กรุณาระบุ "ตำแหน่งงานที่คุณคาดหวัง" ',
             'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
             'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
             'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
@@ -450,6 +457,18 @@ class SmartcvForm extends ComponentBase
         $skill_basic_com->Typing_English_Level = Input::get('Typing_English_Level')+1;
         $skill_basic_com->save();
 
+        if(Input::get('Job_TitleRequire')=='other'){
+            $job_titles = new JobTitle();
+            $job_titles->idJob_Category = Input::get('job_CategoryNew');
+            $job_titles->Name_TH = Input::get('Job_TitleRequireOther');
+            $job_titles->Status = 2;
+            $job_titles->Verify = 0;
+            $job_titles->save();
+            $Job_TitleRequire = $job_titles->id;
+        }else{
+            $Job_TitleRequire = Input::get('Job_TitleRequire');
+        }
+
         $chkReOfWork=RequirementOfWork::where('idCandidate',Session::get('idCandidate'));
         if($chkReOfWork->count() > 0){
             $requirement_of_works = RequirementOfWork::find($chkReOfWork->first()->idRequirement_of_Work);
@@ -464,7 +483,7 @@ class SmartcvForm extends ComponentBase
         }else{
             $requirement_of_works->idSeniority ='1';
         }
-        $requirement_of_works->idJob_Title = Input::get('Job_TitleRequire');
+        $requirement_of_works->idJob_Title = $Job_TitleRequire;
         $requirement_of_works->Expected_Salary = Input::get('Expected_Salary');
         $requirement_of_works->idType_of_Employment = Input::get('idType_of_Employment');
         $requirement_of_works->idAvailability_of_Work = Input::get('idAvailability_of_Work');
@@ -830,7 +849,14 @@ class SmartcvForm extends ComponentBase
 
     public function onGetJobTitle()
     {
-        return JobTitle::select('idJob_Title AS id','Name_TH')->where('idJob_Category',post('value'))->get();
+        //return JobTitle::select('idJob_Title AS id','Name_TH')->where('idJob_Category',post('value'))->get();
+        $get=JobTitle::select('idJob_Title AS id','Name_TH')->where('Verify',1)->where('idJob_Category',post('value'));
+        $chk=RequirementOfWork::where('idUser',Auth::getUser()->id);
+        if($chk->count() > 0){
+            $get->orWhere('idJob_Title',$chk->first()->idJob_Title);
+        }
+        $get->orderBy('Status','ASC');
+        return $get->get();
     }
 
     public function onGetEducationLevel()

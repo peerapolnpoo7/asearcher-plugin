@@ -259,7 +259,7 @@
 						<option value="{{education_level.idEducation_Level}}" {{ selected }}>{{education_level.Name_TH}}</option>
 						{% endfor %}
 					</select>
-					<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level }}"/>
+					<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level?educations.idEducation_Level:'2' }}"/>
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidGeography">
@@ -546,8 +546,12 @@
 					<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
 					<span class="help-block"></span>
 				</div>
+				<div class="form-group col-md-12 col-xs-12 hidden" id="boxJob_TitleRequireOther">
+					<label class="control-label">ระบุตำแหน่งที่คุณคาดหวัง <span class="text-danger">*</span></label>
+					<input type="text" name="Job_TitleRequireOther" id="Job_TitleRequireOther" class="form-control">
+				</div>
 				<input type="hidden" name="chkValidateSkill" value="no"/>
-				<div class="form-group col-md-12 col-xs-12  boxSkillList" id="boxidSkill_List">
+				<div class="form-group col-md-12 col-xs-12 hidden  boxSkillList" id="boxidSkill_List">
 					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
 					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
 						<option value="">ไม่ระบุ</option>
