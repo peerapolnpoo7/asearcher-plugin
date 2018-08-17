@@ -50,11 +50,8 @@ $(document).ready(function(){
 			$('#idCountry_Calling_Code_Mother').prop('disabled', false).trigger("chosen:updated");
 		}
 	}).on("keyup","#NumChildren",function(){
-
-
-
 		$("#boxChildren").find('.row:not(:first-child)').remove();
-		if(this.value=="" || this.value=="0" || this.value=="_"){
+		if(this.value=="" || this.value=="0"){
 			$("#boxChildren").find('.row:first-child').addClass('hidden');
 		}else{
 			$("#boxChildren").find('.row:first-child').removeClass('hidden');
@@ -70,8 +67,6 @@ $(document).ready(function(){
 					$("#boxChildren .row:last-child").find(".Children").each(function(){
 						var idExp=this.id.split("_");
 						$(this).attr('id',idExp[0]+'_'+i);
-						// $(".chosen").chosen({width: "100%"});
-						// $(".chosen").trigger("chosen:updated");
 					});
 				}
 			}
@@ -143,6 +138,32 @@ $(document).ready(function(){
 								$('.boxMarital').removeClass('hidden');
 						}
 				}
+		});
+
+		$("#phone").intlTelInput({
+		  // allowDropdown: false,
+		  // autoHideDialCode: false,
+		  // autoPlaceholder: "off",
+		  // dropdownContainer: "body",
+		  // excludeCountries: ["us"],
+		  // formatOnDisplay: false,
+		  // geoIpLookup: function(callback) {
+		  //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+		  //     var countryCode = (resp && resp.country) ? resp.country : "";
+		  //     callback(countryCode);
+		  //   });
+		  // },
+		  // hiddenInput: "full_number",
+		  // initialCountry: "auto",
+		  // localizedCountries: { 'de': 'Deutschland' },
+		  // nationalMode: false,
+		  // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+		  // placeholderNumberType: "MOBILE",
+		  // preferredCountries: ['cn', 'jp'],
+		  // separateDialCode: true,
+		  // utilsScript: "build/js/utils.js"
+		  utilsScript: {{ 'assets/js/utils.js'|theme }}
+
 		});
 
 
