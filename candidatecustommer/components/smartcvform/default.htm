@@ -585,11 +585,21 @@
 				<div class="form-group col-md-7 col-sm-12 col-xs-12" id="boxidType_of_Employment">
 					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
-					<a class="btn btn-info btn-rounded btn-sm {% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %} btn-outline {%endif%} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
+					{% set classOutline = '' %}
+					{% if requirement_of_works.idType_of_Employment == '' %}
+						{% if type_of_employment.idType_of_Employment != 1 %}
+							{% set classOutline = 'btn-outline' %}
+						{% endif %}
+					{% else %}
+						{% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %}
+							{% set classOutline = 'btn-outline' %}
+						{% endif %}
+					{% endif %}
+					<a class="btn btn-info btn-rounded btn-sm {{ classOutline }} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
 						{{type_of_employment.Name_TH}}
 					</a>
 					{% endfor %}
-					<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment }}"/>
+					<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment ? requirement_of_works.idType_of_Employment : 1 }}"/>
 					<span class="help-block"></span>
 				</div>
 				<h4>สถานที่ต้องการทำงาน</h4>
@@ -628,7 +638,7 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<fieldset>
 				<h4 class="hidden-xs">&nbsp;</h4>
-				<div class="form-group col-md-12 col-xs-12">
+				<div class="form-group col-md-12 col-xs-12 {{ requirement_of_works.idType_of_Employment != 1 ? 'hidden' : '' }}" id="boxWelFares">
 					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
 					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
 						{% for welfare_type in welfare_types %}

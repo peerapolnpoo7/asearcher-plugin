@@ -505,6 +505,12 @@ $(document).ready(function(){
         }
         var spl=this.id.split("_");
         $('input[name="idType_of_Employment"]').val(spl[1]);
+        if(spl[1]!=1){
+            $('#boxWelFares').addClass('hidden');
+        }else{
+            $('#boxWelFares').removeClass('hidden');
+            $(".select2-container").css('width','100%');
+        }
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
