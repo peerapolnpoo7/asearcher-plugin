@@ -7,6 +7,7 @@ $(document).ready(function(){
 		// 		}
 		// });
 
+
 	}).on('click','input[name="typeMilitary"]',function(){
 		if ($('#radioOther').is(':checked')) {
 			$('#detailMilitary').prop('disabled',false);
@@ -27,6 +28,9 @@ $(document).ready(function(){
 		if ($('#หม้าย').is(':checked')){
 			$('.widow').prop('disabled',true);
 			$('#idCountry_Calling_Code_Spouse').prop('disabled', true).trigger("chosen:updated");
+			$('#idOccupation_Spouse').val('');
+			$('#Age_Spouse').val('');
+			$('#TelephoneNumber_Spouse').val('');
 		}else{
 			$('.widow').prop('disabled',false);
 			$('#idCountry_Calling_Code_Spouse').prop('disabled', false).trigger("chosen:updated");
@@ -56,11 +60,6 @@ $(document).ready(function(){
 		}else{
 			$("#boxChildren").find('.row:first-child').removeClass('hidden');
 			if(this.value > 1){
-				// $("#boxChildren").find('.row:first-child label:contains("{=id=}")').text(1+".คำนำหน้าชื่อ");
-				// for(var i=2;i<=this.value;i++){
-				// 	$("#boxChildren").find('.row:last-child').clone().appendTo("#boxChildren");
-				// 	$("#boxChildren").find('.row:last-child label:contains("{=id=}")').text(i+".คำนำหน้าชื่อ");
-				// }
 				for(var i=2;i<=this.value;i++){
 					$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
 					$("#boxChildren .row:last-child").find(".No").text(i);
@@ -97,7 +96,31 @@ $(document).ready(function(){
 			$('#AgeBrethren_'+idBox[1]).prop('disabled',false);
 			$('#OccupationBrethren_'+idBox[1]).prop('disabled',false);
 		}
-	});
+	})
+
+
+	var i = 0
+	$("body").on('click','#btnAddForm',function(){
+		i = i + 1;
+		$('#NumChildren').val(i);
+
+		$("#boxChildren").find('.row:first-child').removeClass('hidden');
+		// // $("#boxChildren").append('<hr>');
+		if (i >= 2) {
+			$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
+			$("#boxChildren .row:last-child").find(".No").text(i);
+			$("#boxChildren .row:last-child").find(".Children").each(function(){
+				var idExp=this.id.split("_");
+				$(this).attr('id',idExp[0]+'_'+i);
+			});
+		}
+
+
+	}).on('click','#btnRemoveForm',function(){
+		i = i - 1;
+		$('#NumChildren').val(i);
+		$("#boxChildren .row:last-child").remove();
+	})
 
 	var now = new Date();
 	$('.BirthDate').scroller({
@@ -140,31 +163,7 @@ $(document).ready(function(){
 				}
 		});
 
-		$("#phone").intlTelInput({
-		  // allowDropdown: false,
-		  // autoHideDialCode: false,
-		  // autoPlaceholder: "off",
-		  // dropdownContainer: "body",
-		  // excludeCountries: ["us"],
-		  // formatOnDisplay: false,
-		  // geoIpLookup: function(callback) {
-		  //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-		  //     var countryCode = (resp && resp.country) ? resp.country : "";
-		  //     callback(countryCode);
-		  //   });
-		  // },
-		  // hiddenInput: "full_number",
-		  // initialCountry: "auto",
-		  // localizedCountries: { 'de': 'Deutschland' },
-		  // nationalMode: false,
-		  // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-		  // placeholderNumberType: "MOBILE",
-		  // preferredCountries: ['cn', 'jp'],
-		  // separateDialCode: true,
-		  // utilsScript: "build/js/utils.js"
-		  utilsScript: {{ 'assets/js/utils.js'|theme }}
 
-		});
 
 
 
