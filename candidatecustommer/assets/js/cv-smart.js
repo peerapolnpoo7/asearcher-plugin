@@ -314,6 +314,10 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                $('#Job_TitleRequire').append($('<option>', {
+                        value: 'other',
+                        text: 'อื่นๆ'
+                    }));
                 $('select.chosen').trigger("chosen:updated");
             }
         });
@@ -400,7 +404,8 @@ $(document).ready(function(){
         }else{
             $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail').removeClass('hidden');
             $('#boxidDegree_and_Certificate,#boxGPA').removeClass('hidden');
-            $('#idGeography,#type_of_institue,#idInstitute_Detail,#idFaculty_Detail,#idDepartment,#idMajor_Subject,#idDegree_and_Certificate,#GPA').val('');
+            $('#boxidFaculty_Detail,#boxidDepartment,#boxidMajor_Subject').addClass('hidden');
+            $('#idGeography,#type_of_institue,#idInstitute_Detail,#idDegree_and_Certificate,#GPA').val('');
             $('select.chosen').trigger("chosen:updated");
         }
         $.request('onGetDegreeAndCertificate', {
@@ -660,10 +665,10 @@ $(document).ready(function(){
     $("input[name='Type_Candidate']").each(function(){
         if(this.value=="" || this.value=="1"){
             $(".boxRefExperience").addClass('hidden');
-             getSeniority(1,$('input[name="temSeniority"]').val());
+            getSeniority(1,$('input[name="temSeniority"]').val());
         }else{
             $(".boxRefExperience").removeClass('hidden');
-             getSeniority(2,$('input[name="temSeniority"]').val());
+            getSeniority(2,$('input[name="temSeniority"]').val());
         }
     });
 
@@ -678,6 +683,10 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                $('#Job_TitleRequire').append($('<option>', {
+                        value: 'other',
+                        text: 'อื่นๆ'
+                    }));
                 $("#Job_TitleRequire").val($("input[name='tempJob_TitleRequire']").val());
                 $('select.chosen').trigger("chosen:updated");
             }

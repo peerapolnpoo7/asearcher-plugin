@@ -227,7 +227,7 @@
 				<h3>การศึกษา / ประสบการณ์ทำงาน</h3>
 				<div class="col-md-6 col-sm-6 col-xs-6 text-right">
 					<a href="javascript:void(0);" id="newGraduate" class="Type_Candidate">
-						{% if candidates.Type_Candidate == '' or candidates.Type_Candidate == '1' %}
+						{% if candidates.Type_Candidate == '1' %}
 						<img src="{{ 'assets/img/CV/NewGrad_hover.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
 						{% else %}
 						<img src="{{ 'assets/img/CV/NewGrad.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
@@ -236,13 +236,13 @@
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6 text-left">
 					<a href="javascript:void(0);" id="haveExp" class="Type_Candidate">
-						{% if candidates.Type_Candidate == '2' %}
+						{% if candidates.Type_Candidate == '' or candidates.Type_Candidate == '2' %}
 						<img src="{{ 'assets/img/CV/Exp_hover.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
 						{% else %}
 						<img src="{{ 'assets/img/CV/Exp.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
 						{% endif %}
 					</a>
-					<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!="" ? candidates.Type_Candidate : '1' }}"/>
+					<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!="" ? candidates.Type_Candidate : '2' }}"/>
 				</div>
 				<div class="form-group col-md-6 col-sm-4 col-xs-12 m-t-20" id="boxidEducation_Level">
 					<label class="control-label">ระดับการศึกษา <span class="text-danger">*</span></label>
@@ -250,6 +250,9 @@
 						<option value="">เลือก</option>
 						{% for education_level in education_levels %}
 						{% set selected = '' %}
+						{% if education_level.idEducation_Level == '2' and educations.idEducation_Level=="" %}
+							{% set selected = 'selected' %}
+						{% endif %}
 						{% if education_level.idEducation_Level == educations.idEducation_Level %}
 						{% set selected = 'selected' %}
 						{% endif %}
@@ -259,7 +262,7 @@
 					<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20 {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidGeography">
+				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidGeography">
 					<label class="control-label">ที่ตั้งสถาบัน <span class="text-danger">*</span></label>
 					<select name="idGeography" id="idGeography" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -273,7 +276,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level != 1  and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxtype_of_institue">
+				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxtype_of_institue">
 					<label class="control-label">ประเภทสถาบัน <span class="text-danger">*</span></label>
 					<select name="type_of_institue" id="type_of_institue" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -287,7 +290,7 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidInstitute_Detail">
+				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidInstitute_Detail">
 					<label class="control-label">ชื่อสถาบัน <span class="text-danger">*</span></label>
 					<select name="idInstitute_Detail" id="idInstitute_Detail" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -327,7 +330,7 @@
 					<span class="help-block"></span>
 				</div>
 				<div style="clear:both;"></div>
-				<div class="form-group col-md-6 col-sm-4 col-xs-12 {{ educations.idEducation_Level ? '' : 'hidden' }}" id="boxidDegree_and_Certificate">
+				<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxidDegree_and_Certificate">
 					<label class="control-label">วุฒิการศึกษา <span class="text-danger">*</span></label>
 					<select name="idDegree_and_Certificate" id="idDegree_and_Certificate" class="form-control chosen">
 						<option value="">เลือก</option>
@@ -342,7 +345,7 @@
 					<input type="hidden" id="tempidDegree_and_Certificate" value="{{ educations.idDegree_and_Certificate }}"/>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-6 col-sm-4 col-xs-12 {{ educations.idEducation_Level ? '' : 'hidden' }}" id="boxGPA">
+				<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxGPA">
 					<label class="control-label">เกรดเฉลี่ย <span class="text-danger">*</span></label>
 					<input type="text" class="form-control" name="GPA" id="GPA" placeholder="Ex. 4.00" value="{{ educations.GPA }}" maxlength="4">
 					<span class="help-block"></span>
@@ -379,7 +382,7 @@
 						{% for experience_work_status in experience_work_statuss %}
 						{% set noselect = 'btn-outline' %}
 						{% if experiences.idExperience_Work_Status == "" %}
-							{% if experience_work_status.idExperience_Work_Status == 1 %}
+							{% if experience_work_status.idExperience_Work_Status == 2 %}
 								{% set noselect = '' %}
 							{% endif %}
 						{% else %}
@@ -391,7 +394,7 @@
 							{{experience_work_status.Name_TH}}
 						</a>
 						{% endfor %}
-						<input type="hidden" name="idExperience_Work_Status" value="{{ experiences.idExperience_Work_Status ? experiences.idExperience_Work_Status : 1 }}"/>
+						<input type="hidden" name="idExperience_Work_Status" value="{{ experiences.idExperience_Work_Status ? experiences.idExperience_Work_Status : 2 }}"/>
 						<span class="help-block"></span>
 					</div>
 					<div class="form-group col-md-6 col-sm-4 col-xs-12">
@@ -403,7 +406,7 @@
 						</div>
 						<span class="help-block"></span>
 					</div>
-					<div class="form-group col-md-6 col-sm-4 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status != 2 %} hidden {% endif %}">
+					<div class="form-group col-md-6 col-sm-4 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status == 1 %} hidden {% endif %}">
 						<label class="control-label">วันที่สิ้นสุด <span class="text-danger">*</span></label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
