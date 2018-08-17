@@ -217,7 +217,12 @@ class SmartcvForm extends ComponentBase
                 'idSkill_List' => array('required'),
             );
             $rules = array_merge($rules,$rules_more);
-
+            if(Input::get('idSkill_List')=='other'){
+                $rules_more= array( 
+                'Skill_ListOther' => array('required'),
+                );
+                $rules = array_merge($rules,$rules_more);
+            }
         }
         $rules_more=array(
             'LangidCountry_Calling_Code' => array('required'),
@@ -277,6 +282,7 @@ class SmartcvForm extends ComponentBase
             'Job_TitleRequire.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน" ที่คาดหวัง',
             'Job_TitleRequireOther.required' => 'กรุณาระบุ "ตำแหน่งงานที่คุณคาดหวัง" ',
             'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
+            'Skill_ListOther.required' => 'กรุณาระบุ "ทักษะที่คุณถนัดที่สุด"',
             'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
             'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
             'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทการจ้างงาน"',
@@ -292,11 +298,7 @@ class SmartcvForm extends ComponentBase
             throw new ValidationException($validator);
         }
 
-        if(Input::get('chkValidateSkill')=="yes"){
-            $idSkillList = Input::get('idSkill_List');
-        }else{
-            $idSkillList = 0;
-        }
+        
 
         $users=Users::find(Input::get('idUser'));
         $users->name = Input::get('FirstName_TH');
@@ -428,6 +430,22 @@ class SmartcvForm extends ComponentBase
         $skilllang->Reading_Level = Input::get('ionrangeReadingLevel')+1;
         $skilllang->Writing_Level = Input::get('ionrangeWritingLevel')+1;
         $skilllang->save();
+
+        if(Input::get('chkValidateSkill')=="yes"){
+            if(Input::get('idSkill_List')=='other'){
+                $skillists = new SkillList();
+                $skillists->idJob_Title = Input::get('Job_TitleRequire');
+                $skillists->Name_TH = Input::get('Skill_ListOther');
+                $skillists->Status = 2;
+                $skillists->Verify = 0;
+                $skillists->save();
+                $idSkillList = $skillists->id;
+            }else{
+                $idSkillList = Input::get('idSkill_List');
+            }
+        }else{
+            $idSkillList = 0;
+        }
 
         $chkSkillSpecific=SkillSpecific::where('idCandidate',Session::get('idCandidate'));
         if($chkSkillSpecific->count() > 0){
@@ -911,7 +929,13 @@ class SmartcvForm extends ComponentBase
 
     public function onGetSkillList()
     {
-        return SkillList::select('idSkill_List AS id','Name_TH')->where('idJob_Title',post('value'))->get();
+        $get = SkillList::select('idSkill_List AS id','Name_TH')->where('Verify',1)->where('idJob_Title',post('value'));
+        $chk=SkillSpecific::where('idUser',Auth::getUser()->id);
+        if($chk->count() > 0){
+            $get->orWhere('idSkill_List',$chk->first()->idSkill_List);
+        }
+        $get->orderBy('Status','ASC');
+        return $get->get();
     }
 
     public function loadCandidate()
