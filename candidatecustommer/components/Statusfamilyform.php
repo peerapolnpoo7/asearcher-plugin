@@ -68,6 +68,7 @@ class Statusfamilyform extends ComponentBase
       $this->statuscandidates=$this->loadStatusCandidate();
       $this->onstatuscandidates=$this->onStatusCandidate();
       $this->lifestatuss=$this->loadLifestatus();
+      $this->childrens=$this->onChildren();
     }
 
     public function onSave(){
@@ -203,12 +204,12 @@ class Statusfamilyform extends ComponentBase
         $families_spouse->FirstName_TH = Input::get('FirstName_TH_Spouse');
         $families_spouse->LastName_TH = Input::get('LastName_TH_Spouse');
         $families_spouse->NickName_TH = Input::get('NickName_TH_Spouse');
-        if ($statuscandidate->idMarital_Status != 4) {
+        // if ($statuscandidate->idMarital_Status != 4) {
         $families_spouse->idOccupation = Input::get('idOccupation_Spouse');
         $families_spouse->Age = Input::get('Age_Spouse');
         $families_spouse->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Spouse');
         $families_spouse->TelephoneNumber = Input::get('TelephoneNumber_Spouse');
-        }
+        // }
         $families_spouse->Amount_of_Children = Input::get('Amount_of_Children');
 
         if ($statuscandidate->idMarital_Status == 2) {
@@ -230,40 +231,63 @@ class Statusfamilyform extends ComponentBase
       }
 
      // //บุตร
-     //
-     //
-     //   if($families_spouse->Amount_of_Children !="" || $families_spouse->Amount_of_Children !="0"){
-     //     // $idPrefix_Children = Input::get('idPrefix_Children');
-     //     // $FirstName_TH_Children = Input::get('FirstName_TH_Children');
-     //     // $LastName_TH_Children = Input::get('LastName_TH_Children');
-     //     // $AgeChildren = Input::get('AgeChildren');
-     //
-     //     // $array1 = array("idPrefix_Children" => $idPrefix_Children);
-     //     // $array2 = array("FirstName_TH_Children" => $FirstName_TH_Children);
-     //     // $array3 = array("LastName_TH_Children" => $LastName_TH_Children);
-     //     // $array4 = array("AgeChildren" => $AgeChildren);
-     //
-     //     // $Children = array_merge($array1,$array2,$array3,$array4);
-     //
-     //     for ($i=0; $i < $families->Amount_of_Children ; $i++) {
-     //       $families_children = new Families();
-     //       $families_children->idCandidate = Session::get('idCandidate');
-     //       $families_children->idUser = Auth::getUser()->id;
-     //       $families_children->idPrefix_Children = post('idPrefix_Children')[$i];
-     //       $families_children->FirstName_TH_Children = post('FirstName_TH_Children')[$i];
-     //       $families_children->LastName_TH_Children = post('LastName_TH_Children')[$i];
-     //       $families_children->AgeChildren = post('AgeChildren')[$i];
-     //       $families_children->idRelationship_type = '5';
-     //       // echo $families_children->idCandidate;
-     //       // echo $families_children->idUser;
-     //       // echo $families_children->idPrefix_Children;
-     //       // echo $families_children->FirstName_TH_Children;
-     //       // echo $families_children->LastName_TH_Children;
-     //       // echo $families_children->AgeChildren;
-     //       // echo $families_children->idRelationship_type;
-     //       // echo "-----";
-     //     }
-     //    }
+          // print_r(post('TitleNameChildren'));
+          // if(post('Amount_of_Children') != 0 ){
+          //   $AmountChildren = post('Amount_of_Children');
+          //
+          //
+          //   $Prefix = post('TitleNameChildren');
+          //   $FirstName_TH = post('FirstName_TH_Children');
+          //   $LastName_TH = post('LastName_TH_Children');
+          //   $Age = post('AgeChildren');
+          //   foreach($Prefix as $key => $val){
+          //
+          //   echo "$val---$FirstName_TH[$key]---$LastName_TH[$key]---$Age[$key]<br />\n";
+          //
+          //
+          //
+          //   }
+
+
+       if($families_spouse->Amount_of_Children !="" || $families_spouse->Amount_of_Children !="0"){
+         // $idPrefix_Children = Input::get('idPrefix_Children');
+         // $FirstName_TH_Children = Input::get('FirstName_TH_Children');
+         // $LastName_TH_Children = Input::get('LastName_TH_Children');
+         // $AgeChildren = Input::get('AgeChildren');
+
+         // $array1 = array("idPrefix_Children" => $idPrefix_Children);
+         // $array2 = array("FirstName_TH_Children" => $FirstName_TH_Children);
+         // $array3 = array("LastName_TH_Children" => $LastName_TH_Children);
+         // $array4 = array("AgeChildren" => $AgeChildren);
+
+         // $Children = array_merge($array1,$array2,$array3,$array4);
+
+         for ($i=0; $i < post('Amount_of_Children') ; $i++) {
+           $families_children = new Families();
+           $families_children->idCandidate = Session::get('idCandidate');
+           $families_children->idUser = Auth::getUser()->id;
+           $families_children->idPrefix = post('TitleNameChildren')[$i];
+           $families_children->FirstName_TH = post('FirstName_TH_Children')[$i];
+           $families_children->LastName_TH = post('LastName_TH_Children')[$i];
+           $families_children->Age = post('AgeChildren')[$i];
+           $families_children->idRelationship_type = '5';
+           $families_children->save();
+           // echo $families_children->idCandidate;
+           // echo "--";
+           // echo $families_children->idUser;
+           // echo "--";
+           // echo $families_children->idPrefix_Children;
+           // echo "--";
+           // echo $families_children->FirstName_TH_Children;
+           // echo "--";
+           // echo $families_children->LastName_TH_Children;
+           // echo "--";
+           // echo $families_children->AgeChildren;
+           // echo "--";
+           // echo $families_children->idRelationship_type;
+           // echo "<br />";
+         }
+        }
 
 
      //บิดา
@@ -472,6 +496,17 @@ class Statusfamilyform extends ComponentBase
        return LifeStatus::all();
     }
 
+    public function onChildren()
+    {
+        // $get = familiess::select('idFamilies','idCandidate','idUser','idPrefix','FirstName_TH','LastName_TH','Age','idRelationship_type')
+        // ->where('idUser',Auth::getUser()->id)->where('idRelationship_type',5);
+        // dd($get);
+        // return $get;
+        $get = Families::where('idUser',Auth::getUser()->id)->where('idRelationship_type',5)->get();
+        // dd($get);
+        return $get;
+    }
+
 
 
 
@@ -493,4 +528,5 @@ class Statusfamilyform extends ComponentBase
     public $mother;
     public $spouse;
     public $lifestatuss;
+    public $childrens;
 }
