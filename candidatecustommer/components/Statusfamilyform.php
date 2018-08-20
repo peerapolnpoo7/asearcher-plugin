@@ -69,6 +69,9 @@ class Statusfamilyform extends ComponentBase
       $this->onstatuscandidates=$this->onStatusCandidate();
       $this->lifestatuss=$this->loadLifestatus();
       $this->childrens=$this->onChildren();
+      $this->brethrens=$this->onBrethren();
+      $this->brethren=$this->loadBrethren();
+      // $this->prefixbrethrens=$this->loadPrefixBrethren();
     }
 
     public function onSave(){
@@ -124,7 +127,6 @@ class Statusfamilyform extends ComponentBase
                           'LastName_TH_Spouse.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
                           'NickName_TH_Spouse.required' => 'กรุณากรอก "ชื่อเล่น"',
                           'NickName_TH_Spouse.regex' => 'กรุณากรอก "ชื่อเล่น" เป็นตัวอักษรไทยเท่านั้น',
-
                           'Amount_of_Children.required' => 'กรุณากรอก "จำนวนบุตร"',
                   ];
 
@@ -154,11 +156,27 @@ class Statusfamilyform extends ComponentBase
                       $rules = array_merge($rules,$rules_more);
                       $messages = array_merge($messages,$messages_more);
                   }
-
-
-
               }
 
+              // if(Input::get('Amount_of_Children') != 0){
+              //   $rules_more= array(
+              //           'TitleNameChildren' => array('required'),
+              //           'FirstName_TH_Children1' => array('required','regex:/^[ก-์]+$/u'),
+              //           'LastName_TH_Children1' => array('required','regex:/^[\ก-์\s]+$/u'),
+              //           'AgeChildren1' => array('required'),
+              //   );
+              //   $messages_more = [
+              //           'TitleNameChildren.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
+              //           'FirstName_TH_Children1.required' => 'กรุณากรอก "ชื่อ"',
+              //           'FirstName_TH_Children1.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
+              //           'LastName_TH_Children1.required' => 'กรุณากรอก "นามสกุล"',
+              //           'LastName_TH_Children1.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
+              //           'AgeChildren.required1' => 'กรุณากรอก "อายุบุตร"',
+              //   ];
+              //
+              //   $rules = array_merge($rules,$rules_more);
+              //   $messages = array_merge($messages,$messages_more);
+              // }
 
               $validator = Validator::make(Input::all(), $rules, $messages);
 
@@ -230,38 +248,8 @@ class Statusfamilyform extends ComponentBase
 
       }
 
-     // //บุตร
-          // print_r(post('TitleNameChildren'));
-          // if(post('Amount_of_Children') != 0 ){
-          //   $AmountChildren = post('Amount_of_Children');
-          //
-          //
-          //   $Prefix = post('TitleNameChildren');
-          //   $FirstName_TH = post('FirstName_TH_Children');
-          //   $LastName_TH = post('LastName_TH_Children');
-          //   $Age = post('AgeChildren');
-          //   foreach($Prefix as $key => $val){
-          //
-          //   echo "$val---$FirstName_TH[$key]---$LastName_TH[$key]---$Age[$key]<br />\n";
-          //
-          //
-          //
-          //   }
-
-
-       if($families_spouse->Amount_of_Children !="" || $families_spouse->Amount_of_Children !="0"){
-         // $idPrefix_Children = Input::get('idPrefix_Children');
-         // $FirstName_TH_Children = Input::get('FirstName_TH_Children');
-         // $LastName_TH_Children = Input::get('LastName_TH_Children');
-         // $AgeChildren = Input::get('AgeChildren');
-
-         // $array1 = array("idPrefix_Children" => $idPrefix_Children);
-         // $array2 = array("FirstName_TH_Children" => $FirstName_TH_Children);
-         // $array3 = array("LastName_TH_Children" => $LastName_TH_Children);
-         // $array4 = array("AgeChildren" => $AgeChildren);
-
-         // $Children = array_merge($array1,$array2,$array3,$array4);
-
+     //บุตร
+           Families::where('idCandidate',Session::get('idCandidate'))->where('idRelationship_type','5')->delete();
          for ($i=0; $i < post('Amount_of_Children') ; $i++) {
            $families_children = new Families();
            $families_children->idCandidate = Session::get('idCandidate');
@@ -271,7 +259,11 @@ class Statusfamilyform extends ComponentBase
            $families_children->LastName_TH = post('LastName_TH_Children')[$i];
            $families_children->Age = post('AgeChildren')[$i];
            $families_children->idRelationship_type = '5';
-           $families_children->save();
+
+           if (post('TitleNameChildren')[$i] != '' && post('FirstName_TH_Children')[$i] != '' && post('LastName_TH_Children')[$i] != '' && post('AgeChildren')[$i] != '') {
+             $families_children->save();
+           }
+
            // echo $families_children->idCandidate;
            // echo "--";
            // echo $families_children->idUser;
@@ -287,8 +279,6 @@ class Statusfamilyform extends ComponentBase
            // echo $families_children->idRelationship_type;
            // echo "<br />";
          }
-        }
-
 
      //บิดา
 
@@ -310,16 +300,8 @@ class Statusfamilyform extends ComponentBase
      $families_father->TelephoneNumber = Input::get('TelephoneNumber_Father');
      $families_father->idRelationship_type = 1;
      $families_father->save();
-     // TitleNameFather
-     // FirstName_TH_Father
-     // LastName_TH_Father
-     // Status_Father
-     // Age_Father
-     // idOccupation_Father
-     // idCountry_Calling_Code_Father
-     // TelephoneNumber_Father
 
-     // // //มารดา
+     //มารดา
 
      $chkfami_Mother=Families::where('idCandidate',Session::get('idCandidate'))->where('idRelationship_type','2');
      if($chkfami_Mother->count() > 0){
@@ -340,18 +322,40 @@ class Statusfamilyform extends ComponentBase
      $families_Mother->idRelationship_type = 2;
      $families_Mother->save();
 
-     // TitleNameMother
-     // FirstName_TH_Mother
-     // LastName_TH_Mother
-     // Status_Mother
-     // Age_Mother
-     // idOccupation_Mother
-     // idCountry_Calling_Code_Mother
-     // TelephoneNumber_Mother
-
-
      // //พี่น้อง
-     //
+
+     Families::where('idCandidate',Session::get('idCandidate'))->whereIN('idRelationship_type',['8','9'])->delete();
+
+     for ($i=0; $i < post('NumBrethren') ; $i++) {
+     $families_brethren = new Families();
+     $families_brethren->idCandidate = Session::get('idCandidate');
+     $families_brethren->idUser = Auth::getUser()->id;
+     $families_brethren->idPrefix = post('TitleNameBrethren')[$i];
+     $families_brethren->FirstName_TH = post('FirstName_TH_Brethren')[$i];
+     $families_brethren->LastName_TH = post('LastName_TH_Brethren')[$i];
+     $families_brethren->idLife_Status = post('Status_Brethren')[$i];
+     // if (post('Status_Brethren')[$i] != 2) {
+       $families_brethren->Age = post('Age_Brethren')[$i]!='2' ? Input::get('Age_Mother'):NULL ;
+       $families_brethren->idOccupation = post('idOccupation_Brethren')[$i];
+     // }
+
+
+             $get = Prefix::where('idPrefix',post('TitleNameBrethren')[$i])->first();
+             // dd($get->idGender);
+     if ($get->idGender == 1) {
+       $Re_t = 8 ;
+     }else if ($get->idGender == 2) {
+       $Re_t = 9 ;
+     }
+     $families_brethren->idRelationship_type = $Re_t;
+
+     if (post('TitleNameBrethren')[$i] != ''&& post('FirstName_TH_Brethren')[$i] != ''&& post('LastName_TH_Brethren')[$i] != ''&& post('Status_Brethren')[$i] != '') {
+       $families_brethren->save();
+     }
+     // $families_brethren->save();
+    }
+
+
      // $families->NumBrethren = Input::get('NumBrethren');
      //
      // if($families->$families->NumBrethren !="" || $families->NumBrethren !="0"){
@@ -370,6 +374,7 @@ class Statusfamilyform extends ComponentBase
      //     // $families_brethren->idRelationship_type = '5';
      //   }
      //  }
+
          Flash::success('บันทึกข้อมูลเรียบร้อยแล้ว');
          return Redirect::to('/cv-family');
 
@@ -491,6 +496,13 @@ class Statusfamilyform extends ComponentBase
         return $get;
     }
 
+    public function loadBrethren()
+    {
+        $get = Families::where('idUser',Auth::getUser()->id)->whereIN('idRelationship_type',['8','9'])->get();
+        // dd($get);
+        return $get;
+    }
+
     public function loadLifestatus()
     {
        return LifeStatus::all();
@@ -498,16 +510,15 @@ class Statusfamilyform extends ComponentBase
 
     public function onChildren()
     {
-        // $get = familiess::select('idFamilies','idCandidate','idUser','idPrefix','FirstName_TH','LastName_TH','Age','idRelationship_type')
-        // ->where('idUser',Auth::getUser()->id)->where('idRelationship_type',5);
-        // dd($get);
-        // return $get;
         $get = Families::where('idUser',Auth::getUser()->id)->where('idRelationship_type',5)->get();
-        // dd($get);
         return $get;
     }
 
-
+    public function onBrethren()
+    {
+        $get = Families::where('idUser',Auth::getUser()->id)->whereIN('idRelationship_type',['8','9'])->get();
+        return $get;
+    }
 
 
     public $militarys;
@@ -529,4 +540,7 @@ class Statusfamilyform extends ComponentBase
     public $spouse;
     public $lifestatuss;
     public $childrens;
+    public $brethrens;
+    public $brethren;
+    // public $prefixbrethrens;
 }
