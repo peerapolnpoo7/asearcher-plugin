@@ -89,7 +89,7 @@ $(document).ready(function(){
 		}
 	}).on("change",".BrethrenStatus",function(){
 		var idBox=this.id.split("_");
-		if(this.value=="1"){
+		if(this.value=="2"){
 			$('#AgeBrethren_'+idBox[1]).prop('disabled',true);
 			$('#OccupationBrethren_'+idBox[1]).prop('disabled',true);
 		}else{
@@ -98,29 +98,189 @@ $(document).ready(function(){
 		}
 	})
 
+	var i = 0;
+	$('form').request('onChildren',{
+			success: function(data) {
+				$('#btnRemove_C').attr('disabled', true);
+					// console.log(data.length);
+					i = data.length;
+					if (i != 0) {
+						$('#NumChildren').val(i);
 
-	var i = 0
-	$("body").on('click','#btnAddForm',function(){
-		i = i + 1;
-		$('#NumChildren').val(i);
+						for (var k = 1; k <= i; k++) {
+							if (k == 1) {
+									$("#boxChildren").find('.row:first-child').removeClass('hidden');
+							}else if (k >= 2) {
+								$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
+								$("#boxChildren .row:last-child").find(".No").text(k);
+								$("#boxChildren .row:last-child").find(".Children").each(function(){
+									var idExp=this.id.split("_");
+									$(this).attr('id',idExp[0]+'_'+k);
+								});
+							}
+							$("#TitleNameChildren_"+k+" option[value='" + data[k-1].idPrefix +"']").attr("selected","selected");
+							$("#NameChildren_"+k+"").val(data[k-1].FirstName_TH);
+							$("#LastNameChildren_"+k+"").val(data[k-1].LastName_TH);
+							$("#AgeChildren_"+k+"").val(data[k-1].Age);
+						}
+					}else {
+						 i = 0;
+						$('#NumChildren').val(i);
+					}
 
-		$("#boxChildren").find('.row:first-child').removeClass('hidden');
-		// // $("#boxChildren").append('<hr>');
-		if (i >= 2) {
-			$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
-			$("#boxChildren .row:last-child").find(".No").text(i);
-			$("#boxChildren .row:last-child").find(".Children").each(function(){
-				var idExp=this.id.split("_");
-				$(this).attr('id',idExp[0]+'_'+i);
-			});
-		}
+					$("body").on('click','#btnAdd_C',function(){
+						i = i + 1;
+						if (i == 9) {
+							$('#btnAdd_C').attr('disabled', true);
+						}else {
+							$('#btnAdd_C').attr('disabled', false);
+						}
+
+						if (i > data.length ) {
+									$('#btnRemove_C').attr('disabled', false);
+						}
+
+						$('#NumChildren').val(i);
+						$("#boxChildren").find('.row:first-child').removeClass('hidden');
+						if (i >= 2) {
+							$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren").val("");
+							$("#boxChildren .row:last-child").find(".No").text(i);
+							$("#boxChildren .row:last-child").find(".Children").val("").each(function(){
+								var idExp=this.id.split("_");
+								$(this).attr('id',idExp[0]+'_'+i);
+							});
+						}
+					}).on('click','#btnRemove_C',function(){
+						if (i == 1 ) {
+							$("#boxChildren").find('.row:first-child').addClass('hidden');
+						}else {
+							$("#boxChildren .row:last-child").remove();
+						}
+						i = i - 1;
+						$('#NumChildren').val(i);
+
+						if (data.length != 0) {
+							if (data.length == i) {
+			              $('#btnRemove_C').attr('disabled', true);
+			        }else {
+			              $('#btnRemove_C').attr('disabled', false);
+			        }
+
+							if (i != data.length) {
+			              $('#btnAdd_C').attr('disabled', false);
+			        }
+						} else {
+							if (i == 0) {
+			              $('#btnRemove_C').attr('disabled', true);
+			        }else {
+			              $('#btnRemove_C').attr('disabled', false);
+			        }
+
+							if (i != 0) {
+			              $('#btnAdd_C').attr('disabled', false);
+			        }
+						}
+
+					})
+			}
+	});
+
+	var j = 0;
+	$('form').request('onBrethren',{
+			success: function(data) {
+				$('#btnRemove_B').attr('disabled', true);
+					// console.log(data);
+					j = data.length;
+					if (j != 0) {
+						$('#NumBrethren').val(j);
+
+						for (var h = 1; h <= j; h++) {
+							if (h == 1) {
+									$("#boxBrethren").find('.row:first-child').removeClass('hidden');
+							}else if (h >= 2) {
+								$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren");
+								$("#boxBrethren .row:last-child").find(".No").text(h);
+								$("#boxBrethren .row:last-child").find(".Brethren").each(function(){
+									var idExp=this.id.split("_");
+									$(this).attr('id',idExp[0]+'_'+h);
+								});
+							}
+							$("#TitleNameBrethren_"+h+" option[value='" + data[h-1].idPrefix +"']").attr("selected","selected");
+							$("#NameBrethren_"+h+"").val(data[h-1].FirstName_TH);
+							$("#LastNameBrethren_"+h+"").val(data[h-1].LastName_TH);
+							$("#BrethrenStatus_"+h+"").val(data[h-1].idLife_Status);
+							$("#AgeBrethren_"+h+"").val(data[h-1].Age);
+							$("#OccupationBrethren_"+h+"").val(data[h-1].idOccupation);
+
+						}
+					}else {
+						 j = 0;
+						$('#NumBrethren').val(j);
+					}
+
+					$("body").on('click','#btnAdd_B',function(){
+						j = j + 1;
+						if (j == 9) {
+							$('#btnAdd_B').attr('disabled', true);
+						}else {
+							$('#btnAdd_B').attr('disabled', false);
+						}
+
+						if (j > data.length ) {
+									$('#btnRemove_B').attr('disabled', false);
+						}
+
+						$('#NumBrethren').val(j);
+						$("#boxBrethren").find('.row:first-child').removeClass('hidden');
+						if (j >= 2) {
+							$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren");
+							$("#boxBrethren .row:last-child").find(".No").text(j);
+							$("#boxBrethren .row:last-child").find(".Brethren").val("").each(function(){
+								var idExp=this.id.split("_");
+								$(this).attr('id',idExp[0]+'_'+j);
+							});
+						}
+					console.log(j);
+						$("#TitleNameBrethren_"+j+" option[value='']").attr("selected","selected");
+						$("#BrethrenStatus_"+j+" option[value='1']").attr("selected","selected");
+						$("#OccupationBrethren_"+j+" option[value='']").attr("selected","selected");
+					}).on('click','#btnRemove_B',function(){
+						if (j == 1 ) {
+							$("#boxBrethren").find('.row:first-child').addClass('hidden');
+						}else {
+							$("#boxBrethren .row:last-child").remove();
+						}
+						j = j - 1;
+						$('#NumBrethren').val(j);
+
+						if (data.length != 0) {
+							if (data.length == j) {
+										$('#btnRemove_B').attr('disabled', true);
+							}else {
+										$('#btnRemove_B').attr('disabled', false);
+							}
+
+							if (j != data.length) {
+										$('#btnAdd_B').attr('disabled', false);
+							}
+						} else {
+							if (j == 0) {
+										$('#btnRemove_B').attr('disabled', true);
+							}else {
+										$('#btnRemove_B').attr('disabled', false);
+							}
+
+							if (j != 0) {
+										$('#btnAdd_B').attr('disabled', false);
+							}
+						}
+
+					})
+			}
+	});
 
 
-	}).on('click','#btnRemoveForm',function(){
-		i = i - 1;
-		$('#NumChildren').val(i);
-		$("#boxChildren .row:last-child").remove();
-	})
+
 
 	var now = new Date();
 	$('.BirthDate').scroller({
@@ -144,19 +304,9 @@ $(document).ready(function(){
 		});
 		$('.chosen-select').chosen({width: "100%",height:"100%"});
 
-
-		// $('form').request('onCandidate',{
-		// 		success: function(data) {
-		// 				console.log(data);
-		// 				if (data.idGender == 2) {
-		// 						$('.boxMilitary').addClass('hidden');
-		// 				}
-		// 		}
-		// });
-		//
 		$('form').request('onStatusCandidate',{
 				success: function(data) {
-						console.log(data.idMarital_Status);
+						// console.log(data.idMarital_Status);
 						if (data.idMarital_Status != 1) {
 								$('.boxMarital').removeClass('hidden');
 						}
