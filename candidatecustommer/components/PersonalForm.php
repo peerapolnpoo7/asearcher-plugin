@@ -39,6 +39,7 @@ class PersonalForm extends ComponentBase
 
     public function onRun(){
         $this->addJs('assets/js/cv-personal.js');
+        $this->addCss('assets/css/cv-personal.css');
         $this->imgcvs=$this->loadImageCV();
         $this->prefixs=$this->loadPrefix();
         $this->genders=$this->loadGender();

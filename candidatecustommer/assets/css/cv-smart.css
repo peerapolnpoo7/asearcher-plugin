@@ -1,3 +1,12 @@
 .irs-min,.irs-max{
 	display:none;
 }
+
+textarea.form-control{
+  border: 50px solid #feb515  !important;
+  border-radius: 15px !important;
+  -moz-border-radius: 15px !important;
+  -webkit-border-radius: 15px !important;
+  padding: 15px;
+  border-image-slice: 5;
+}
