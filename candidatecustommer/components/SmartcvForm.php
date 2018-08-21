@@ -952,9 +952,6 @@ class SmartcvForm extends ComponentBase
 
     public function loadEducation()
     {
-        /*$get=Education::join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
-        ->join('geography','institute_detail.idGeography','=','geography.idGeography')
-        ->where('idUser',Auth::getUser()->id)->first();*/
         $get=Education::where('idUser',Auth::getUser()->id);
         if($get->count() > 0 and $get->first()->idEducation_Level!=1){
             $get->join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
