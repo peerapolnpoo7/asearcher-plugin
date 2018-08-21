@@ -20,6 +20,7 @@ use Asearcher\CandidateCustommer\Models\Religion;
 use Asearcher\CandidateCustommer\Models\Race;
 use Asearcher\CandidateCustommer\Models\BloodGroup;
 use Asearcher\CandidateCustommer\Models\JobSeekingStatus;
+use Asearcher\CandidateCustommer\Models\RequirementOfWork;
 
 class PersonalForm extends ComponentBase
 {
@@ -46,6 +47,7 @@ class PersonalForm extends ComponentBase
         $this->countrycallingcodes=$this->loadCountryCallingCode();
         $this->blood_groups=$this->loadBloodGroup();
         $this->job_seeker_statuses=$this->loadJobSeekingStatus();
+        $this->requirement_of_works=$this->loadRequirementOfWork();
     }
 
     public function loadImageCV()
@@ -88,6 +90,13 @@ class PersonalForm extends ComponentBase
         return JobSeekingStatus::all();
     }
 
+    public function loadRequirementOfWork()
+    {
+        $get=RequirementOfWork::join('job_title','requirement_of_work.idJob_Title','=','job_title.idJob_Title')
+        ->where('idUser',Auth::getUser()->id)->first();
+        return $get;
+    }
+
 
     public $imgcvs;
     public $prefixs;
@@ -97,4 +106,5 @@ class PersonalForm extends ComponentBase
     public $countrycallingcodes;
     public $blood_groups;
     public $job_seeker_statuses;
+    public $requirement_of_works;
 }
