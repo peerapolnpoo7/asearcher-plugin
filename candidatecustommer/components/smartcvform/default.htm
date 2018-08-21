@@ -434,67 +434,93 @@
 						{% endfor %}
 					</select>
 				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12">
-					<label class="col-md-2 control-label ">ฟัง</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgListen.png'|theme }}" alt="LanguageSkillListening" id="imgListen"/>
+						ฟัง
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="ionrangeListenLevel"></div>
 						<input type="hidden" name="ionrangeListenLevel" class=""  value="{{ skilllangs.Listening_Level ? skilllangs.Listening_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12">
-					<label class="col-md-2 control-label ">พูด</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgSpeaking.png'|theme }}" alt="LanguageSkillSpeaking" id="imgSpeaking"/>
+						พูด
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="ionrangeSpeakingLevel"></div>
 						<input type="hidden" name="ionrangeSpeakingLevel" class=""  value="{{ skilllangs.Speaking_Level ? skilllangs.Speaking_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12">
-					<label class="col-md-2 control-label ">อ่าน</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgReading.png'|theme }}" alt="LanguageSkillReading" id="imgReading"/>
+						อ่าน
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="ionrangeReadingLevel"></div>
 						<input type="hidden" name="ionrangeReadingLevel" class=""  value="{{ skilllangs.Reading_Level ? skilllangs.Reading_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12">
-					<label class="col-md-2 control-label ">เขียน</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgWriting.png'|theme }}" alt="LanguageSkillWriting" id="imgWriting"/>
+						เขียน
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="ionrangeWritingLevel"></div>
 						<input type="hidden" name="ionrangeWritingLevel" class=""  value="{{ skilllangs.Writing_Level ? skilllangs.Writing_Level-1 : 0 }}" />
 					</div>
 				</div>
 				<h4>ความสามารถพื้นฐานด้านคอมพิวเตอร์</h4>
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-label ">Word</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgWord.png'|theme }}" alt="ComputerSkillWord" id="imgWord"/>
+						Word
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="Word_Level"></div>
 						<input type="hidden" class="" name="Word_Level" value="{{ skill_basic_coms.Word_Level ? skill_basic_coms.Word_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-label ">Excel</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgExcel.png'|theme }}" alt="ComputerSkillExcel" id="imgExcel"/>
+						Excel
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="Excel_Level"></div>
 						<input type="hidden" class="" name="Excel_Level" value="{{ skill_basic_coms.Excel_Level ? skill_basic_coms.Excel_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-label no-padding">Powerpoint</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgPowerpoint.png'|theme }}" alt="ComputerSkillPowerpoint" id="imgPowerpoint"/>
+						Power<br class="visible-xs"/>point</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="Powerpoint_Level"></div>
 						<input type="hidden" class="" name="Powerpoint_Level" value="{{ skill_basic_coms.Powerpoint_Level ? skill_basic_coms.Powerpoint_Level-1 : 0 }}" />
 					</div>
 				</div>
 				<h4>ความสามารถด้านการพิมพ์ (คำต่อนาที)</h4>
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-label no-padding">การพิมพ์ไทย</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgTypingThai.png'|theme }}" alt="TypingSkillThai" id="imgTypingThai"/><br/>
+						การพิมพ์ไทย
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="Typing_Thai_Level"></div>
 						<input type="hidden" name="Typing_Thai_Level" value="{{ skill_basic_coms.Typing_Thai_Level ? skill_basic_coms.Typing_Thai_Level-1 : 0 }}" />
 					</div>
 				</div>
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-label no-padding">การพิมพ์อังกฤษ</label>
-					<div class="col-lg-10">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+						<img src="{{ 'assets/img/CV/imgTypingEnglish.png'|theme }}" alt="TypingSkillEnglish" id="imgTypingEnglish"/><br/>
+						การพิมพ์อังกฤษ
+					</label>
+					<div class="col-md-10 col-sm-10 col-xs-10">
 						<div id="Typing_English_Level"></div>
 						<input type="hidden" name="Typing_English_Level" value="{{ skill_basic_coms.Typing_English_Level ? skill_basic_coms.Typing_English_Level-1 : 0 }}" />
 					</div>
@@ -638,7 +664,7 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<fieldset>
 				<h4 class="hidden-xs">&nbsp;</h4>
-				<div class="form-group col-md-12 col-xs-12 {{ requirement_of_works.idType_of_Employment != 1 ? 'hidden' : '' }}" id="boxWelFares">
+				<div class="form-group col-md-12 col-xs-12 {{ requirement_of_works.idType_of_Employment == 1 or requirement_of_works.idType_of_Employment == '' ? '' : 'hidden' }}" id="boxWelFares">
 					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
 					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
 						{% for welfare_type in welfare_types %}
