@@ -72,7 +72,7 @@ class SmartcvForm extends ComponentBase
     public function onRun(){
        
         $this->addJs('assets/js/cv-smart.js');
-        $this->addCss('assets/css/cv-address.css');
+        $this->addCss('assets/css/cv-smart.css');
         $this->candidates=$this->loadCandidate();
         $this->imgcvs=$this->loadImageCV();
         $this->prefixs=$this->loadPrefix();
