@@ -608,6 +608,11 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
+			</fieldset>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<fieldset>
+				<h4 class="hidden-xs">&nbsp;</h4>
 				<div class="form-group col-md-7 col-sm-12 col-xs-12" id="boxidType_of_Employment">
 					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
@@ -628,42 +633,6 @@
 					<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment ? requirement_of_works.idType_of_Employment : 1 }}"/>
 					<span class="help-block"></span>
 				</div>
-				<h4>สถานที่ต้องการทำงาน</h4>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="boxLocation_of_Work_Provinces">
-					<label class="control-label">จังหวัด</label>
-					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
-						<option value="0">ทุกจังหวัด</option>
-						{% for province in provinces %}
-						{% set selected = '' %}
-						{% if province.idProvinces == requirement_of_works.Location_of_Work_Provinces %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_Districts">
-					<label class="control-label">อำเภอ/เขต</label>
-					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
-						<option value="0">ทุกอำเภอ/เขต</option>
-					</select>
-					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_SubDistricts">
-					<label class="control-label">ตำบล/แขวง</label>
-					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
-						<option value="0">ทุกตำบล/แขวง</option>
-					</select>
-					<input type="hidden" id="temSubdistricts" value="{{ requirement_of_works.Location_of_Work_Subdistricts }}">
-					<span class="help-block"></span>
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4 class="hidden-xs">&nbsp;</h4>
 				<div class="form-group col-md-12 col-xs-12 {{ requirement_of_works.idType_of_Employment == 1 or requirement_of_works.idType_of_Employment == '' ? '' : 'hidden' }}" id="boxWelFares">
 					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
 					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
@@ -719,6 +688,37 @@
 		</div> -->
 		<div class="col-md-12  col-xs-12 transportation">
 			<fieldset>
+				<h4>สถานที่ต้องการทำงาน</h4>
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="boxLocation_of_Work_Provinces">
+					<label class="control-label">จังหวัด</label>
+					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
+						<option value="0">ทุกจังหวัด</option>
+						{% for province in provinces %}
+						{% set selected = '' %}
+						{% if province.idProvinces == requirement_of_works.Location_of_Work_Provinces %}
+						{% set selected = 'selected' %}
+						{% endif %}
+						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
+						{% endfor %}
+					</select>
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_Districts">
+					<label class="control-label">อำเภอ/เขต</label>
+					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
+						<option value="0">ทุกอำเภอ/เขต</option>
+					</select>
+					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_SubDistricts">
+					<label class="control-label">ตำบล/แขวง</label>
+					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
+						<option value="0">ทุกตำบล/แขวง</option>
+					</select>
+					<input type="hidden" id="temSubdistricts" value="{{ requirement_of_works.Location_of_Work_Subdistricts }}">
+					<span class="help-block"></span>
+				</div>
 				<h4>ความคาดหวังในการเดินทาง</h4>
 				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
 					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
