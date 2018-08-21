@@ -941,7 +941,7 @@ class SmartcvForm extends ComponentBase
     }
 
     public function loadCandidate()
-    {
+    { 
         $get=Candidate::where('idUser',Auth::getUser()->id)->first();
         if($get){
             $get->Date_of_Birth=$this->convertDateToForm($get->Date_of_Birth);
