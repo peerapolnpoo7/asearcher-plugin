@@ -503,7 +503,7 @@ class SmartcvForm extends ComponentBase
         }
         $requirement_of_works->idJob_Title = $Job_TitleRequire;
         $requirement_of_works->Expected_Salary = Input::get('Expected_Salary');
-        $requirement_of_works->idType_of_Employment = Input::get('idType_of_Employment');
+        //$requirement_of_works->idType_of_Employment = Input::get('idType_of_Employment');
         $requirement_of_works->idAvailability_of_Work = Input::get('idAvailability_of_Work');
         $requirement_of_works->Location_of_Work_Country = Input::get('Location_of_Work_Country');
         $requirement_of_works->Location_of_Work_Provinces = Input::get('Location_of_Work_Provinces');
