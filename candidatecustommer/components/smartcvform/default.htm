@@ -377,7 +377,30 @@
 						<input type="text" class="form-control" name="Company_Name_TH" id="Company_Name_TH" value="{{ experiences.Company_Name_TH }}">
 						<span class="help-block"></span>
 					</div>
-					<div class="form-group col-md-12 col-sm-4 col-xs-12">
+					<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-lg visible-md visible-sm">
+						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
+						{% for experience_work_status in experience_work_statuss %}
+						<div class="radio radio-info col-md-6 col-sm-6 col-xs-6 text-center no-padding">
+							{% set checked = '' %}
+							{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'.png' %}
+							{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
+								{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
+								{% set checked = 'checked' %}
+							{% endif %}
+
+							{% if experiences.idExperience_Work_Status == "" and experience_work_status.idExperience_Work_Status == "2" %}
+								{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
+								{% set checked = 'checked' %}
+							{% endif %}
+							<input type="radio" name="ExperienceWorkStatus" id="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}" value="{{ experience_work_status.idExperience_Work_Status }}" {{ checked }} />
+							<label for="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}">
+								<img src="{{ image|theme }}" alt="{{ experience_work_status.Name_EN }}" id="ImageWorkStatus{{ experience_work_status.idExperience_Work_Status }}" class="ImageWorkStatus"/>
+							</label><br/>
+							{{ experience_work_status.Name_TH }}
+						</div>
+						{% endfor %}
+					</div>
+					<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-xs">
 						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
 						{% for experience_work_status in experience_work_statuss %}
 						{% set noselect = 'btn-outline' %}
@@ -390,7 +413,7 @@
 								{% set noselect = '' %}
 							{% endif %}
 						{% endif %}
-						<a class="btn btn-info btn-rounded btn-sm {{ noselect }} ExperienceWorkStatus" id="ExperienceWorkStatus_{{ experience_work_status.idExperience_Work_Status}}" href="javascript:void(0)">
+						<a class="btn btn-info btn-rounded btn-sm {{ noselect }} ExperienceWorkStatus" id="ExperienceWorkStatus_{{ experience_work_status.idExperience_Work_Status }}" href="javascript:void(0)">
 							{{experience_work_status.Name_TH}}
 						</a>
 						{% endfor %}
