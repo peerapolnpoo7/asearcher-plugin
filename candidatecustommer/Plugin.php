@@ -13,7 +13,7 @@ class Plugin extends PluginBase
            'Asearcher\CandidateCustommer\Components\AddressForm' => 'addressform',
            'Asearcher\CandidateCustommer\Components\ProfileSession' => 'profilesession',
            'Asearcher\CandidateCustommer\Components\Statusfamilyform' => 'statusfamilyform',
-           'Asearcher\CandidateCustommer\Components\Personalform' => 'personalform'  
+           'Asearcher\CandidateCustommer\Components\PersonalForm' => 'personalform'  
 
         ];
     }
