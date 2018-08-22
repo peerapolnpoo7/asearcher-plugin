@@ -523,6 +523,25 @@ $(document).ready(function(){
         }else{
             $('.DateEnd').addClass('hidden');
         }
+    }).on('click','input[name="ExperienceWorkStatus"]',function(){
+        $('input[name="idExperience_Work_Status"]').val(this.value);
+        if(this.value==2){
+            var Img = $("#ImageWorkStatus"+this.value).attr('src');
+            var ImgReplace = Img.replace('Resigned.png','Resigned_hover.png');
+            $("#ImageWorkStatus"+this.value).attr('src',ImgReplace);
+            var Img = $("#ImageWorkStatus1").attr('src');
+            var ImgReplace = Img.replace('Working_hover.png','Working.png');
+            $("#ImageWorkStatus1").attr('src',ImgReplace);
+            $('.DateEnd').removeClass('hidden');
+        }else{
+            var Img = $("#ImageWorkStatus"+this.value).attr('src');
+            var ImgReplace = Img.replace('Working.png','Working_hover.png');
+            $("#ImageWorkStatus"+this.value).attr('src',ImgReplace);
+            var Img = $("#ImageWorkStatus2").attr('src');
+            var ImgReplace = Img.replace('Resigned_hover.png','Resigned.png');
+            $("#ImageWorkStatus2").attr('src',ImgReplace);
+            $('.DateEnd').addClass('hidden');
+        }
     }).on('click','.Availability',function(){
         $(".Availability").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
