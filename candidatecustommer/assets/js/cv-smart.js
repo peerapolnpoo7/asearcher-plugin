@@ -331,8 +331,8 @@ $(document).ready(function(){
             $('#Job_TitleRequireOther').focus();
         }else{
             $('#boxJob_TitleRequireOther').addClass('hidden');
-            $.request('onGetSkillList2', {
-                data: {value: this.value,},
+            $.request('onGetSkillList', {
+                data: {value: this.value},
                 success: function(data) {
                     $('#idSkill_List').children('option:not(:first)').remove();
                     $.each(data, function(k, v) {
@@ -498,26 +498,6 @@ $(document).ready(function(){
         }
         var spl=this.id.split("_");
         $('input[name="idJob_Seeking_Status"]').val(spl[1]);
-    }).on('click','input[name="JobSeekingStatus"]',function(){
-        $('input[name="idJob_Seeking_Status"]').val(this.value);
-        $('img.ImageJobSeeking').each(function(){
-            var Img = $(this).attr('src');
-            var ImgReplace = Img.replace('_hover','');
-            $(this).attr('src',ImgReplace);
-        });
-        if(this.value==1){
-            var Img = $("#ImageJobSeeking"+this.value).attr('src');
-            var ImgReplace = Img.replace('ActivelyLooking.png','ActivelyLooking_hover.png');
-            $("#ImageJobSeeking"+this.value).attr('src',ImgReplace);
-        }else if(this.value==2){
-            var Img = $("#ImageJobSeeking"+this.value).attr('src');
-            var ImgReplace = Img.replace('MaybeInterested.png','MaybeInterested_hover.png');
-            $("#ImageJobSeeking"+this.value).attr('src',ImgReplace);
-        }else{
-            var Img = $("#ImageJobSeeking"+this.value).attr('src');
-            var ImgReplace = Img.replace('RegisteredbutnotLooking.png','RegisteredbutnotLooking_hover.png');
-            $("#ImageJobSeeking"+this.value).attr('src',ImgReplace);
-        }
     }).on('click','.TypeofEmployment',function(){
         $(".TypeofEmployment").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
