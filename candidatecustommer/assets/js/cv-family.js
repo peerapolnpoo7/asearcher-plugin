@@ -189,7 +189,7 @@ $(document).ready(function(){
 	$('form').request('onBrethren',{
 			success: function(data) {
 				$('#btnRemove_B').attr('disabled', true);
-					// console.log(data);
+					console.log(data);
 					j = data.length;
 					if (j != 0) {
 						$('#NumBrethren').val(j);
@@ -208,10 +208,11 @@ $(document).ready(function(){
 							$("#TitleNameBrethren_"+h+" option[value='" + data[h-1].idPrefix +"']").attr("selected","selected");
 							$("#NameBrethren_"+h+"").val(data[h-1].FirstName_TH);
 							$("#LastNameBrethren_"+h+"").val(data[h-1].LastName_TH);
-							$("#BrethrenStatus_"+h+"").val(data[h-1].idLife_Status);
+							// $("#BrethrenStatus_"+h+"").val(data[h-1].idLife_Status);
+							$("#BrethrenStatus_"+h+" option[value='" + data[h-1].idLife_Status +"']").attr("selected","selected");
 							$("#AgeBrethren_"+h+"").val(data[h-1].Age);
-							$("#OccupationBrethren_"+h+"").val(data[h-1].idOccupation);
-
+							// $("#OccupationBrethren_"+h+"").val(data[h-1].idOccupation);
+							$("#OccupationBrethren_"+h+" option[value='" + data[h-1].idOccupation +"']").attr("selected","selected");
 						}
 					}else {
 						 j = 0;
@@ -227,24 +228,39 @@ $(document).ready(function(){
 						}
 
 						if (j > data.length ) {
+									$('#btnRemove_B').removeClass('btn-danger');
+									$("#btnRemove_B").addClass('btn-white');
 									$('#btnRemove_B').attr('disabled', false);
 						}
 
 						$('#NumBrethren').val(j);
 						$("#boxBrethren").find('.row:first-child').removeClass('hidden');
 						if (j >= 2) {
-							$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren");
+							$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren").val("");
 							$("#boxBrethren .row:last-child").find(".No").text(j);
 							$("#boxBrethren .row:last-child").find(".Brethren").val("").each(function(){
 								var idExp=this.id.split("_");
 								$(this).attr('id',idExp[0]+'_'+j);
 							});
 						}
-					console.log(j);
+					// console.log(j);
 						$("#TitleNameBrethren_"+j+" option[value='']").attr("selected","selected");
-						$("#BrethrenStatus_"+j+" option[value='1']").attr("selected","selected");
+						$("#BrethrenStatus_"+j+" option[value='1']").attr("selected","selected").trigger("BrethrenStatus:updated");;
 						$("#OccupationBrethren_"+j+" option[value='']").attr("selected","selected");
-					}).on('click','#btnRemove_B',function(){
+					}).on('click','#btnRemove_B.btn-danger',function(){
+								swal({
+		                title: "Are you sure?",
+		                text: "You will not be able to recover this imaginary file!",
+		                type: "warning",
+		                showCancelButton: true,
+		                confirmButtonColor: "#DD6B55",
+		                confirmButtonText: "Yes, delete it!",
+		                closeOnConfirm: false
+		            }, function () {
+		                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+		            })
+
+					}).on('click','#btnRemove_B.btn-white',function(){
 						if (j == 1 ) {
 							$("#boxBrethren").find('.row:first-child').addClass('hidden');
 						}else {
@@ -255,9 +271,13 @@ $(document).ready(function(){
 
 						if (data.length != 0) {
 							if (data.length == j) {
-										$('#btnRemove_B').attr('disabled', true);
+										// $('#btnRemove_B').attr('disabled', true);
+										$('#btnRemove_B').removeClass('btn-white');
+										$("#btnRemove_B").addClass('btn-danger');
 							}else {
-										$('#btnRemove_B').attr('disabled', false);
+										$('#btnRemove_B').removeClass('btn-danger');
+										$("#btnRemove_B").addClass('btn-white');
+										// $('#btnRemove_B').attr('disabled', false);
 							}
 
 							if (j != data.length) {
