@@ -869,9 +869,8 @@ class SmartcvForm extends ComponentBase
 
     public function onGetJobTitle()
     {
-        //return JobTitle::select('idJob_Title AS id','Name_TH')->where('idJob_Category',post('value'))->get();
         $get=JobTitle::select('idJob_Title AS id','Name_TH')->where('Verify',1)->where('idJob_Category',post('value'));
-        $chk=RequirementOfWork::where('idUser',Auth::getUser()->id);
+        $chk=RequirementOfWork::where('idJob_Category',post('value'))->where('idUser',Auth::getUser()->id);
         if($chk->count() > 0){
             $get->orWhere('idJob_Title',$chk->first()->idJob_Title);
         }
@@ -932,7 +931,10 @@ class SmartcvForm extends ComponentBase
     public function onGetSkillList()
     {
         $get = SkillList::select('idSkill_List AS id','Name_TH')->where('Verify',1)->where('idJob_Title',post('value'));
-        $chk=SkillSpecific::where('idUser',Auth::getUser()->id);
+        $chk=SkillSpecific::
+        join('skill_list','skill_specific.idSkill_List','=','skill_list.idSkill_List')
+        ->where('skill_list.idJob_Title',post('value'))
+        ->where('skill_specific.idUser',Auth::getUser()->id);
         if($chk->count() > 0){
             $get->orWhere('idSkill_List',$chk->first()->idSkill_List);
         }
