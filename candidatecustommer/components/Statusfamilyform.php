@@ -158,25 +158,51 @@ class Statusfamilyform extends ComponentBase
                   }
               }
 
-              // if(Input::get('Amount_of_Children') != 0){
-              //   $rules_more= array(
-              //           'TitleNameChildren' => array('required'),
-              //           'FirstName_TH_Children1' => array('required','regex:/^[ก-์]+$/u'),
-              //           'LastName_TH_Children1' => array('required','regex:/^[\ก-์\s]+$/u'),
-              //           'AgeChildren1' => array('required'),
-              //   );
-              //   $messages_more = [
-              //           'TitleNameChildren.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
-              //           'FirstName_TH_Children1.required' => 'กรุณากรอก "ชื่อ"',
-              //           'FirstName_TH_Children1.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
-              //           'LastName_TH_Children1.required' => 'กรุณากรอก "นามสกุล"',
-              //           'LastName_TH_Children1.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
-              //           'AgeChildren.required1' => 'กรุณากรอก "อายุบุตร"',
-              //   ];
-              //
-              //   $rules = array_merge($rules,$rules_more);
-              //   $messages = array_merge($messages,$messages_more);
-              // }
+              if(Input::get('Amount_of_Children') != 0){
+                $rules_more= array(
+                        'TitleNameChildren.*' => array('required'),
+                        'FirstName_TH_Children.*' => array('required','regex:/^[ก-์]+$/u'),
+                        'LastName_TH_Children.*' => array('required','regex:/^[\ก-์\s]+$/u'),
+                        'AgeChildren.*' => array('required','regex:/^[1-9][0-9]*$/'),
+                );
+                $messages_more = [
+                        'TitleNameChildren.*.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
+                        'FirstName_TH_Children.*.required' => 'กรุณากรอก "ชื่อ"',
+                        'FirstName_TH_Children.*.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
+                        'LastName_TH_Children.*.required' => 'กรุณากรอก "นามสกุล"',
+                        'LastName_TH_Children.*.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
+                        'AgeChildren.*.required' => 'กรุณากรอก "อายุบุตร"',
+                        'AgeChildren.*.regex' => '"อายุบุตร" ต้องเป็นตัวเลขเท่านั้น',
+                ];
+
+                $rules = array_merge($rules,$rules_more);
+                $messages = array_merge($messages,$messages_more);
+              }
+
+              if(Input::get('NumBrethren') != 0){
+                $rules_more= array(
+                        'TitleNameBrethren.*' => array('required'),
+                        'FirstName_TH_Brethren.*' => array('required','regex:/^[ก-์]+$/u'),
+                        'LastName_TH_Brethren.*' => array('required','regex:/^[\ก-์\s]+$/u'),
+                        'Status_Brethren.*' => array('required'),
+                        'Age_Brethren.*' => array('required','regex:/^[1-9][0-9]*$/'),
+                        'idOccupation_Brethren.*' => array('required'),
+                );
+                $messages_more = [
+                        'TitleNameBrethren.*.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
+                        'FirstName_TH_Brethren.*.required' => 'กรุณากรอก "ชื่อ"',
+                        'FirstName_TH_Brethren.*.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
+                        'LastName_TH_Brethren.*.required' => 'กรุณากรอก "นามสกุล"',
+                        'LastName_TH_Brethren.*.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
+                        'Status_Brethren.*.required' => 'กรุณาเลือก "สถานะการมีชีวิตของพี่น้อง"',
+                        'Age_Brethren.*.required' => 'กรุณากรอก "อายุพี่น้อง"',
+                        'Age_Brethren.*.regex'  => '"อายุพี่น้อง" ต้องเป็นตัวเลขเท่านั้น',
+                        'idOccupation_Brethren.*.required' => 'กรุณาเลือก "อาชีพของพี่น้อง"',
+                ];
+
+                $rules = array_merge($rules,$rules_more);
+                $messages = array_merge($messages,$messages_more);
+              }
 
               $validator = Validator::make(Input::all(), $rules, $messages);
 
@@ -250,6 +276,7 @@ class Statusfamilyform extends ComponentBase
 
      //บุตร
            Families::where('idCandidate',Session::get('idCandidate'))->where('idRelationship_type','5')->delete();
+
          for ($i=0; $i < post('Amount_of_Children') ; $i++) {
            $families_children = new Families();
            $families_children->idCandidate = Session::get('idCandidate');
@@ -330,26 +357,33 @@ class Statusfamilyform extends ComponentBase
      $families_brethren = new Families();
      $families_brethren->idCandidate = Session::get('idCandidate');
      $families_brethren->idUser = Auth::getUser()->id;
-     $families_brethren->idPrefix = post('TitleNameBrethren')[$i];
-     $families_brethren->FirstName_TH = post('FirstName_TH_Brethren')[$i];
-     $families_brethren->LastName_TH = post('LastName_TH_Brethren')[$i];
-     $families_brethren->idLife_Status = post('Status_Brethren')[$i];
-     // if (post('Status_Brethren')[$i] != 2) {
-       $families_brethren->Age = post('Age_Brethren')[$i]!='2' ? Input::get('Age_Mother'):NULL ;
-       $families_brethren->idOccupation = post('idOccupation_Brethren')[$i];
-     // }
-
-
-             $get = Prefix::where('idPrefix',post('TitleNameBrethren')[$i])->first();
-             // dd($get->idGender);
-     if ($get->idGender == 1) {
-       $Re_t = 8 ;
-     }else if ($get->idGender == 2) {
-       $Re_t = 9 ;
+     $families_brethren->idPrefix = Input::get('TitleNameBrethren')[$i];
+     $families_brethren->FirstName_TH = Input::get('FirstName_TH_Brethren')[$i];
+     $families_brethren->LastName_TH = Input::get('LastName_TH_Brethren')[$i];
+     $families_brethren->idLife_Status = Input::get('Status_Brethren')[$i];
+     // dd($families_brethren->idLife_Status);
+     if (Input::get('Status_Brethren')[$i] == '2') {
+       $families_brethren->Age = NULL ;
+       $families_brethren->idOccupation = NULL ;
+     }else {
+       $families_brethren->Age = Input::get('Age_Brethren')[$i] ;
+       $families_brethren->idOccupation = Input::get('idOccupation_Brethren')[$i] ;
      }
-     $families_brethren->idRelationship_type = $Re_t;
 
-     if (post('TitleNameBrethren')[$i] != ''&& post('FirstName_TH_Brethren')[$i] != ''&& post('LastName_TH_Brethren')[$i] != ''&& post('Status_Brethren')[$i] != '') {
+     if (post('TitleNameBrethren')[$i] != '') {
+               $get = Prefix::where('idPrefix',post('TitleNameBrethren')[$i])->first();
+               // dd($get->idGender);
+        if ($get->idGender == 1) {
+         $Re_t = 8 ;
+        }else if ($get->idGender == 2) {
+         $Re_t = 9 ;
+        }
+        $families_brethren->idRelationship_type = $Re_t;
+     }
+
+
+
+     if (post('TitleNameBrethren')[$i] != ''&& post('FirstName_TH_Brethren')[$i] != ''&& post('LastName_TH_Brethren')[$i] != '' && post('Status_Brethren')[$i] != '') {
        $families_brethren->save();
      }
      // $families_brethren->save();
