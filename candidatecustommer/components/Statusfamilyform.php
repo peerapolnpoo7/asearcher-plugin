@@ -80,11 +80,13 @@ class Statusfamilyform extends ComponentBase
                   'typeMilitary' => array('required'),
                   'typeMarital' => array('required'),
                   //บิดา
+                  'TitleNameFather' => array('required'),
                   'FirstName_TH_Father' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Father' => array('regex:/^[\ก-์\s]+$/u'),
                   'Age_Father' => array('regex:/^[1-9][0-9]*$/'),
                   'TelephoneNumber_Father' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
                   //มารดา
+                  'TitleNameMother' => array('required'),
                   'FirstName_TH_Mother' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Mother' => array('regex:/^[\ก-์\s]+$/u'),
                   'Age_Mother' => array('regex:/^[1-9][0-9]*$/'),
@@ -94,6 +96,7 @@ class Statusfamilyform extends ComponentBase
                   'typeMilitary.required' => 'กรุณาเลือก "สถานะทางทหาร"',
                   'typeMarital.required' => 'กรุณาเลือก "สถานภาพสมรส"',
                   //บิดา
+                  'TitleNameFather.required' => 'กรุณาเลือก "คำนำหน้าชื่อบิดา"',
                   'FirstName_TH_Father.regex' => 'กรุณากรอก "ชื่อบิดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Father.regex' => 'กรุณากรอก "นามสกุลบิดา" เป็นตัวอักษรไทยเท่านั้น',
                   'Age_Father.regex' => '"อายุบิดา" ต้องเป็นตัวเลขเท่านั้น',
@@ -101,6 +104,7 @@ class Statusfamilyform extends ComponentBase
                   'TelephoneNumber_Father.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                   'TelephoneNumber_Father.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
                   //มารดา
+                  'TitleNameMother.required' => 'กรุณาเลือก "คำนำหน้าชื่อมารดา"',
                   'FirstName_TH_Mother.regex' => 'กรุณากรอก "ชื่อมารดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Mother.regex' => 'กรุณากรอก "นามสกุลมารดา" เป็นตัวอักษรไทยเท่านั้น',
                   'Age_Mother.regex' => '"อายุมารดา" ต้องเป็นตัวเลขเท่านั้น',
