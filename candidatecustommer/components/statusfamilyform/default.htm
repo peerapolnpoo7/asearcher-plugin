@@ -33,7 +33,7 @@
 
 
 </style>
-<h3>สถานะและครอบครัว</h3>
+<h2>สถานะและครอบครัว</h2>
 <form data-request="onSave"  class="m-t-md" data-request-files data-request-flash>
   <!-- <form id="formsave"> -->
   {% flash %}
@@ -46,14 +46,17 @@
 {% endflash %}
 
   <div class="row boxMilitary"  {{ candidates.idGender ==  2 ? 'hidden' :'' }} >
-
-    <div class="col-sm-1">
+  <div class="col-sm-12">
+    <div class="cc-selector">
+    <div class="row">
+      <div class="col-sm-12">
+        <label><h3>สถานภาพสมรส</h3></label><br>
+      </div>
     </div>
-    <div class="col-sm-8">
-      <div class="form-group">
-
-        <label>สถานะทางทหาร</label><br /><br />
         <div class="row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-8">
         {% for military in militarys %}
         {% if military.idMilitary == '5'%}
         <div style="clear:both;"></div>
@@ -64,21 +67,18 @@
           </div>
         {% endfor %}
       </div>
+      <div class="col-sm-3">
       </div>
     </div>
-    <div class="col-sm-2">
+    </div>
     </div>
   </div>
 
         <div class="cc-selector">
           <div class="row">
-            <div class=" col-sm-1">
+            <div class=" col-sm-12">
+          <label><h3>สถานภาพสมรส</h3></label><br>
             </div>
-            <div class=" col-sm-8">
-          <label>สถานภาพสมรส</label><br>
-            </div>
-            <div class=" col-sm-2">
-          </div>
           </div>
           <div class="row">
             <div class=" col-sm-1 col-md-1">
@@ -101,7 +101,7 @@
 
       <div class="row">
         <div class=" col-sm-12">
-        <label>สถานะการจดทะเบียน</label><br>
+        <label><h3>สถานะการจดทะเบียน</h3></label><br>
         </div>
       </div>
 
@@ -109,7 +109,7 @@
       <div class=" col-sm-1">
       </div>
       <div class="col-sm-11">
-        <div class="form-group">
+        <!-- <div class="form-group"> -->
 
           {% for marital_regiter_status in maritalregiterstatus %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-2">
@@ -125,13 +125,18 @@
             <input type="radio" name="typeMarriage" id="radioPre" value="Pre">
             <label for="radioPre">ไม่ได้จดทะเบียน</label>
           </div> -->
-        </div>
+        <!-- </div> -->
       </div>
       <!-- <div class=" col-sm-2">
       </div> -->
     </div>
     </div>
     <div class="row">
+      <div class=" col-sm-12">
+      <label><h3>คู่สมรส</h3></label><br>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 10px;">
         <div class="col-sm-1">
         </div>
       <div class="col-sm-2" id="boxidPrefix_Spouse">
@@ -212,6 +217,11 @@
           <span class="help-block"></span>
         </div>
       </div>
+      </div>
+      <div class="row">
+        <div class=" col-sm-12">
+        <label><h3>บุตร</h3></label><br>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-1">
@@ -456,6 +466,11 @@
     </div> -->
   </div>
   <div class="row">
+    <div class=" col-sm-12">
+    <label><h3>พี่น้อง</h3></label><br>
+    </div>
+  </div>
+  <div class="row" >
     <div class="col-sm-1">
     </div>
     <div class="col-sm-2">
@@ -478,10 +493,10 @@
           <select id="TitleNameBrethren_1" class="form-control Brethren" name="TitleNameBrethren[]">
             <option value="">เลือก</option>
             {% for prefix in prefixs %}
-            {% set selected = '' %}
+            <!-- {% set selected = '' %}
             {% if prefix.idPrefix == brethren.idPrefix %}
             {% set selected = 'selected' %}
-            {% endif %}
+            {% endif %} -->
             <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
             {% endfor %}
           </select>
@@ -495,14 +510,10 @@
         <label class="control-label">นามสกุล</label>
         <input type="text" id="LastNameBrethren_1" name="LastName_TH_Brethren[]" class="form-control Brethren" placeholder="">
       </div>
-      <div class="col-sm-2">  {{brethrens.idLife_Status}}
+      <div class="col-sm-2">
         <label class="control-label">สถานะ</label>
-        <select name="Status_Brethren[]" id="BrethrenStatus_1"   class="form-control Brethren BrethrenStatus">
+        <select  id="BrethrenStatus_1"   class="form-control Brethren BrethrenStatus" name="Status_Brethren[]">
           {% for lifestatus in lifestatuss %}
-          {% set selected = '1' %}
-          {% if lifestatus.idLife_Status == brethren.idLife_Status %}
-          {% set selected = 'selected' %}
-          {% endif %}
           <option value="{{ lifestatus.idLife_Status }}" {{ selected }}>{{ lifestatus.Name_TH }}</option>
           {% endfor %}
         </select>
