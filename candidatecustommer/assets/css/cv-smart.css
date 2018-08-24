@@ -5,3 +5,26 @@
     -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
 }
+
+#boxMRT_Station .chosen-container .chosen-drop, 
+#boxBTS_Station .chosen-container .chosen-drop,
+#boxBRT_Station .chosen-container .chosen-drop,
+#boxBUS_Station .chosen-container .chosen-drop,
+#boxFerry_Station .chosen-container .chosen-drop,
+#boxAirportRailLink_Station .chosen-container .chosen-drop
+{
+    border-bottom: 0 !important;
+    border-bottom: 1px solid #aaa !important;
+    top: auto !important;
+    bottom: 35px !important;
+}
+
+#boxMRT_Station .chosen-results, 
+#boxBTS_Station .chosen-results,
+#boxBRT_Station .chosen-results,
+#boxBUS_Station .chosen-results,
+#boxFerry_Station .chosen-results,
+#boxAirportRailLink_Station .chosen-results
+{
+	max-height: 200px;
+}
