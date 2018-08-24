@@ -514,8 +514,14 @@ $(document).ready(function(){
                 $('#boxWelFares').addClass('hidden');
             }
         }
-    })/*.on('click','.TypeofEmployment',function(){
-        $(".TypeofEmployment").addClass("btn-outline");
+    }).on('click','.idTypeofEmployment',function(){
+       var spl=this.id.split("_");
+        if($(this).hasClass("btn-outline")==true){
+            $(this).removeClass("btn-outline");
+        }else{
+            $(this).addClass("btn-outline");
+        }
+        /*$(".TypeofEmployment").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
@@ -526,8 +532,8 @@ $(document).ready(function(){
         }else{
             $('#boxWelFares').removeClass('hidden');
             $(".select2-container").css('width','100%');
-        }
-    })*/.on('click','.ExperienceWorkStatus',function(){
+        }*/
+    }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
