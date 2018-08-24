@@ -636,7 +636,7 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<fieldset>
 				<h4 class="hidden-xs">&nbsp;</h4>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12" id="boxidType_of_Employment">
+				<div class="form-group col-md-12 col-sm-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidType_of_Employment">
 					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
 					<div class="checkbox checkbox-info col-md-4 col-sm-4 col-xs-4 text-center no-padding">
@@ -656,26 +656,21 @@
 					</div>
 					{% endfor %}
 				</div>
-				<!-- <div class="form-group col-md-7 col-sm-12 col-xs-12" id="boxidType_of_Employment">
+				<div class="form-group col-md-7 col-sm-12 col-xs-12 visible-xs" id="boxidType_of_Employment">
 					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
-					{% set classOutline = '' %}
-					{% if requirement_of_works.idType_of_Employment == '' %}
-						{% if type_of_employment.idType_of_Employment != 1 %}
-							{% set classOutline = 'btn-outline' %}
+						{% set isActive = 'btn-outline' %}
+						{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
+						{% if type_of_employment.isSelect == "selected" %}
+							{% set isActive = '' %}
 						{% endif %}
-					{% else %}
-						{% if type_of_employment.idType_of_Employment != requirement_of_works.idType_of_Employment %}
-							{% set classOutline = 'btn-outline' %}
-						{% endif %}
-					{% endif %}
-					<a class="btn btn-info btn-rounded btn-sm {{ classOutline }} TypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment}}" href="javascript:void(0)">
-						{{type_of_employment.Name_TH}}
-					</a>
+						
+						<a class="btn btn-info btn-rounded btn-sm {{ isActive }} idTypeofEmployment" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment }}" href="javascript:void(0)">
+						{{ type_of_employment.Name_TH}}
+						</a>
 					{% endfor %}
-					<input type="hidden" name="idType_of_Employment" value="{{ requirement_of_works.idType_of_Employment ? requirement_of_works.idType_of_Employment : 1 }}"/>
 					<span class="help-block"></span>
-				</div> -->
+				</div>
 				<div class="form-group col-md-12 col-xs-12 {{ type_of_employments[0].isSelect == 'selected' ? '' : 'hidden' }}" id="boxWelFares">
 					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
 					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
