@@ -54,7 +54,6 @@ use Asearcher\CandidateCustommer\Models\TransportationOfWork;
 use Asearcher\CandidateCustommer\Models\WelfareOfWork;
 use Asearcher\CandidateCustommer\Models\ExpectationOfWork;
 use Asearcher\CandidateCustommer\Models\PhotoProfileCV;
-use Asearcher\CandidateCustommer\Models\RequirementEmployment;
 
 class SmartcvForm extends ComponentBase
 {
@@ -329,6 +328,7 @@ class SmartcvForm extends ComponentBase
         }
 
         $candidate = Candidate::find(Auth::getUser()->id);
+        $candidate->idUser = Auth::getUser()->id;
         $candidate->idGender = Input::get('idGender');
         $candidate->idPrefix = Input::get('idPrefix');
         $candidate->FirstName_TH = Input::get('FirstName_TH');
@@ -399,7 +399,7 @@ class SmartcvForm extends ComponentBase
             }
             
             $experience->idCandidate = $candidate->idCandidate;
-            $experience->idUser =  Auth::getUser()->id;
+            $experience->idUser = Auth::getUser()->id;
             $experience->idExperience_Type = '2';
             $experience->idProvinces= 0;
             $experience->idSeniority = Input::get('LastSeniority');
@@ -512,43 +512,8 @@ class SmartcvForm extends ComponentBase
         $requirement_of_works->idJob_Seeking_Status = Input::get('idJob_Seeking_Status');
         $requirement_of_works->save();
 
-        if(post('idType_of_Employment')){
-            RequirementEmployment::where('idUser',Auth::getUser()->id)->whereNotIn('idType_of_Employment',post('idType_of_Employment'))->delete();
-            foreach (post('idType_of_Employment') as $idType_of_Employment) {
-                if($idType_of_Employment!=""){
-                    $chk=RequirementEmployment::where('idUser',Auth::getUser()->id)->where('idType_of_Employment',$idType_of_Employment);
-                    if($chk->count() == 0){
-                        $requirementEmp = new RequirementEmployment();
-                        if($chkReOfWork->count() > 0){
-                        $requirementEmp->idRequirement_of_Work = $requirement_of_works->idRequirement_of_Work;
-                        }else{
-                            $requirementEmp->idRequirement_of_Work =  $requirement_of_works->id;
-                        }
-                        $requirementEmp->idCandidate = $candidate->idCandidate;
-                        $requirementEmp->idUser = Auth::getUser()->id;
-                        $requirementEmp->idType_of_Employment = $idType_of_Employment;
-                        $requirementEmp->save();
-                    }
-                }
-                if($idType_of_Employment=="1"){
-                    WelfareOfWork::where('idUser',Auth::getUser()->id)->delete();
-                    if(post('Welfares')){
-                        foreach (post('Welfares') as $Welfare) {
-                            $welfare_of_work = new WelfareOfWork();
-                            $welfare_of_work->idCandidate = $candidate->idCandidate;
-                            $welfare_of_work->idUser = Auth::getUser()->id;
-                            $welfare_of_work->idWelfare_Type = $Welfare;
-                            $welfare_of_work->save();
-                        }
-                    }
-                }
-
-            }
-        }
-
-
         if(post('idTransportation_Detail')){
-            TransportationOfWork::where('idUser',Auth::getUser()->id)->delete();
+            TransportationOfWork::where('idCandidate',$candidate->idCandidate)->delete();
             foreach (post('idTransportation_Detail') as $idTransportation_Detail) {
                 if($idTransportation_Detail!=""){
                     $transportation_of_work = new TransportationOfWork();
@@ -561,7 +526,7 @@ class SmartcvForm extends ComponentBase
         }
 
         if(post('Expected_Details')){
-            ExpectationOfWork::where('idUser',Auth::getUser()->id)->delete();
+            ExpectationOfWork::where('idCandidate',$candidate->idCandidate)->delete();
             foreach (post('Expected_Details') as $Expected_Detail) {
                 $expectation_of_work = new ExpectationOfWork();
                 $expectation_of_work->idCandidate = $candidate->idCandidate;
@@ -571,9 +536,18 @@ class SmartcvForm extends ComponentBase
             }
         }
 
-        /*if(Input::get('idType_of_Employment')=='1'){
-            
-        }*/
+        if(Input::get('idType_of_Employment')=='1'){
+            WelfareOfWork::where('idCandidate',$candidate->idCandidate)->delete();
+            if(post('Welfares')){
+                foreach (post('Welfares') as $Welfare) {
+                    $welfare_of_work = new WelfareOfWork();
+                    $welfare_of_work->idCandidate = $candidate->idCandidate;
+                    $welfare_of_work->idUser = Auth::getUser()->id;
+                    $welfare_of_work->idWelfare_Type = $Welfare;
+                    $welfare_of_work->save();
+                }
+            }
+        }
         Flash::success('บันทึกข้อมูลเรียบร้อยแล้ว');
         return Redirect::to('/cv-smart');
     }
@@ -769,28 +743,9 @@ class SmartcvForm extends ComponentBase
         return $get->get();
     }
 
-    public function chkChooseTepyEmp($idType_of_Employment)
-    {
-        $get=RequirementEmployment::where('idUser',Auth::getUser()->id)->where('idType_of_Employment',$idType_of_Employment);
-        if($get->count() > 0){
-            return 'selected';
-        }else{
-            return '';
-        }
-
-    }
-
     public function loadTypeOfEmployment()
     {
-        //return TypeOfEmployment::all();
-        $get = TypeOfEmployment::get()->toArray();
-        if($get)
-        {
-            foreach ($get as $key => $value) {
-                $get[$key]['isSelect'] = $this->chkChooseTepyEmp($value['idType_of_Employment']);
-            }
-        }
-        return $get;
+        return TypeOfEmployment::all();
     }
 
     public function loadTransportationMRT()
@@ -870,7 +825,7 @@ class SmartcvForm extends ComponentBase
     public function chkExpectedSelected($idExpected_Detail)
     {
 
-        $chk=Db::table('expectation_of_work')->where('idCandidate',Session::get('idCandidate'));
+        $chk=Db::table('expectation_of_work')->where('idUser',Auth::getUser()->id);
         if($chk->count() == 0){
             return "selected";
         }
