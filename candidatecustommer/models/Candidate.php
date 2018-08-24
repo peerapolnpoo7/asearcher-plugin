@@ -16,7 +16,7 @@ class Candidate extends Model
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
-    protected $primaryKey = 'idCandidate';
+    protected $primaryKey = 'idUser';
     /**
      * @var array Fillable fields
      */
