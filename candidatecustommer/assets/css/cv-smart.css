@@ -28,3 +28,9 @@
 {
 	max-height: 200px;
 }
+
+.btn-outline:focus{
+	color : #23c6c8 !important;
+	background-color: transparent !important;
+	transition: all .5s !important;
+}
