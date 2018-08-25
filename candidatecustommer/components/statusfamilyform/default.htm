@@ -29,8 +29,8 @@
 .Windowed{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
 .Separated{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
 
-.จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/regi.png'|theme }}); background-size: 70px 55px; background-position: top;}
-.ไม่ได้จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/unregi.png'|theme }}); background-size: 70px 55px; background-position: top;}
+.Registered{background-image:url({{ 'assets/img/statusfamily/regi.png'|theme }}); background-size: 70px 55px; background-position: top;}
+.Unregistered{background-image:url({{ 'assets/img/statusfamily/unregi.png'|theme }}); background-size: 70px 55px; background-position: top;}
 
 
 </style>
@@ -115,7 +115,7 @@
           {% for marital_regiter_status in maritalregiterstatus %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-2">
           <input id="{{ marital_regiter_status.Name_TH }}"  type="radio" name="typeMarital_register_status"  value="{{ marital_regiter_status.idMarital_Register_Status }}" {{ statuscandidates.idMarital_Register_Status ==  marital_regiter_status.idMarital_Register_Status ? 'checked' :'' }}/>
-          <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_TH }} MaritalRegister"  for="{{ marital_regiter_status.Name_TH }}">{{ marital_regiter_status.Name_TH }}</label>
+          <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_EN }} MaritalRegister"  for="{{ marital_regiter_status.Name_TH }}">{{ marital_regiter_status.Name_TH }}</label>
           </div>
           {% endfor %}
           <!-- <div class="radio radio-info col-sm-2 col-xs-6">
