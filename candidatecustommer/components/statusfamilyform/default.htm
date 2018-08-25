@@ -19,6 +19,7 @@
 {% set childrens = __SELF__.childrens %}
 {% set brethrens = __SELF__.brethrens %}
 {% set brethren = __SELF__.brethren %}
+{% set children = __SELF__.children %}
 
 <style>
 
@@ -50,7 +51,7 @@
     <div class="cc-selector">
     <div class="row">
       <div class="col-sm-12">
-        <label><h3>สถานภาพสมรส</h3></label><br>
+        <label><h3>สถานภาพทางทหาร</h3></label><br>
       </div>
     </div>
         <div class="row">
@@ -232,12 +233,72 @@
         </div>
         <div class="col-sm-2 col-xs-12">
           <br />
-        <button class="btn btn-white" type="button" id="btnAdd_C"><i class="fa fa-plus"></i> เพิ่ม</button>
-        <button class="btn btn-white" type="button" id="btnRemove_C"><i class="fa fa-remove"></i> ลด</button>
+        <!-- <button class="btn btn-white" type="button" id="btnAdd_C"><i class="fa fa-plus"></i> เพิ่ม</button>
+        <button class="btn btn-white" type="button" id="btnRemove_C"><i class="fa fa-remove"></i> ลด</button> -->
+        <button class="btn btn-white" type="button" data-toggle="modal" data-target="#moDalAddChildren" id="AddChildren" ><i class="fa fa-plus"></i> เพิ่ม</button>
         </div>
       </div>
     </span>
-  <span id="boxChildren">
+
+    <div class="row">
+        <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <!-- <div class="wrapper wrapper-content animated fadeInUp"> -->
+                <div class="ibox">
+                    <!-- <div class="ibox-content"> -->
+                        <div class="project-list">
+                          <div class="table-responsive" >
+                            <table class="table table-hover ">
+                                <tbody>
+                                {% for c in children %}
+                                <tr>
+                                    <td class="col-sm-1">
+                                      <center>
+                                      <button  value="{{c.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditChildren" class="btn btn-white btn-sm editChildren" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                      <!-- <input type="hidden" name="idFamilies" value="{{ b.idFamilies }}"> -->
+                                      </center>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <small>ชื่อ</small><br/>
+                                        <h4>{{c.nameprefix}}{{ c.FirstName_TH }}</h4>
+                                    </td>
+                                    <td class="col-sm-2" >
+                                        <small>นามสกุล</small><br/>
+                                        <h4>{{ c.LastName_TH }}</h4>
+                                    </td>
+                                    <!-- {% if b.namelife == ''  %}
+                                    {% set selected = '' %}
+                                    {% else %} -->
+                                    <!-- <td  >
+                                        <small>สถานะ</small><br/>
+                                        <h4>{{ c.namelife }}</h4>
+                                    </td> -->
+                                    <!-- {% endif %} -->
+                                    <td  >
+                                        <small>อายุ</small><br/>
+                                        <h4>{{ c.Age }}</h4>
+                                    </td>
+                                    <!-- <td  >
+                                        <small>อาชีพ</small><br/>
+                                        <h4>{{ c.nameoccupation }}</h4>
+                                    </td> -->
+                                    <!-- <td >
+                                    <h2><a href="#"><i class="fa fa-minus-circle"></i></a></h2>
+                                    </td> -->
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+
+  <!-- <span id="boxChildren">
     <div class="row hidden">
       <div class="col-sm-1">
         </div>
@@ -247,10 +308,6 @@
           <select id="TitleNameChildren_1" class="form-control Children" name="TitleNameChildren[]">
             <option value="">เลือก</option>
             {% for prefix in prefixs %}
-            <!-- {% set selected = '' %}
-            {% if prefix.idPrefix == candidates.idPrefix %}
-            {% set selected = 'selected' %}
-            {% endif %} -->
             <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
             {% endfor %}
           </select>
@@ -269,8 +326,8 @@
         <div class="input-group m-b"><input type="text"  id="AgeChildren_1"class="form-control Children" name="AgeChildren[]"> <span class="input-group-addon">ปี</span></div>
       </div>
     </div>
-  </span>
-  <hr/>
+  </span> -->
+  <!-- <hr/> -->
 
   <div class="row">
     <div class="col-sm-1">
@@ -479,11 +536,73 @@
     </div>
     <div class="col-sm-2 col-xs-12">
       <br />
-    <button class="btn btn-white" type="button" id="btnAdd_B"><i class="fa fa-plus"></i> เพิ่ม</button>
-    <button class="btn btn-white" type="button" id="btnRemove_B"><i class="fa fa-remove"></i> ลด</button>
+    <!-- <button class="btn btn-white" type="button" id="btnAdd_B"><i class="fa fa-plus"></i> เพิ่ม</button>
+    <button class="btn btn-white" type="button" id="btnRemove_B"><i class="fa fa-remove"></i> ลด</button> -->
+
+    <button class="btn btn-white" type="button" data-toggle="modal" data-target="#moDalAddBrethren" id="AddBrethren" ><i class="fa fa-plus"></i> เพิ่ม</button>
     </div>
   </div>
-  <span id="boxBrethren">
+
+  <div class="row">
+      <div class="col-sm-1">
+        </div>
+        <div class="col-sm-10">
+          <!-- <div class="wrapper wrapper-content animated fadeInUp"> -->
+              <div class="ibox">
+                  <!-- <div class="ibox-content"> -->
+                      <div class="project-list">
+                        <div class="table-responsive" >
+                          <table class="table table-hover ">
+                              <tbody>
+                              {% for b in brethren %}
+                              <tr>
+                                  <td class="col-sm-1">
+                                    <center>
+                                    <button  value="{{b.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                    <!-- <input type="hidden" name="idFamilies" value="{{ b.idFamilies }}"> -->
+                                    </center>
+                                  </td>
+                                  <td class="col-sm-2">
+                                      <small>ชื่อ</small><br/>
+                                      <h4>{{b.nameprefix}}{{ b.FirstName_TH }}</h4>
+                                  </td>
+                                  <td class="col-sm-2" >
+                                      <small>นามสกุล</small><br/>
+                                      <h4>{{ b.LastName_TH }}</h4>
+                                  </td>
+                                  <!-- {% if b.namelife == ''  %}
+                                  {% set selected = '' %}
+                                  {% else %} -->
+                                  <td  >
+                                      <small>สถานะ</small><br/>
+                                      <h4>{{ b.namelife }}</h4>
+                                  </td>
+                                  <!-- {% endif %} -->
+                                  <td  >
+                                      <small>อายุ</small><br/>
+                                      <h4>{{ b.Age }}</h4>
+                                  </td>
+                                  <td  >
+                                      <small>อาชีพ</small><br/>
+                                      <h4>{{ b.nameoccupation }}</h4>
+                                  </td>
+                                  <!-- <td >
+                                  <h2><a href="#"><i class="fa fa-minus-circle"></i></a></h2>
+                                  </td> -->
+                              </tr>
+                              {% endfor %}
+                              </tbody>
+                          </table>
+                          </div>
+                      </div>
+                  <!-- </div> -->
+              </div>
+          <!-- </div> -->
+      </div>
+  </div>
+
+
+  <!-- <span id="boxBrethren">
     <div class="row hidden">
       <div class="col-sm-1">
       </div>
@@ -493,10 +612,6 @@
           <select id="TitleNameBrethren_1" class="form-control Brethren" name="TitleNameBrethren[]">
             <option value="">เลือก</option>
             {% for prefix in prefixs %}
-            <!-- {% set selected = '' %}
-            {% if prefix.idPrefix == brethren.idPrefix %}
-            {% set selected = 'selected' %}
-            {% endif %} -->
             <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
             {% endfor %}
           </select>
@@ -537,11 +652,224 @@
         </div>
       </div>
     </div>
-  </span>
+  </span> -->
+
   <div class="row">
     <div class="col-sm-12 text-center m-t-md">
       <button type="submit" class="btn btn-info btn-rounded btn-sm save">บันทึกข้อมูล</button>
       <!-- <a class="btn btn-info btn-rounded btn-sm" href="#">บันทึกข้อมูล</a> -->
     </div>
   </div>
+</form>
+
+<form method="post" id="insert_Brethren">
+<div class="modal inmodal fade" id="moDalAddBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+                        <label>คำนำหน้าชื่อ</label>
+                        <select id="TitleNameBrethren" class="form-control Brethren chosen" name="TitleNameBrethren">
+                          <option value="">เลือก</option>
+                          {% for prefix in prefixs %}
+                          <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+                          {% endfor %}
+                        </select>
+                        <br /><br />
+                        <label>ชื่อ</label>
+                        <input type="text" id="NameBrethren" name="FirstName_TH_Brethren" class="form-control Brethren">
+                        <br />
+                        <label>นามสกุล</label>
+                        <input type="text" id="LastNameBrethren" name="LastName_TH_Brethren" class="form-control Brethren">
+                        <br />
+                        <label class="control-label">สถานะ</label>
+                        <select  id="BrethrenStatus"   class="form-control Brethren BrethrenStatus" name="Status_Brethren">
+                          {% for lifestatus in lifestatuss %}
+                          <option value="{{ lifestatus.idLife_Status }}" {{ selected }}>{{ lifestatus.Name_TH }}</option>
+                          {% endfor %}
+                        </select>
+                        <br />
+                        <label class="control-label">อายุ</label>
+                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+                        <label class="control-label">อาชีพ</label>
+                        <select id="OccupationBrethren" class="form-control Brethren" name="idOccupation_Brethren">
+                          <option value="">เลือก</option>
+                          {% for occupation in occupations %}
+                          <option value="{{ occupation.idOccupation }}" {{ selected }}>{{ occupation.Name_TH }}</option>
+                          {% endfor %}
+                        </select>
+
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">  ปิด  </button>
+                <button type="button" id="addbrethren" class="btn btn-info btn-rounded">  เพิ่ม  </button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<form method="post" id="edit_Brethren">
+<div class="modal inmodal fade" id="moDaleditBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+
+                        <label>คำนำหน้าชื่อ</label>
+                        <select id="TitleNameBrethren_edit" class="form-control Brethren chosen" name="TitleNameBrethren">
+                          <option value="">เลือก</option>
+                          {% for prefix in prefixs %}
+                          <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+                          {% endfor %}
+                        </select>
+                        <br />
+                        <label>ชื่อ</label>
+                        <input type="text" id="NameBrethren_edit" name="FirstName_TH_Brethren" class="form-control Brethren">
+                        <br />
+                        <label>นามสกุล</label>
+                        <input type="text" id="LastNameBrethren_edit" name="LastName_TH_Brethren" class="form-control Brethren">
+                        <br />
+                        <label class="control-label">สถานะ</label>
+                        <select  id="BrethrenStatus_edit"   class="form-control chosen Brethren" name="Status_Brethren">
+                          {% for lifestatus in lifestatuss %}
+                          <option value="{{ lifestatus.idLife_Status }}" {{ selected }}>{{ lifestatus.Name_TH }}</option>
+                          {% endfor %}
+                        </select>
+                        <br />
+                        <label class="control-label">อายุ</label>
+                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren_edit" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+                        <label class="control-label">อาชีพ</label>
+                        <select id="OccupationBrethren_edit" class="form-control chosen Brethren" name="idOccupation_Brethren">
+                          <option value="">เลือก</option>
+                          {% for occupation in occupations %}
+                          <option value="{{ occupation.idOccupation }}" {{ selected }}>{{ occupation.Name_TH }}</option>
+                          {% endfor %}
+                        </select>
+
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delbrethren"class="btn btn-danger btn-rounded pull-left">ลบ</button>
+                <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">ปิด</button>
+                <button type="button" id="upbrethren" class="btn btn-info btn-rounded">แก้ไข</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+
+<form method="post" id="insert_Children">
+<div class="modal inmodal fade" id="moDalAddChildren" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+                        <label>คำนำหน้าชื่อ</label>
+                        <select id="TitleNameChildren" class="form-control Brethren chosen" name="TitleNameChildren">
+                          <option value="">เลือก</option>
+                          {% for prefix in prefixs %}
+                          <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+                          {% endfor %}
+                        </select>
+                        <br /><br />
+                        <label>ชื่อ</label>
+                        <input type="text" id="NameChildren" name="FirstName_TH_Children" class="form-control Children">
+                        <br />
+                        <label>นามสกุล</label>
+                        <input type="text" id="LastNameChildren" name="LastName_TH_Children" class="form-control Children">
+                        <br />
+                        <label class="control-label">อายุ</label>
+                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren" class="form-control Children"> <span class="input-group-addon">ปี</span></div>
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">  ปิด  </button>
+                <button type="button" id="addChildren" class="btn btn-info btn-rounded">  เพิ่ม  </button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+<form method="post" id="edit_Children">
+<div class="modal inmodal fade" id="moDaleditChildren" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-6">
+                        <label>คำนำหน้าชื่อ</label>
+                        <select id="TitleNameChildren_edit" class="form-control Children chosen" name="TitleNameChildren">
+                          <option value="">เลือก</option>
+                          {% for prefix in prefixs %}
+                          <option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+                          {% endfor %}
+                        </select>
+                        <br />
+                        <label>ชื่อ</label>
+                        <input type="text" id="NameChildren_edit" name="FirstName_TH_Children" class="form-control Children">
+                        <br />
+                        <label>นามสกุล</label>
+                        <input type="text" id="LastNameChildren_edit" name="LastName_TH_Children" class="form-control Children">
+                        <br />
+                        <label class="control-label">อายุ</label>
+                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren_edit" class="form-control Children"> <span class="input-group-addon">ปี</span></div>
+                  </div>
+                  <div class="col-sm-3">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delChildren"class="btn btn-danger btn-rounded pull-left">ลบ</button>
+                <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">ปิด</button>
+                <button type="button" id="upChildren" class="btn btn-info btn-rounded">แก้ไข</button>
+            </div>
+        </div>
+    </div>
+</div>
 </form>

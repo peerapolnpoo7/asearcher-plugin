@@ -5,6 +5,7 @@
 {% set races = __SELF__.races %}
 {% set countrycallingcodes = __SELF__.countrycallingcodes %}
 {% set blood_groups = __SELF__.blood_groups %}
+{% set requirement_of_works = __SELF__.requirement_of_works %}
 <h3>1.ข้อมูลส่วนบุคคล</h3>
 <form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
 	<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
@@ -148,44 +149,6 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-sm-12">
-					<label class="control-label">กรุ๊ปเลือด</label><br>
-					{% for blood_group in blood_groups %}
-					<div class="radio radio-info col-sm-3 col-xs-3">
-						<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}">
-						<label for="bloodgroup_{{ blood_group.idBlood_Group }}">
-							{{ blood_group.Blood_Group }}
-						</label>
-					</div>
-					{% endfor %}
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-12">
-			<fieldset>
-				
-			</fieldset>
-		</div>
-		<div class="col-md-6">&nbsp;
-		</div>
-		<div class="col-md-6">
-			<fieldset>
-				<div class="form-group col-md-6">
-					<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<input type="text" name="" id="" class="form-control" placeholder="" value="">
-						<span class="input-group-addon">กก.</span>
-					</div>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6">
-					<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<input type="text" name="" id="" class="form-control" placeholder="" value="">
-						<span class="input-group-addon">ซม.</span>
-					</div>
-					<span class="help-block"></span>
-				</div>
 				<div class="form-group col-md-6">
 					<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
 					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
@@ -234,6 +197,44 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
+				<div class="form-group col-sm-12">
+					<label class="control-label">กรุ๊ปเลือด</label><br>
+					{% for blood_group in blood_groups %}
+					<div class="radio radio-info col-sm-3 col-xs-3">
+						<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}">
+						<label for="bloodgroup_{{ blood_group.idBlood_Group }}">
+							{{ blood_group.Blood_Group }}
+						</label>
+					</div>
+					{% endfor %}
+				</div>
+			</fieldset>
+		</div>
+		<div class="col-md-12">
+			<fieldset>
+				
+			</fieldset>
+		</div>
+		<div class="col-md-6">&nbsp;
+		</div>
+		<div class="col-md-6">
+			<fieldset>
+				<div class="form-group col-md-6">
+					<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
+					<div class="input-group">
+						<input type="text" name="" id="" class="form-control" placeholder="" value="">
+						<span class="input-group-addon">กก.</span>
+					</div>
+					<span class="help-block"></span>
+				</div>
+				<div class="form-group col-md-6">
+					<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
+					<div class="input-group">
+						<input type="text" name="" id="" class="form-control" placeholder="" value="">
+						<span class="input-group-addon">ซม.</span>
+					</div>
+					<span class="help-block"></span>
+				</div>
 				<div class="form-group col-sm-6 col-xs-12">
 					<label class="control-label">สถานะการหางาน</label>
 					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
@@ -259,11 +260,11 @@
 			<fieldset>
 				<div class="form-group col-sm-12">
 					<label class="control-label">แนะนำตัวเอง</label>
-					<textarea name="" class="form-control"></textarea>
+					<textarea name="" class="form-control notes" cols='10'></textarea>
 				</div>
 				<div class="form-group col-sm-12">
 					<label class="control-label">แนะนำตัวผ่านวีดิโอ</label>
-					<input type="text" name="" id="" class="form-control" placeholder="ใส่Link" value="">
+					<input type="text" name="" id="" class="form-control video-link " placeholder="ใส่Link" value="">
 				</div>
 			</fieldset>
 		</div>

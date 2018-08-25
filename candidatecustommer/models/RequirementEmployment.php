@@ -1,22 +1,22 @@
-<?php namespace Asearcher\Candidatecustommer\Models;
+<?php namespace Asearcher\CandidateCustommer\Models;
 
 use Model;
 
 /**
- * Candidate Model
+ * RequirementEmployment Model
  */
-class Candidate extends Model
+class RequirementEmployment extends Model
 {
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'candidate';
+    public $table = 'requirement_employment';
 
     /**
      * @var array Guarded fields
      */
     protected $guarded = ['*'];
-    protected $primaryKey = 'idUser';
+    protected $primaryKey = 'idRequirement_Employment';
     /**
      * @var array Fillable fields
      */
