@@ -23,11 +23,11 @@
 
 <style>
 
-.โสด{background-image:url({{ 'assets/img/statusfamily/sf1.png'|theme }}); background-size: 45px 45px; background-position: top;}
-.สมรส{background-image:url({{ 'assets/img/statusfamily/sf2.png'|theme }}); background-size: 45px 45px; background-position: top;}
-.หย่า{background-image:url({{ 'assets/img/statusfamily/sf3.png'|theme }}); background-size: 45px 45px; background-position: top;}
-.หม้าย{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
-.แยกกันอยู่{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.Single{background-image:url({{ 'assets/img/statusfamily/sf1.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.Married{background-image:url({{ 'assets/img/statusfamily/sf2.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.Divorced{background-image:url({{ 'assets/img/statusfamily/sf3.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.Windowed{background-image:url({{ 'assets/img/statusfamily/sf4.png'|theme }}); background-size: 45px 45px; background-position: top;}
+.Separated{background-image:url({{ 'assets/img/statusfamily/sf5.png'|theme }}); background-size: 45px 45px; background-position: top;}
 
 .จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/regi.png'|theme }}); background-size: 70px 55px; background-position: top;}
 .ไม่ได้จดทะเบียนสมรส{background-image:url({{ 'assets/img/statusfamily/unregi.png'|theme }}); background-size: 70px 55px; background-position: top;}
@@ -87,7 +87,7 @@
             {% for maritalstatus in maritalstatuss %}
             <div class="checkboxgroup col-sm-1 col-xs-4 col-md-1">
             <input id="{{ maritalstatus.Name_TH }}"  type="radio" name="typeMarital"  value="{{ maritalstatus.idMarital_Status }}" {{ statuscandidates.idMarital_Status ==  maritalstatus.idMarital_Status ? 'checked' :'' }}/>
-            <label class="drinkcard-cc below2 {{ maritalstatus.Name_TH }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
+            <label class="drinkcard-cc below2 {{ maritalstatus.Name_EN }}"  for="{{ maritalstatus.Name_TH }}">{{ maritalstatus.Name_TH }}</label>
             </div>
             <div class=" col-sm-1  col-md-1">
             </div>
