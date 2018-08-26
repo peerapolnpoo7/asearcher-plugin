@@ -216,6 +216,9 @@
           <input type="text" class="form-control widow" name="TelephoneNumber_Spouse" id="TelephoneNumber_Spouse" placeholder="Ex.0999999999" value="{{ spouse.TelephoneNumber }}" maxlength="10">
           <span class="help-block"></span>
         </div>
+
+
+
       </div>
       </div>
       <div class="row">
@@ -355,7 +358,7 @@
     <div class="form-group col-md-6 col-sm-6">
       <label class="control-label">เบอร์โทรศัพท์</label><br/>
       <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
-        <select class="form-control chosen FatherRelateStatus" name="idCountry_Calling_Code_Father" id="idCountry_Calling_Code_Father">
+        <select class="form-control FatherRelateStatus" name="idCountry_Calling_Code_Father" id="idCountry_Calling_Code_Father">
           <option value="0">เลือก</option>
           {% for countrycallingcode in countrycallingcodes %}
           {% set selected = '0' %}
@@ -368,6 +371,9 @@
           <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
           {% endfor %}
         </select>
+
+        <input class="form-control" type="tel" id="hp">
+
         <span class="help-block"></span>
       </div>
       <div class="col-sm-6 col-xs-6 no-padding">
@@ -760,3 +766,26 @@
     </div>
 </div>
 </form>
+
+<script>
+$('#hp').intlTelInput({
+  // initialCountry: "auto",
+  // geoIpLookup: function(callback){
+  // 	$.get('http://ipinfo.io', function(){}, "jsonp").always(function(resp){
+  // 		var countryCode = (resp && resp.country) ? resp.country : "";
+  // 		callback(countryCode);
+  // 	});
+  // },
+  utilsScript: "js/utils.js"
+});
+// set it's initial value
+var CodeLoad = $("#hp").intlTelInput("getSelectedCountryData").dialCode;
+console.log(CodeLoad);
+
+// listen to the telephone input for changes
+$("#hp").on("countrychange", function(e, countryData) {
+      var CodeOnchange = $("#hp").intlTelInput("getSelectedCountryData").dialCode;
+      console.log(CodeOnchange);
+});
+
+</script>
