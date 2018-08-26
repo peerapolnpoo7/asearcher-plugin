@@ -13,17 +13,15 @@ $(document).ready(function(){
 			$('#detailMilitary').prop('disabled',true);
 		}
 	}).on('click','input[name="typeMarital"]',function(){
-		if ($('#สมรส').is(':checked') || $('#หย่า').is(':checked') || $('#หม้าย').is(':checked') || $('#แยกกันอยู่').is(':checked') ){
+		if ($('#Married').is(':checked') || $('#Divorced').is(':checked') || $('#Windowed').is(':checked') || $('#Separated').is(':checked') ){
 			$('.boxMarital').removeClass('hidden');
-			$("#boxChildren").removeClass('hidden');
-			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',true);
+			$('#Unregistered').prop('checked',true);
 		}else{
 			$('.boxMarital').addClass('hidden');
-			$("#boxChildren").addClass('hidden');
-			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',false);
+			$('#Unregistered').prop('checked',false);
 		}
 
-		if ($('#หม้าย').is(':checked')){
+		if ($('#Windowed').is(':checked')){
 			$('.widow').prop('disabled',true);
 			$('#idCountry_Calling_Code_Spouse').prop('disabled', true).trigger("chosen:updated");
 			$('#idOccupation_Spouse').val('');
@@ -285,9 +283,13 @@ $(document).ready(function(){
 
 		$('form').request('onStatusCandidate',{
 				success: function(data) {
-						// console.log(data.idMarital_Status);
+						console.log(data.idMarital_Status);
+
 						if (data.idMarital_Status != 1) {
 								$('.boxMarital').removeClass('hidden');
+						}
+						if (data.idMarital_Status == null) {
+								$('.boxMarital').addClass('hidden');
 						}
 				}
 		});
