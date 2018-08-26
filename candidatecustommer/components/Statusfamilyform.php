@@ -76,27 +76,37 @@ class Statusfamilyform extends ComponentBase
 
     public function onSave(){
 
-              $rules = array(
-                  'typeMilitary' => array('required'),
+                      $onGender = Candidate::where('idUser',Auth::getUser()->id)->first();
+                      // dd($onGender->idGender);
+                      if ($onGender->idGender == "1") {
+                        $rules= array('typeMilitary' => array('required'));
+                        $messages = ['typeMilitary.required' => 'กรุณาเลือก "สถานะทางทหาร"'];
+                      }else {
+                        $rules= array();
+                        $messages = [];
+                      }
+
+              $rules_more = array(
+
                   'typeMarital' => array('required'),
                   //บิดา
-                  'TitleNameFather' => array('required'),
+                  // 'TitleNameFather' => array('required'),
                   'FirstName_TH_Father' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Father' => array('regex:/^[\ก-์\s]+$/u'),
                   'Age_Father' => array('regex:/^[1-9][0-9]*$/'),
                   'TelephoneNumber_Father' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
                   //มารดา
-                  'TitleNameMother' => array('required'),
+                  // 'TitleNameMother' => array('required'),
                   'FirstName_TH_Mother' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Mother' => array('regex:/^[\ก-์\s]+$/u'),
                   'Age_Mother' => array('regex:/^[1-9][0-9]*$/'),
                   'TelephoneNumber_Mother' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
               );
-              $messages = [
-                  'typeMilitary.required' => 'กรุณาเลือก "สถานะทางทหาร"',
+              $messages_more = [
+
                   'typeMarital.required' => 'กรุณาเลือก "สถานภาพสมรส"',
                   //บิดา
-                  'TitleNameFather.required' => 'กรุณาเลือก "คำนำหน้าชื่อบิดา"',
+                  // 'TitleNameFather.required' => 'กรุณาเลือก "คำนำหน้าชื่อบิดา"',
                   'FirstName_TH_Father.regex' => 'กรุณากรอก "ชื่อบิดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Father.regex' => 'กรุณากรอก "นามสกุลบิดา" เป็นตัวอักษรไทยเท่านั้น',
                   'Age_Father.regex' => '"อายุบิดา" ต้องเป็นตัวเลขเท่านั้น',
@@ -104,7 +114,7 @@ class Statusfamilyform extends ComponentBase
                   'TelephoneNumber_Father.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                   'TelephoneNumber_Father.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
                   //มารดา
-                  'TitleNameMother.required' => 'กรุณาเลือก "คำนำหน้าชื่อมารดา"',
+                  // 'TitleNameMother.required' => 'กรุณาเลือก "คำนำหน้าชื่อมารดา"',
                   'FirstName_TH_Mother.regex' => 'กรุณากรอก "ชื่อมารดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Mother.regex' => 'กรุณากรอก "นามสกุลมารดา" เป็นตัวอักษรไทยเท่านั้น',
                   'Age_Mother.regex' => '"อายุมารดา" ต้องเป็นตัวเลขเท่านั้น',
@@ -112,6 +122,10 @@ class Statusfamilyform extends ComponentBase
                   'TelephoneNumber_Mother.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                   'TelephoneNumber_Mother.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
               ];
+
+              $rules = array_merge($rules,$rules_more);
+              $messages = array_merge($messages,$messages_more);
+
 
               if(Input::get('typeMarital') != 1){
                   $rules_more= array(
@@ -136,6 +150,7 @@ class Statusfamilyform extends ComponentBase
 
                   $rules = array_merge($rules,$rules_more);
                   $messages = array_merge($messages,$messages_more);
+
                   if(Input::get('typeMarital') != 4){
                       $rules_more= array(
                         //ถ้าหม่ายไม่ต้องใส่
@@ -179,7 +194,12 @@ class Statusfamilyform extends ComponentBase
       $statuscandidate->idRace = 0;
       $statuscandidate->idReligion = 0;
       //สถานะทางทหาร
-      $statuscandidate->idMilitary = Input::get('typeMilitary');
+      if ($onGender->idGender == "1") {
+        $statuscandidate->idMilitary = Input::get('typeMilitary');
+      }else {
+        $statuscandidate->idMilitary = 99 ;
+      }
+
       //สถานภาพสมรส
       $statuscandidate->idMarital_Status = Input::get('typeMarital');
       //สถานะการจดทะเบียน
