@@ -497,15 +497,19 @@ $(document).ready(function(){
         }
     }).on('click','.source_type',function(){
         $(".source_type").addClass("btn-outline");
+        $('.imgSourceType').addClass('grayscaled');
+        var spl=this.id.split("_");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
-        var spl=this.id.split("_");
-        $('input[name="idSources_Type"]').val(spl[1]);
+        
+       // $('input[name="idSources_Type"]').val(spl[1]);
+        $('#SourcesType_'+spl[1]).prop('checked',true);
+        $('#imgSourceType'+spl[1]).removeClass('grayscaled');
         if(spl[1]=="99"){
-            $("#OtherType").removeClass("hidden");
+            $("#boxidSources_TypeOther").removeClass("hidden");
         }else{
-            $("#OtherType").addClass("hidden");
+            $("#boxidSources_TypeOther").addClass("hidden");
         }
     }).on('click','.JobSeeking',function(){
         $(".JobSeeking").addClass("btn-outline");

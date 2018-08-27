@@ -560,20 +560,6 @@ class SmartcvForm extends ComponentBase
             }
         }
 
-        if(post('Expected_Details')){
-            ExpectationOfWork::where('idUser',Auth::getUser()->id)->delete();
-            foreach (post('Expected_Details') as $Expected_Detail) {
-                $expectation_of_work = new ExpectationOfWork();
-                $expectation_of_work->idCandidate = $candidate->idCandidate;
-                $expectation_of_work->idUser = Auth::getUser()->id;
-                $expectation_of_work->idExpected_Detail = $Expected_Detail;
-                $expectation_of_work->save();
-            }
-        }
-
-        /*if(Input::get('idType_of_Employment')=='1'){
-            
-        }*/
         Flash::success('บันทึกข้อมูลเรียบร้อยแล้ว');
         return Redirect::to('/cv-smart');
     }
@@ -789,16 +775,31 @@ class SmartcvForm extends ComponentBase
         return $get;
     }
 
+    public function chkChooseSourceType($idSources_Type)
+    {
+        $get=Candidate::where('idUser',Auth::getUser()->id)->where('idSources_Type',$idSources_Type);
+        if($get->count() > 0){
+            return 'selected';
+        }else{
+            return '';
+        }
+    }
+
     public function loadSourceType()
     {
-        //return SourceType::all();
         $get=SourceType::where('Verify',1);
         $chkSourceType=Candidate::where('idUser',Auth::getUser()->id);
         if($chkSourceType->count() > 0){
             $get->orWhere('idSources_Type',$chkSourceType->first()->idSources_Type);
         }
         $get->orderBy('Status','ASC');
-        return $get->get();
+        $get=$get->get()->toArray();
+        if($get){
+            foreach ($get as $key => $value) {
+                $get[$key]['isSelect'] = $this->chkChooseSourceType($value['idSources_Type']);
+            }
+        }
+        return $get;
     }
 
     public function chkChooseTepyEmp($idType_of_Employment)
