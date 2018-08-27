@@ -707,15 +707,34 @@
 						{{ job_seeker_status.Name_TH}}
 					</a>
 					{% endfor %}
-					<!-- <input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/> -->
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12" id="boxidAvailability_of_Work">
+				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidAvailability_of_Work">
+					<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
+					{% for availability_of_work in availability_of_works %}
+					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+						{% set isChecked = '' %}
+						{% set isActive = 'grayscaled' %}
+						{% set image = 'assets/img/CV/'~availability_of_work.Image~'_hover.png' %}
+						{% if availability_of_work.isSelect == "selected" %}
+							{% set isChecked = 'checked' %}
+							{% set isActive = '' %}
+						{% endif %}
+						<input type="radio" class="Availability" name="idAvailability_of_Work" id="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}" value="{{ availability_of_work.idAvailability_of_Work }}" {{ isChecked }}/>
+
+						<label for="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}">
+							<img src="{{ image|theme }}" alt="" id="imgAvailability{{ availability_of_work.idAvailability_of_Work }}" class="{{ isActive }} imgAvailability"/>
+						</label><br/>
+						{{ availability_of_work.Name_TH }}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="form-group col-md-12 col-xs-12  visible-xs" id="boxidAvailability_of_Work">
 					<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
 					{% for availability_of_work in availability_of_works %}
 					<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
 					{% endfor %}
-					<input type="hidden" name="idAvailability_of_Work" value="{{ requirement_of_works.idAvailability_of_Work }}"/>
+					<!-- <input type="hidden" name="idAvailability_of_Work" value="{{ requirement_of_works.idAvailability_of_Work }}"/> -->
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-12 col-xs-12" id="boxidSources_Type">

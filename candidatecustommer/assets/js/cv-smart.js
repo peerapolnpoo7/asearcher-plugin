@@ -581,11 +581,13 @@ $(document).ready(function(){
         }
     }).on('click','.Availability',function(){
         $(".Availability").addClass("btn-outline");
+        $('.imgAvailability').addClass('grayscaled');
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
         var spl=this.id.split("_");
-        $('input[name="idAvailability_of_Work"]').val(spl[1]);
+        $('#AvailabilityofWork_'+spl[1]).prop('checked',true);
+        $('#imgAvailability'+spl[1]).removeClass('grayscaled');
     }).on('change','.chooseTran',function(){
         var TranSpl=this.id.split('_');
         if(this.value!=""){

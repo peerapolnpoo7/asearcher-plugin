@@ -705,9 +705,25 @@ class SmartcvForm extends ComponentBase
         return SalaryRange::all();
     }
 
+    public function chkChooseAvailability($idAvailability_of_Work)
+    {
+        $get=RequirementOfWork::where('idUser',Auth::getUser()->id)->where('idAvailability_of_Work',$idAvailability_of_Work);
+        if($get->count() > 0){
+            return 'selected';
+        }else{
+            return '';
+        }
+    }
+
     public function loadAvailabilityOfWork()
     {
-        return AvailabilityOfWork::all();
+        $get = AvailabilityOfWork::get()->toArray();
+        if($get){
+            foreach ($get as $key => $value) {
+                $get[$key]['isSelect'] = $this->chkChooseAvailability($value['idAvailability_of_Work']);
+            }
+        }
+        return $get;
     }
 
     public function chkChooseJobSeek($idJob_Seeking_Status)
