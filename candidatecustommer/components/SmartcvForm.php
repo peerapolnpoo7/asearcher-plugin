@@ -939,6 +939,7 @@ class SmartcvForm extends ComponentBase
 
     public function onGetFaculty()
     {
+        
         return FacultyDetail::select('idFaculty_Detail AS id','Name_TH')->where('idInstitute_Detail',post('value'))->get();
     }
 

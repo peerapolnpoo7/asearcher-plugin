@@ -535,9 +535,16 @@ $(document).ready(function(){
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
             $('#idTypeofEmployment_'+spl[1]).prop('checked',true);
+            if(spl[1]=='1'){
+                $('#boxWelFares').removeClass('hidden');
+                $(".select2-container").css('width','100%');
+            }
         }else{
             $(this).addClass("btn-outline");
             $('#idTypeofEmployment_'+spl[1]).prop('checked',false);
+            if(spl[1]=='1'){
+                $('#boxWelFares').addClass('hidden');
+            }
         }
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
