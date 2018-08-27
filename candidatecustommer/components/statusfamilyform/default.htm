@@ -109,23 +109,12 @@
       <div class=" col-sm-1">
       </div>
       <div class="col-sm-11">
-        <!-- <div class="form-group"> -->
-
           {% for marital_regiter_status in maritalregiterstatus %}
           <div class="checkboxgroup col-sm-2 col-xs-6 col-md-2">
           <input id="{{ marital_regiter_status.Name_EN }}"  type="radio" name="typeMarital_register_status"  value="{{ marital_regiter_status.idMarital_Register_Status }}" {{ statuscandidates.idMarital_Register_Status ==  marital_regiter_status.idMarital_Register_Status ? 'checked' :'' }}/>
           <label class="drinkcard-cc below2 {{ marital_regiter_status.Name_EN }} MaritalRegister"  for="{{ marital_regiter_status.Name_EN }}">{{ marital_regiter_status.Name_TH }}</label>
           </div>
           {% endfor %}
-          <!-- <div class="radio radio-info col-sm-2 col-xs-6">
-            <input type="radio" name="typeMarriage" id="radioPer" value="Per">
-            <label for="radioPer">จดทะเบียน</label>
-          </div>
-          <div class="radio radio-info col-sm-2 col-xs-6">
-            <input type="radio" name="typeMarriage" id="radioPre" value="Pre">
-            <label for="radioPre">ไม่ได้จดทะเบียน</label>
-          </div> -->
-        <!-- </div> -->
       </div>
       <!-- <div class=" col-sm-2">
       </div> -->
@@ -173,7 +162,7 @@
       <div class="col-sm-3">
         <div class="form-group">
           <label class="control-label">อาชีพ</label>
-          <select id="idOccupation_Spouse" class="form-control widow" name="idOccupation_Spouse">
+          <select id="idOccupation_Spouse" class="form-control widow" name="idOccupation_Spouse" {{statuscandidates.idMarital_Status == 4 ? 'disabled' :'' }}>
             <option value=""> เลือก </option>
             {% for occupation in occupations %}
             {% set selected = '' %}
@@ -190,14 +179,14 @@
           <input type="text" name="Age_Spouse" id="Age_Spouse" class="form-control dateMobile BirthDate widow" value="{{ spouse.Date_of_Birth !='00/00/0000' ? spouse.Age_Spouse : '' }}">
           <span class="help-block"></span> -->
           <label class="control-label">อายุ</label>
-          <div class="input-group m-b"><input type="text" name="Age_Spouse" id="Age_Spouse"class="form-control chosen widow" value="{{spouse.Age}}" maxlength="2"><span class="input-group-addon">ปี</span></div>
+          <div class="input-group m-b"><input type="text" name="Age_Spouse" id="Age_Spouse"class="form-control chosen widow" value="{{spouse.Age}}" maxlength="2" {{statuscandidates.idMarital_Status == 4 ? 'disabled' :'' }}><span class="input-group-addon">ปี</span></div>
         <span class="help-block"></span>
 
       </div>
       <div class="form-group col-md-6 col-sm-6">
         <label class="control-label">เบอร์โทรศัพท์</label><br/>
         <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
-          <select class="form-control chosen widow" name="idCountry_Calling_Code_Spouse" id="idCountry_Calling_Code_Spouse">
+          <select class="form-control widow" name="idCountry_Calling_Code_Spouse" id="idCountry_Calling_Code_Spouse" {{statuscandidates.idMarital_Status == 4 ? 'disabled' :'' }}>
             <option value="">เลือก</option>
             {% for countrycallingcode in countrycallingcodes %}
             {% set selected = '' %}
@@ -213,7 +202,7 @@
           <span class="help-block"></span>
         </div>
         <div class="col-sm-6 col-xs-6 no-padding">
-          <input type="text" class="form-control widow" name="TelephoneNumber_Spouse" id="TelephoneNumber_Spouse" placeholder="Ex.0999999999" value="{{ spouse.TelephoneNumber }}" maxlength="10">
+          <input type="text" class="form-control widow" name="TelephoneNumber_Spouse" id="TelephoneNumber_Spouse" placeholder="Ex.0999999999" value="{{ spouse.TelephoneNumber }}" maxlength="10" {{statuscandidates.idMarital_Status == 4 ? 'disabled' :'' }}>
           <span class="help-block"></span>
         </div>
 
@@ -251,9 +240,29 @@
                           <div class="project-list">
                             <div class="table-responsive" >
                               <table class="table table-hover ">
-                                  <tbody>
+                                  <tbody class="tbody-c">
+                                    <tr class="ccch hidden">
+                                        <td class="col-sm-1">
+                                          <center>
+                                          <button  value="{{c.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditChildren" class="btn btn-white btn-sm editChildren idFami-c" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                          <!-- <input type="hidden" name="idFamilies" value="{{ b.idFamilies }}"> -->
+                                          </center>
+                                        </td>
+                                        <td class="col-sm-2">
+                                            <small>ชื่อ</small><br/>
+                                            <h4 class="pfFirstName-c"></h4>
+                                        </td>
+                                        <td class="col-sm-2" >
+                                            <small>นามสกุล</small><br/>
+                                            <h4 class="LastName-c"></h4>
+                                        </td>
+                                        <td  >
+                                            <small>อายุ</small><br/>
+                                            <h4 class="Age-c"></h4>
+                                        </td>
+                                    </tr>
                                   {% for c in children %}
-                                  <tr>
+                                  <tr class="ccc">
                                       <td class="col-sm-1">
                                         <center>
                                         <button  value="{{c.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditChildren" class="btn btn-white btn-sm editChildren" ><i class="fa fa-pencil"></i> แก้ไข</button>
@@ -262,15 +271,15 @@
                                       </td>
                                       <td class="col-sm-2">
                                           <small>ชื่อ</small><br/>
-                                          <h4>{{c.nameprefix}}{{ c.FirstName_TH }}</h4>
+                                          <h4 class="pfFirstName">{{c.nameprefix}}{{ c.FirstName_TH }}</h4>
                                       </td>
                                       <td class="col-sm-2" >
                                           <small>นามสกุล</small><br/>
-                                          <h4>{{ c.LastName_TH }}</h4>
+                                          <h4 class="LastName">{{ c.LastName_TH }}</h4>
                                       </td>
                                       <td  >
                                           <small>อายุ</small><br/>
-                                          <h4>{{ c.Age }}</h4>
+                                          <h4 class="Age">{{ c.Age }}</h4>
                                       </td>
                                   </tr>
                                   {% endfor %}
@@ -337,13 +346,13 @@
     <div class="col-sm-1">
     </div>
     <div class="col-sm-2">
-      <label class="control-label">อายุ</label>
-      <div class="input-group m-b"><input type="text" class="form-control FatherRelateStatus" id="Age_Father" name="Age_Father" value="{{ father.Age }}" maxlength="3"><span class="input-group-addon">ปี</span></div>
+      <label class="control-label">อายุ</label >
+      <div class="input-group m-b"><input type="text" class="form-control FatherRelateStatus" id="Age_Father" name="Age_Father" value="{{ father.Age }}" maxlength="3" {{ father.idLife_Status == 2 ? 'disabled' :'' }}><span class="input-group-addon">ปี</span></div>
     </div>
     <div class="col-sm-3">
       <div class="form-group">
         <label class="control-label">อาชีพ</label>
-        <select id="TitleName" class="form-control FatherRelateStatus" name="idOccupation_Father" id="idOccupation_Father">
+        <select id="TitleName" class="form-control FatherRelateStatus" name="idOccupation_Father" id="idOccupation_Father" {{ father.idLife_Status == 2 ? 'disabled' :'' }}>
           <option value=""> เลือก </option>
           {% for occupation in occupations %}
           {% set selected = '' %}
@@ -358,7 +367,7 @@
     <div class="form-group col-md-6 col-sm-6">
       <label class="control-label">เบอร์โทรศัพท์</label><br/>
       <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
-        <select class="form-control FatherRelateStatus" name="idCountry_Calling_Code_Father" id="idCountry_Calling_Code_Father">
+        <select class="form-control FatherRelateStatus" name="idCountry_Calling_Code_Father" id="idCountry_Calling_Code_Father" {{ father.idLife_Status == 2 ? 'disabled' :'' }}>
           <option value="0">เลือก</option>
           {% for countrycallingcode in countrycallingcodes %}
           {% set selected = '0' %}
@@ -368,16 +377,14 @@
           {% if countrycallingcode.idCountry_Calling_Code == father.idCountry_Calling_Code %}
           {% set selected = 'selected' %}
           {% endif %}
-          <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
+          <option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }} >+{{countrycallingcode.Code}}</option>
           {% endfor %}
         </select>
-
-        <input class="form-control" type="tel" id="hp">
-
+        <!-- <input class="form-control" type="tel" id="hp"> -->
         <span class="help-block"></span>
       </div>
       <div class="col-sm-6 col-xs-6 no-padding">
-        <input type="text" class="form-control FatherRelateStatus" name="TelephoneNumber_Father" id="TelephoneNumber_Father" placeholder="Ex.0999999999" value="{{ father.TelephoneNumber }}" maxlength="10">
+        <input type="text" class="form-control FatherRelateStatus" name="TelephoneNumber_Father" id="TelephoneNumber_Father" placeholder="Ex.0999999999" value="{{ father.TelephoneNumber }}" maxlength="10" {{ father.idLife_Status == 2 ? 'disabled' :'' }}>
         <span class="help-block"></span>
       </div>
     </div>
@@ -431,12 +438,12 @@
     </div>
     <div class="col-sm-2">
       <label class="control-label">อายุ</label>
-      <div class="input-group m-b"><input type="text" class="form-control MotherRelateStatus" name="Age_Mother" value="{{ mother.Age }}" maxlength="3"><span class="input-group-addon">ปี</span></div>
+      <div class="input-group m-b"><input type="text" class="form-control MotherRelateStatus" name="Age_Mother" value="{{ mother.Age }}" maxlength="3" {{ mother.idLife_Status == 2 ? 'disabled' :'' }}><span class="input-group-addon">ปี</span></div>
     </div>
     <div class="col-sm-3">
       <div class="form-group">
         <label class="control-label">อาชีพ</label>
-        <select id="TitleName" class="form-control MotherRelateStatus" name="idOccupation_Mother">
+        <select id="TitleName" class="form-control MotherRelateStatus" name="idOccupation_Mother" {{ mother.idLife_Status == 2 ? 'disabled' :'' }}>
           <option value=""> เลือก </option>
           {% for occupation in occupations %}
           {% set selected = '' %}
@@ -451,7 +458,7 @@
     <div class="form-group col-md-6 col-sm-6">
       <label class="control-label">เบอร์โทรศัพท์</label><br/>
       <div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
-        <select class="form-control chosen MotherRelateStatus" name="idCountry_Calling_Code_Mother" id="idCountry_Calling_Code_Mother">
+        <select class="form-control MotherRelateStatus" name="idCountry_Calling_Code_Mother" id="idCountry_Calling_Code_Mother" {{ mother.idLife_Status == 2 ? 'disabled' :'' }}>
           <option value="0">เลือก</option>
           {% for countrycallingcode in countrycallingcodes %}
           {% set selected = '0' %}
@@ -467,7 +474,7 @@
         <span class="help-block"></span>
       </div>
       <div class="col-sm-6 col-xs-6 no-padding">
-        <input type="text" class="form-control chosen MotherRelateStatus" name="TelephoneNumber_Mother" id="TelephoneNumber_Mother" placeholder="Ex.0999999999" value="{{ mother.TelephoneNumber }}" maxlength="10">
+        <input type="text" class="form-control chosen MotherRelateStatus" name="TelephoneNumber_Mother" id="TelephoneNumber_Mother" placeholder="Ex.0999999999" value="{{ mother.TelephoneNumber }}" maxlength="10" {{ mother.idLife_Status == 2 ? 'disabled' :'' }}>
         <span class="help-block"></span>
       </div>
     </div>
@@ -488,7 +495,6 @@
       <br />
     <!-- <button class="btn btn-white" type="button" id="btnAdd_B"><i class="fa fa-plus"></i> เพิ่ม</button>
     <button class="btn btn-white" type="button" id="btnRemove_B"><i class="fa fa-remove"></i> ลด</button> -->
-
     <button class="btn btn-white" type="button" data-toggle="modal" data-target="#moDalAddBrethren" id="AddBrethren" ><i class="fa fa-plus"></i> เพิ่ม</button>
     </div>
   </div>
@@ -503,9 +509,41 @@
                       <div class="project-list">
                         <div class="table-responsive" >
                           <table class="table table-hover ">
-                              <tbody>
+
+                              <tbody class="tbody-b">
+                                <tr class="bbbh hidden">
+                                    <td class="col-sm-1">
+                                      <center>
+                                      <button  value="{{b.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                      <!-- <input type="hidden" name="idFamilies" value="{{ b.idFamilies }}"> -->
+                                      </center>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <small>ชื่อ</small><br/>
+                                        <h4 class="pfFirstName-b"></h4>
+                                    </td>
+                                    <td class="col-sm-2" >
+                                        <small>นามสกุล</small><br/>
+                                        <h4 class="LastName-b"></h4>
+                                    </td>
+                                    <td  >
+                                        <small>สถานะ</small><br/>
+                                        <h4 class="life-b"></h4>
+                                    </td>
+                                    <td  >
+                                        <small>อายุ</small><br/>
+                                        <h4 class="Age-b"></h4>
+                                    </td>
+                                    <td  >
+                                        <small>อาชีพ</small><br/>
+                                        <h4 class="occupation-b"></h4>
+                                    </td>
+                                    <!-- <td >
+                                    <h2><a href="#"><i class="fa fa-minus-circle"></i></a></h2>
+                                    </td> -->
+                                </tr>
                               {% for b in brethren %}
-                              <tr>
+                              <tr class="bbb">
                                   <td class="col-sm-1">
                                     <center>
                                     <button  value="{{b.idFamilies}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren" ><i class="fa fa-pencil"></i> แก้ไข</button>
@@ -556,9 +594,9 @@
 </form>
 
 <form method="post" id="insert_Brethren">
-<div class="modal inmodal fade" id="moDalAddBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal" id="moDalAddBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
-        <div class="modal-content">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
@@ -615,9 +653,9 @@
 </form>
 
 <form method="post" id="edit_Brethren">
-<div class="modal inmodal fade" id="moDaleditBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal" id="moDaleditBrethren" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
-        <div class="modal-content">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
@@ -644,7 +682,7 @@
                         <input type="text" id="LastNameBrethren_edit" name="LastName_TH_Brethren" class="form-control Brethren">
                         <br />
                         <label class="control-label">สถานะ</label>
-                        <select  id="BrethrenStatus_edit"   class="form-control chosen Brethren" name="Status_Brethren">
+                        <select  id="BrethrenStatus_edit"   class="form-control Brethren" name="Status_Brethren">
                           {% for lifestatus in lifestatuss %}
                           <option value="{{ lifestatus.idLife_Status }}" {{ selected }}>{{ lifestatus.Name_TH }}</option>
                           {% endfor %}
@@ -653,7 +691,7 @@
                         <label class="control-label">อายุ</label>
                         <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren_edit" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
                         <label class="control-label">อาชีพ</label>
-                        <select id="OccupationBrethren_edit" class="form-control chosen Brethren" name="idOccupation_Brethren">
+                        <select id="OccupationBrethren_edit" class="form-control Brethren" name="idOccupation_Brethren">
                           <option value="">เลือก</option>
                           {% for occupation in occupations %}
                           <option value="{{ occupation.idOccupation }}" {{ selected }}>{{ occupation.Name_TH }}</option>
@@ -678,9 +716,9 @@
 
 
 <form method="post" id="insert_Children">
-<div class="modal inmodal fade" id="moDalAddChildren" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal" id="moDalAddChildren" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
-        <div class="modal-content">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
@@ -723,9 +761,9 @@
 
 
 <form method="post" id="edit_Children">
-<div class="modal inmodal fade" id="moDaleditChildren" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal"  id="moDaleditChildren" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog ">
-        <div class="modal-content">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
@@ -780,12 +818,12 @@ $('#hp').intlTelInput({
 });
 // set it's initial value
 var CodeLoad = $("#hp").intlTelInput("getSelectedCountryData").dialCode;
-console.log(CodeLoad);
+// console.log(CodeLoad);
 
 // listen to the telephone input for changes
 $("#hp").on("countrychange", function(e, countryData) {
       var CodeOnchange = $("#hp").intlTelInput("getSelectedCountryData").dialCode;
-      console.log(CodeOnchange);
+      // console.log(CodeOnchange);
 });
 
 </script>
