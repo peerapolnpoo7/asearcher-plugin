@@ -509,11 +509,13 @@ $(document).ready(function(){
         }
     }).on('click','.JobSeeking',function(){
         $(".JobSeeking").addClass("btn-outline");
-        if($(this).hasClass("btn-outline")==true){
-            $(this).removeClass("btn-outline");
-        }
+        $('.imgJobSeek').addClass('grayscaled');
         var spl=this.id.split("_");
-        $('input[name="idJob_Seeking_Status"]').val(spl[1]);
+        if($("#JobSeeking_"+spl[1]).hasClass("btn-outline")==true){
+            $("#JobSeeking_"+spl[1]).removeClass("btn-outline");
+        }
+        $('#JobSeekingStatus_'+spl[1]).prop('checked',true);
+        $('#imgJobSeek'+spl[1]).removeClass('grayscaled');
     }).on('click','.TypeofEmployment',function(){
         var spl=this.id.split("_");
         if(this.checked == true){
@@ -535,9 +537,16 @@ $(document).ready(function(){
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
             $('#idTypeofEmployment_'+spl[1]).prop('checked',true);
+            if(spl[1]=='1'){
+                $('#boxWelFares').removeClass('hidden');
+                $(".select2-container").css('width','100%');
+            }
         }else{
             $(this).addClass("btn-outline");
             $('#idTypeofEmployment_'+spl[1]).prop('checked',false);
+            if(spl[1]=='1'){
+                $('#boxWelFares').addClass('hidden');
+            }
         }
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
