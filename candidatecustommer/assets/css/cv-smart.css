@@ -34,3 +34,17 @@
 	background-color: transparent !important;
 	transition: all .5s !important;
 }
+
+.checkboxCV label::before {
+  top:15px !important;
+}
+.checkboxCV label::after {
+  top: 15px !important;
+}
+
+.radioCV label::before {
+  top:12px !important;
+}
+.radioCV label::after {
+  top: 15px !important;
+}

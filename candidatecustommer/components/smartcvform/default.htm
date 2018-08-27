@@ -380,7 +380,7 @@
 					<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-lg visible-md visible-sm">
 						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
 						{% for experience_work_status in experience_work_statuss %}
-						<div class="radio radio-info col-md-6 col-sm-6 col-xs-6 text-center no-padding">
+						<div class="radio radio-info col-md-6 col-sm-6 col-xs-6 text-center no-padding radioCV">
 							{% set checked = '' %}
 							{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'.png' %}
 							{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
@@ -639,7 +639,7 @@
 				<div class="form-group col-md-12 col-sm-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidType_of_Employment">
 					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
 					{% for type_of_employment in type_of_employments %}
-					<div class="checkbox checkbox-info col-md-4 col-sm-4 col-xs-4 text-center no-padding">
+					<div class="checkbox checkbox-info col-md-4 col-sm-4 col-xs-4 text-center no-padding checkboxCV">
 						{% set isChecked = '' %}
 						{% set isActive = 'grayscaled' %}
 						{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
@@ -680,14 +680,34 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-md-12 col-xs-12" id="boxidJob_Seeking_Status">
+				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
+					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+					{% for job_seeker_status in job_seeker_statuses %}
+					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+						{% set isChecked = '' %}
+						{% set isActive = 'grayscaled' %}
+						{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
+						{% if job_seeker_status.isSelect == "selected" %}
+							{% set isChecked = 'checked' %}
+							{% set isActive = '' %}
+						{% endif %}
+						<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
+
+						<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
+							<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
+						</label><br/>
+						{{ job_seeker_status.Name_TH }}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
 					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
 					{% for job_seeker_status in job_seeker_statuses %}
 					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
 						{{ job_seeker_status.Name_TH}}
 					</a>
 					{% endfor %}
-					<input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/>
+					<!-- <input type="hidden" name="idJob_Seeking_Status" value="{{ requirement_of_works.idJob_Seeking_Status }}"/> -->
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-12 col-xs-12" id="boxidAvailability_of_Work">

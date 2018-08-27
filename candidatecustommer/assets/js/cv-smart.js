@@ -509,11 +509,13 @@ $(document).ready(function(){
         }
     }).on('click','.JobSeeking',function(){
         $(".JobSeeking").addClass("btn-outline");
-        if($(this).hasClass("btn-outline")==true){
-            $(this).removeClass("btn-outline");
-        }
+        $('.imgJobSeek').addClass('grayscaled');
         var spl=this.id.split("_");
-        $('input[name="idJob_Seeking_Status"]').val(spl[1]);
+        if($("#JobSeeking_"+spl[1]).hasClass("btn-outline")==true){
+            $("#JobSeeking_"+spl[1]).removeClass("btn-outline");
+        }
+        $('#JobSeekingStatus_'+spl[1]).prop('checked',true);
+        $('#imgJobSeek'+spl[1]).removeClass('grayscaled');
     }).on('click','.TypeofEmployment',function(){
         var spl=this.id.split("_");
         if(this.checked == true){

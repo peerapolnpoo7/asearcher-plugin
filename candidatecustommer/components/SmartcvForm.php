@@ -710,9 +710,25 @@ class SmartcvForm extends ComponentBase
         return AvailabilityOfWork::all();
     }
 
+    public function chkChooseJobSeek($idJob_Seeking_Status)
+    {
+        $get=RequirementOfWork::where('idUser',Auth::getUser()->id)->where('idJob_Seeking_Status',$idJob_Seeking_Status);
+        if($get->count() > 0){
+            return 'selected';
+        }else{
+            return '';
+        }
+    }
+
     public function loadJobSeekingStatus()
     {
-        return JobSeekingStatus::all();
+        $get = JobSeekingStatus::get()->toArray();
+        if($get){
+            foreach ($get as $key => $value) {
+                $get[$key]['isSelect'] = $this->chkChooseJobSeek($value['idJob_Seeking_Status']);
+            }
+        }
+        return $get;
     }
 
     public function loadProvinces()
@@ -939,7 +955,7 @@ class SmartcvForm extends ComponentBase
 
     public function onGetFaculty()
     {
-        
+
         return FacultyDetail::select('idFaculty_Detail AS id','Name_TH')->where('idInstitute_Detail',post('value'))->get();
     }
 
