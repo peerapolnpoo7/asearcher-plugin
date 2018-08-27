@@ -7,7 +7,7 @@ use Input;
 use Request;
 use Validator;
 use Redirect;
-
+use Response;
 use Db;
 
 use ValidationException;
@@ -72,6 +72,7 @@ class Statusfamilyform extends ComponentBase
       $this->brethrens=$this->onBrethren();
       $this->brethren=$this->loadBrethren();
       $this->children=$this->loadChildren();
+      $this->callingcode=$this->onCountryCallingCode();
     }
 
     public function onSave(){
@@ -226,12 +227,18 @@ class Statusfamilyform extends ComponentBase
         $families_spouse->FirstName_TH = Input::get('FirstName_TH_Spouse');
         $families_spouse->LastName_TH = Input::get('LastName_TH_Spouse');
         $families_spouse->NickName_TH = Input::get('NickName_TH_Spouse');
-        // if ($statuscandidate->idMarital_Status != 4) {
-        $families_spouse->idOccupation = Input::get('idOccupation_Spouse');
-        $families_spouse->Age = Input::get('Age_Spouse');
-        $families_spouse->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Spouse');
-        $families_spouse->TelephoneNumber = Input::get('TelephoneNumber_Spouse');
-        // }
+        if ($statuscandidate->idMarital_Status == 4) {
+        $families_spouse->idOccupation = NULL;
+        $families_spouse->Age = NULL;
+        $families_spouse->idCountry_Calling_Code = 83;
+        $families_spouse->TelephoneNumber = NULL;
+        }else {
+          $families_spouse->idOccupation = Input::get('idOccupation_Spouse');
+          $families_spouse->Age = Input::get('Age_Spouse');
+          $families_spouse->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Spouse');
+          $families_spouse->TelephoneNumber = Input::get('TelephoneNumber_Spouse');
+        }
+
         $families_spouse->Amount_of_Children = Input::get('Amount_of_Children');
 
         if ($statuscandidate->idMarital_Status == 2) {
@@ -266,10 +273,18 @@ class Statusfamilyform extends ComponentBase
      $families_father->FirstName_TH = Input::get('FirstName_TH_Father');
      $families_father->LastName_TH = Input::get('LastName_TH_Father');
      $families_father->idLife_Status = Input::get('Status_Father');
-     $families_father->Age = Input::get('Age_Father')!='' ? Input::get('Age_Father'):NULL ;
-     $families_father->idOccupation = Input::get('idOccupation_Father')!='' ? Input::get('idOccupation_Father'):NULL ;
-     $families_father->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Father');
-     $families_father->TelephoneNumber = Input::get('TelephoneNumber_Father');
+
+     if ($families_father->idLife_Status == 2) {
+       $families_father->Age = NULL ;
+       $families_father->idOccupation = NULL ;
+       $families_father->idCountry_Calling_Code = 83 ;
+       $families_father->TelephoneNumber = NULL;
+     }else {
+       $families_father->Age = Input::get('Age_Father')!='' ? Input::get('Age_Father'):NULL ;
+       $families_father->idOccupation = Input::get('idOccupation_Father')!='' ? Input::get('idOccupation_Father'):NULL ;
+       $families_father->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Father');
+       $families_father->TelephoneNumber = Input::get('TelephoneNumber_Father');
+     }
      $families_father->idRelationship_type = 1;
      $families_father->save();
 
@@ -287,10 +302,19 @@ class Statusfamilyform extends ComponentBase
      $families_Mother->FirstName_TH = Input::get('FirstName_TH_Mother');
      $families_Mother->LastName_TH = Input::get('LastName_TH_Mother');
      $families_Mother->idLife_Status = Input::get('Status_Mother');
-     $families_Mother->Age = Input::get('Age_Mother')!='' ? Input::get('Age_Mother'):NULL ;
-     $families_Mother->idOccupation = Input::get('idOccupation_Mother')!='' ? Input::get('idOccupation_Mother'):NULL ;
-     $families_Mother->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Mother');
-     $families_Mother->TelephoneNumber = Input::get('TelephoneNumber_Mother');
+     // $families_Mother->Age = Input::get('Age_Mother')!='' ? Input::get('Age_Mother'):NULL ;
+     // $families_Mother->idOccupation = Input::get('idOccupation_Mother')!='' ? Input::get('idOccupation_Mother'):NULL ;
+     if (Input::get('Status_Mother') == 2) {
+       $families_Mother->Age = NULL ;
+       $families_Mother->idOccupation = NULL ;
+       $families_Mother->idCountry_Calling_Code = 83 ;
+       $families_Mother->TelephoneNumber = NULL;
+     }else {
+       $families_Mother->Age = Input::get('Age_Mother')!='' ? Input::get('Age_Mother'):NULL ;
+       $families_Mother->idOccupation = Input::get('idOccupation_Mother')!='' ? Input::get('idOccupation_Mother'):NULL;
+       $families_Mother->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Mother');
+       $families_Mother->TelephoneNumber = Input::get('TelephoneNumber_Mother');
+     }
      $families_Mother->idRelationship_type = 2;
      $families_Mother->save();
 
@@ -568,6 +592,13 @@ class Statusfamilyform extends ComponentBase
         return CountryCallingCode::all();
     }
 
+    public function onCountryCallingCode()
+    {
+        $get = CountryCallingCode::select('Name_EN as name','Flag as iso2','Code AS dialCode','idCountry_Calling_Code as id')->get();
+        // dd($get);
+        return Response::json($get);
+    }
+
     public function loadCandidate()
     {
         $get = Candidate::where('idUser',Auth::getUser()->id)->first();
@@ -683,13 +714,21 @@ class Statusfamilyform extends ComponentBase
 
     public function onChildren()
     {
-        $get = Families::where('idUser',Auth::getUser()->id)->where('idRelationship_type',5)->get();
+        $get = Families::select('families.*','life_status.Name_TH AS namelife','occupation.Name_TH AS nameoccupation','prefix.Name_TH AS nameprefix')
+        ->leftJoin('life_status','families.idLife_Status','=','life_status.idLife_Status')
+        ->leftJoin('occupation','families.idOccupation','=','occupation.idOccupation')
+        ->leftJoin('prefix','families.idPrefix','=','prefix.idPrefix')
+        ->where('idUser',Auth::getUser()->id)->where('idRelationship_type',5)->get();
         return $get;
     }
 
     public function onBrethren()
     {
-        $get = Families::where('idUser',Auth::getUser()->id)->whereIN('idRelationship_type',['8','9'])->get();
+        $get = Families::select('families.*','life_status.Name_TH AS namelife','occupation.Name_TH AS nameoccupation','prefix.Name_TH AS nameprefix')
+        ->leftJoin('life_status','families.idLife_Status','=','life_status.idLife_Status')
+        ->leftJoin('occupation','families.idOccupation','=','occupation.idOccupation')
+        ->leftJoin('prefix','families.idPrefix','=','prefix.idPrefix')
+        ->where('idUser',Auth::getUser()->id)->whereIN('idRelationship_type',['8','9'])->get();
         return $get;
     }
 

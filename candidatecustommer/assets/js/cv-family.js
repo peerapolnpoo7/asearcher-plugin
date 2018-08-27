@@ -34,7 +34,7 @@ $(document).ready(function(){
 
 	}).on("change","#Status_Father",function(){
 		if(this.value=="2"){
-			$('.FatherRelateStatus').prop('disabled',true);
+			$('.FatherRelateStatus').val('').prop('disabled',true);
 			$('#idCountry_Calling_Code_Father').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.FatherRelateStatus').prop('disabled',false);
@@ -42,7 +42,7 @@ $(document).ready(function(){
 		}
 	}).on("change","#Status_Mother",function(){
 		if(this.value=="2"){
-			$('.MotherRelateStatus').prop('disabled',true);
+			$('.MotherRelateStatus').val('').prop('disabled',true);
 			$('#idCountry_Calling_Code_Mother').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.MotherRelateStatus').prop('disabled',false);
@@ -96,16 +96,47 @@ $(document).ready(function(){
 						       AgeBrethren: $('#AgeBrethren').val(),
 					         OccupationBrethren: $('#OccupationBrethren').val(),},
 						success: function(data) {
-										swal({
-		            				title: "เพิ่มพี่น้องสำเร็จ!",
-		            				type: "success"
-		        					}, function() {
-													$('#moDalAddBrethren').modal('hide');
-		            					location.reload();
-		        					});
+									 $(".bbb").remove();
+									 $('form').request('onBrethren',{
+										 success: function(dataBre) {
+											 $(".bbbh:first").removeClass('hidden');
+											for (var i = 0; i < dataBre.length; i++) {
+												$(".bbbh:last").clone().appendTo('.tbody-b');
+												$(".idFami-b:last").val(dataBre[i].idFamilies);
+												$(".pfFirstName-b:last").html(dataBre[i].nameprefix+dataBre[i].FirstName_TH);
+												$(".LastName-b:last").html(dataBre[i].LastName_TH);
+												$(".life-b:last").html(dataBre[i].namelife);
+												$(".Age-b:last").html(dataBre[i].Age);
+												if (dataBre[i].idOccupation == null) {
+													 $(".occupation-b:last").html('');
+												}else {
+													 $(".occupation-b:last").html(dataBre[i].nameoccupation);
+												}
+
+											}
+											$(".bbbh:first").addClass('hidden');
+	 									 $('#moDalAddBrethren').modal('hide');
+										 }
+									 })
+
+										// swal({
+		            		// 		title: "เพิ่มพี่น้องสำเร็จ!",
+		            		// 		type: "success"
+		        				// 	}, function() {
+										// 			$('#moDalAddBrethren').modal('hide');
+		            		// 			location.reload();
+		        				// 	});
 						}
 				});
-	})
+	}).on("change",".BrethrenStatus",function(){
+			if(this.value=="2"){
+				$('#AgeBrethren').prop('disabled',true);
+				$('#OccupationBrethren').prop('disabled',true);
+			}else{
+				$('#AgeBrethren').prop('disabled',false);
+				$('#OccupationBrethren').prop('disabled',false);
+			}
+		})
 
 	$('form').on('click','.editBrethren',function(){
 		 var edit = this.value;
@@ -117,10 +148,22 @@ $(document).ready(function(){
 				$("#NameBrethren_edit").val(data.FirstName_TH);
 				$("#LastNameBrethren_edit").val(data.LastName_TH);
 				$("#BrethrenStatus_edit").val(data.idLife_Status).trigger("chosen:updated");
-				$("#AgeBrethren_edit").val(data.Age);
-				$("#OccupationBrethren_edit").val(data.idOccupation).trigger("chosen:updated");
+				if (data.idLife_Status == 2) {
+					$("#AgeBrethren_edit").prop('disabled',true);
+					$("#OccupationBrethren_edit").prop('disabled',true);
+					$("#AgeBrethren_edit").val(data.Age);
+					$("#OccupationBrethren_edit").val(data.idOccupation).trigger("chosen:updated");
+				}else {
+					$("#AgeBrethren_edit").prop('disabled',false);
+					$("#OccupationBrethren_edit").prop('disabled',false);
+					$("#AgeBrethren_edit").val(data.Age);
+					$("#OccupationBrethren_edit").val(data.idOccupation).trigger("chosen:updated");
+				}
+
+
 			 }
 			 })
+
 		 $('#edit_Brethren').on('click','#upbrethren',function(){
 			 $('form').request('onUpdateBrethren', {
 					 data: {numedit: edit,
@@ -165,13 +208,24 @@ $(document).ready(function(){
 						})
 			})
 		})
-	}).on('click','#AddBrethren',function(){
-		$("#TitleNameBrethren option[value='']").attr("selected","selected").trigger("chosen:updated");
+	}).on("change","#BrethrenStatus_edit",function(){
+		// console.log(this.value);
+			if(this.value=="2"){
+				$('#AgeBrethren_edit').val('');
+				$('#AgeBrethren_edit').prop('disabled',true);
+				$('#OccupationBrethren_edit').val('').trigger("chosen:updated");
+				$('#OccupationBrethren_edit').prop('disabled',true);
+			}else{
+				$('#AgeBrethren_edit').prop('disabled',false);
+				$('#OccupationBrethren_edit').prop('disabled',false);
+			}
+		}).on('click','#AddBrethren',function(){
+		$("#TitleNameBrethren").val('').trigger("chosen:updated");
 		$("#NameBrethren").val('');
 		$("#LastNameBrethren").val('');
-		$("#BrethrenStatus option[value='1']").attr("selected","selected").trigger("chosen:updated");
+		$("#BrethrenStatus").val('').trigger("chosen:updated");
 		$("#AgeBrethren").val('');
-		$("#OccupationBrethren option[value='']").attr("selected","selected").trigger("chosen:updated");
+		$("#OccupationBrethren").val('').trigger("chosen:updated");
 	})
 
 
@@ -183,16 +237,32 @@ $(document).ready(function(){
 									 LastNameChildren: $('#LastNameChildren').val(),
 									 AgeChildren: $('#AgeChildren').val(),},
 						success: function(data) {
-										swal({
-												title: "เพิ่มบุตรสำเร็จ!",
-												type: "success"
-											}, function() {
-													$('#moDalAddChildren').modal('hide');
-													location.reload();
-											});
+							$(".ccc").remove();
+							$('form').request('onChildren',{
+								success: function(dataChil) {
+									$(".ccch:first").removeClass('hidden');
+								 for (var i = 0; i < dataChil.length; i++) {
+									 $(".ccch:last").clone().appendTo('.tbody-c');
+									 $(".idFami-c:last").val(dataChil[i].idFamilies);
+									 $(".pfFirstName-c:last").html(dataChil[i].nameprefix+dataChil[i].FirstName_TH);
+									 $(".LastName-c:last").html(dataChil[i].LastName_TH);
+									 $(".Age-c:last").html(dataChil[i].Age);
+								 }
+								 $(".ccch:first").addClass('hidden');
+								$('#moDalAddChildren').modal('hide');
+								}
+							})
+										// swal({
+										// 		title: "เพิ่มบุตรสำเร็จ!",
+										// 		type: "success"
+										// 	}, function() {
+										// 			$('#moDalAddChildren').modal('hide');
+										// 			// location.reload();
+										// 	});
 						}
 				});
 	})
+
 
 	$('form').on('click','.editChildren',function(){
 		 var edit = this.value;
@@ -249,12 +319,11 @@ $(document).ready(function(){
 			})
 		})
 	}).on('click','#AddChildren',function(){
-		$("#TitleNameChildren option[value='']").attr("selected","selected").trigger("chosen:updated");
+		$("#TitleNameChildren").val('').trigger("chosen:updated");
 		$("#NameChildren").val('');
 		$("#LastNameChildren").val('');
 		$("#AgeChildren").val('');
 	})
-
 
 
 
@@ -283,8 +352,7 @@ $(document).ready(function(){
 
 		$('form').request('onStatusCandidate',{
 				success: function(data) {
-						console.log(data.idMarital_Status);
-
+						// console.log(data.idMarital_Status);
 						if (data.idMarital_Status != 1) {
 								$('.boxMarital').removeClass('hidden');
 						}
@@ -293,6 +361,8 @@ $(document).ready(function(){
 						}
 				}
 		});
+
+
 
 
 });
