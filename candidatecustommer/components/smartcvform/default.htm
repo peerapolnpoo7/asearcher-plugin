@@ -614,6 +614,7 @@
 					<input type="text" name="Skill_ListOther" id="Skill_ListOther" class="form-control">
 				</div>
 				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
+					<label class="control-label">ระดับ</label>
 					<div id="ionrangeSkillListLevel"></div>
 					<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
 				</div>
@@ -672,7 +673,7 @@
 					<span class="help-block"></span>
 				</div>
 				<div class="form-group col-md-12 col-xs-12 {{ type_of_employments[0].isSelect == 'selected' ? '' : 'hidden' }}" id="boxWelFares">
-					<label class="control-label">สวัสดิการบริษัทที่ต้องการ</label>
+					<label class="control-label">เลือกสวัสดิการบริษัทที่ต้องการ</label>
 					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
 						{% for welfare_type in welfare_types %}
 						<option value="{{welfare_type.idWelfare_Type}}" {{ welfare_type.selected }}>{{welfare_type.Name_TH}}</option>
@@ -739,7 +740,7 @@
 				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidSources_Type">
 					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
 					{% for source_type in source_types %}
-					<div class="radio radio-info col-md-3 col-sm-3 col-xs-3 text-center no-padding radioCV">
+					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
 						{% set isChecked = '' %}
 						{% set isActive = 'grayscaled' %}
 						{% set image = 'assets/img/CV/'~source_type.Image~'.png' %}

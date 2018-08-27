@@ -738,21 +738,15 @@ class SmartcvForm extends ComponentBase
         return Province::all();
     }
 
-    public function chkWelfareSelected($idWelfare_Type)
+    public function chkWelfareSelected($idWelfare_Type,$Type)
     {
         $chk=WelfareOfWork::where('idUser',Auth::getUser()->id);
         if($chk->count() == 0){
+
             $chkCandidate=Candidate::where('TelephoneNumber',NULL)->where('idUser',Auth::getUser()->id);
             if($chkCandidate->count() == 0){
-                switch ($idWelfare_Type) {
-                    case '5':
-                    case '28':
-                    case '29':
-                    case '35':
-                    case '44':
-                    case '45':
-                        return "selected";
-                    break;
+                if($Type == 'Law Welfare'){
+                    return "selected";
                 }
             }
         }else{
@@ -769,7 +763,7 @@ class SmartcvForm extends ComponentBase
         $get=WelfareType::get()->toArray();
         if($get){
             foreach ($get as $key => $value) {
-                $get[$key]['selected']=$this->chkWelfareSelected($value['idWelfare_Type']);
+                $get[$key]['selected']=$this->chkWelfareSelected($value['idWelfare_Type'],$value['Type']);
             }
         }
         return $get;
@@ -808,14 +802,20 @@ class SmartcvForm extends ComponentBase
         if($get->count() > 0){
             return 'selected';
         }else{
-            return '';
+            if($idType_of_Employment == 1){
+                $get=RequirementEmployment::where('idUser',Auth::getUser()->id)->count();
+                if($get == 0){
+                    return 'selected';
+                }
+            }else{
+                return '';
+            }
         }
 
     }
 
     public function loadTypeOfEmployment()
     {
-        //return TypeOfEmployment::all();
         $get = TypeOfEmployment::get()->toArray();
         if($get)
         {
@@ -828,7 +828,6 @@ class SmartcvForm extends ComponentBase
 
     public function loadTransportationMRT()
     {
-        /*return TransportationDetail::whereIn('Name_EN',[3,4,5,6,7,8])->get();*/
         $get=TransportationDetail::where('Name_EN', 'like', '%MRT%')
         ->groupBy('Name_EN')->get()->toArray();
         if($get){
@@ -841,7 +840,6 @@ class SmartcvForm extends ComponentBase
 
     public function loadTransportationBTS()
     {
-        //return TransportationDetail::whereIn('idTransportation_Detail',[1,2])->get();
         $get=TransportationDetail::where('Name_EN', 'like', '%BTS%')
         ->groupBy('Name_EN')->get()->toArray();
         if($get){
@@ -976,6 +974,11 @@ class SmartcvForm extends ComponentBase
         return FacultyDetail::select('idFaculty_Detail AS id','Name_TH')->where('idInstitute_Detail',post('value'))->get();
     }
 
+    public function onGetTypeOfInstitue()
+    {
+        return InstituteDetail::select('idType_of_Institute')->where('idInstitute_Detail',post('value'))->first();
+    }
+
     public function onGetDepartment()
     {
         return Department::select('idDepartment as id','Name_TH')->where('idFaculty_Detail',post('value'))->get();
@@ -1027,7 +1030,6 @@ class SmartcvForm extends ComponentBase
         if($get){
             $get->Date_of_Birth=$this->convertDateToForm($get->Date_of_Birth);
         }
-        //dd(Auth::getUser()->id);
         return $get;
     }
 
