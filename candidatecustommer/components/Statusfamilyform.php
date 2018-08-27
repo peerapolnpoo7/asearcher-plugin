@@ -131,7 +131,7 @@ class Statusfamilyform extends ComponentBase
               if(Input::get('typeMarital') != 1){
                   $rules_more= array(
                           //คู่สมรส
-                          'idPrefix_Spouse' => array('required'),
+                          // 'idPrefix_Spouse' => array('required'),
                           'FirstName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
                           'LastName_TH_Spouse' => array('required','regex:/^[\ก-์\s]+$/u'),
                           'NickName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
@@ -139,7 +139,7 @@ class Statusfamilyform extends ComponentBase
                           'Amount_of_Children' => array('required'),
                   );
                   $messages_more = [
-                          'idPrefix_Spouse.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
+                          // 'idPrefix_Spouse.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
                           'FirstName_TH_Spouse.required' => 'กรุณากรอก "ชื่อ"',
                           'FirstName_TH_Spouse.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
                           'LastName_TH_Spouse.required' => 'กรุณากรอก "นามสกุล"',
@@ -223,7 +223,7 @@ class Statusfamilyform extends ComponentBase
         }
         $families_spouse->idCandidate = Session::get('idCandidate');
         $families_spouse->idUser = Auth::getUser()->id;
-        $families_spouse->idPrefix = Input::get('idPrefix_Spouse');
+        $families_spouse->idPrefix = Input::get('idPrefix_Spouse') !='' ? Input::get('idPrefix_Spouse'):NULL ;
         $families_spouse->FirstName_TH = Input::get('FirstName_TH_Spouse');
         $families_spouse->LastName_TH = Input::get('LastName_TH_Spouse');
         $families_spouse->NickName_TH = Input::get('NickName_TH_Spouse');
