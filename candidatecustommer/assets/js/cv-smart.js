@@ -399,6 +399,7 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                //$("#type_of_institue").val(data[0].idType_of_Institute);
                 if(data.length > 0){
                     $('.Faculty_Detail').removeClass('hidden');
                     $('.Department').addClass('hidden');
@@ -413,10 +414,16 @@ $(document).ready(function(){
                     $('.Major_Subject').addClass('hidden');
                     $('#idMajor_Subject').val('');
                 }
-                
                 $('select.chosen').trigger("chosen:updated");
-             }
-         });
+            }
+        });
+        $.request('onGetTypeOfInstitue', {
+            data: {value: this.value},
+            success: function(data) {
+                $("#type_of_institue").val(data.idType_of_Institute);
+                $('select.chosen').trigger("chosen:updated");
+            }
+        });
     }).on('change','#idEducation_Level',function(){
         if(this.value ==""){
             $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail,#boxidFaculty_Detail,#boxidDepartment,#boxidMajor_Subject,#boxidDegree_and_Certificate,#boxGPA').addClass('hidden');
