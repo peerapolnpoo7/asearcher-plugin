@@ -299,6 +299,22 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                if(data.length > 0){
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                    $('#idDegree_and_Certificate').val('');
+                    $('#GPA').val('');
+                }else{
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('#idFaculty_Detail').val('');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                }
                 $('select.chosen').trigger("chosen:updated");
             }
         });
@@ -518,21 +534,11 @@ $(document).ready(function(){
        var spl=this.id.split("_");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
+            $('#idTypeofEmployment_'+spl[1]).prop('checked',true);
         }else{
             $(this).addClass("btn-outline");
+            $('#idTypeofEmployment_'+spl[1]).prop('checked',false);
         }
-        /*$(".TypeofEmployment").addClass("btn-outline");
-        if($(this).hasClass("btn-outline")==true){
-            $(this).removeClass("btn-outline");
-        }
-        var spl=this.id.split("_");
-        $('input[name="idType_of_Employment"]').val(spl[1]);
-        if(spl[1]!=1){
-            $('#boxWelFares').addClass('hidden');
-        }else{
-            $('#boxWelFares').removeClass('hidden');
-            $(".select2-container").css('width','100%');
-        }*/
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
