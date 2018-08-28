@@ -13,11 +13,12 @@ class Plugin extends PluginBase
            'Asearcher\CandidateCustommer\Components\AddressForm' => 'addressform',
            'Asearcher\CandidateCustommer\Components\ProfileSession' => 'profilesession',
            'Asearcher\CandidateCustommer\Components\Statusfamilyform' => 'statusfamilyform',
-           'Asearcher\CandidateCustommer\Components\PersonalForm' => 'personalform'  
+           'Asearcher\CandidateCustommer\Components\Education' => 'education',
+           'Asearcher\CandidateCustommer\Components\PersonalForm' => 'personalform'
 
         ];
     }
- 
+
     public function registerSettings()
     {
 
