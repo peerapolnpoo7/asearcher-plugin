@@ -239,7 +239,7 @@
                       <!-- <div class="ibox-content"> -->
                           <div class="project-list">
                             <div class="table-responsive" >
-                              <table class="table table-hover ">
+                              <table class="table table-hover " id="data-c">
                                   <tbody class="tbody-c">
                                     <tr class="ccch hidden">
                                         <td class="col-sm-1">
@@ -508,8 +508,7 @@
                   <!-- <div class="ibox-content"> -->
                       <div class="project-list">
                         <div class="table-responsive" >
-                          <table class="table table-hover ">
-
+                          <table class="table table-hover " id="data-b">
                               <tbody class="tbody-b">
                                 <tr class="bbbh hidden">
                                     <td class="col-sm-1">
@@ -600,6 +599,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <p class="modal-title">เพิ่มข้อมูลพี่น้อง</p>
                 <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
             <div class="modal-body">
@@ -629,7 +629,7 @@
                         </select>
                         <br />
                         <label class="control-label">อายุ</label>
-                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren" class="form-control Brethren" maxlength="2"> <span class="input-group-addon">ปี</span></div>
                         <label class="control-label">อาชีพ</label>
                         <select id="OccupationBrethren" class="form-control Brethren" name="idOccupation_Brethren">
                           <option value="">เลือก</option>
@@ -645,7 +645,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">  ปิด  </button>
-                <button type="button" id="addbrethren" class="btn btn-info btn-rounded">  เพิ่ม  </button>
+                <button type="button" id="addbrethren" class="ladda-button btn btn-info btn-rounded" data-style="slide-up">  เพิ่ม  </button>
             </div>
         </div>
     </div>
@@ -659,6 +659,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <p class="modal-title">แก้ไขข้อมูลพี่น้อง</p>
                 <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
             <div class="modal-body">
@@ -666,7 +667,7 @@
                   <div class="col-sm-3">
                   </div>
                   <div class="col-sm-6">
-
+                        <input type="text" id="idFamiliesBrethren_edit" name="idFamilies_Brethren" hidden>
                         <label>คำนำหน้าชื่อ</label>
                         <select id="TitleNameBrethren_edit" class="form-control Brethren chosen" name="TitleNameBrethren">
                           <option value="">เลือก</option>
@@ -689,7 +690,7 @@
                         </select>
                         <br />
                         <label class="control-label">อายุ</label>
-                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren_edit" class="form-control Brethren"> <span class="input-group-addon">ปี</span></div>
+                        <div class="input-group m-b"><input type="text" name="Age_Brethren" id="AgeBrethren_edit" class="form-control Brethren" maxlength="2"> <span class="input-group-addon">ปี</span></div>
                         <label class="control-label">อาชีพ</label>
                         <select id="OccupationBrethren_edit" class="form-control Brethren" name="idOccupation_Brethren">
                           <option value="">เลือก</option>
@@ -722,6 +723,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <p class="modal-title">เพิ่มข้อมูลบุตร</p>
                 <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
             <div class="modal-body">
@@ -744,7 +746,7 @@
                         <input type="text" id="LastNameChildren" name="LastName_TH_Children" class="form-control Children">
                         <br />
                         <label class="control-label">อายุ</label>
-                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren" class="form-control Children"> <span class="input-group-addon">ปี</span></div>
+                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren" class="form-control Children" maxlength="2"> <span class="input-group-addon">ปี</span></div>
                   </div>
                   <div class="col-sm-3">
                   </div>
@@ -752,7 +754,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white btn-rounded" data-dismiss="modal">  ปิด  </button>
-                <button type="button" id="addChildren" class="btn btn-info btn-rounded">  เพิ่ม  </button>
+                <button type="button" id="addChildren"  class="ladda-button btn btn-info btn-rounded" data-style="slide-up"> เพิ่ม </button>
             </div>
         </div>
     </div>
@@ -766,7 +768,7 @@
         <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <!-- <h4 class="modal-title">เพิ่มพี่น้อง</h4> -->
+                <p class="modal-title">แก้ไขข้อมูลบุตร</p>
                 <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
             </div>
             <div class="modal-body">
@@ -774,6 +776,7 @@
                   <div class="col-sm-3">
                   </div>
                   <div class="col-sm-6">
+                        <input type="text" id="idFamiliesChildren_edit" name="idFamilies_Children" hidden>
                         <label>คำนำหน้าชื่อ</label>
                         <select id="TitleNameChildren_edit" class="form-control Children chosen" name="TitleNameChildren">
                           <option value="">เลือก</option>
@@ -789,7 +792,7 @@
                         <input type="text" id="LastNameChildren_edit" name="LastName_TH_Children" class="form-control Children">
                         <br />
                         <label class="control-label">อายุ</label>
-                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren_edit" class="form-control Children"> <span class="input-group-addon">ปี</span></div>
+                        <div class="input-group m-b"><input type="text" name="Age_Children" id="AgeChildren_edit" class="form-control Children" maxlength="2"> <span class="input-group-addon">ปี</span></div>
                   </div>
                   <div class="col-sm-3">
                   </div>
@@ -825,5 +828,32 @@ $("#hp").on("countrychange", function(e, countryData) {
       var CodeOnchange = $("#hp").intlTelInput("getSelectedCountryData").dialCode;
       // console.log(CodeOnchange);
 });
+
+</script>
+
+<script>
+
+    $(document).ready(function (){
+
+        // Bind normal buttons
+        Ladda.bind( '.ladda-button',{ timeout: 2000 });
+
+        // Bind progress buttons and simulate loading progress
+        Ladda.bind( '.progress-demo .ladda-button',{
+            callback: function( instance ){
+                var progress = 0;
+                var interval = setInterval( function(){
+                    progress = Math.min( progress + Math.random() * 0.1, 1 );
+                    instance.setProgress( progress );
+
+                    if( progress === 1 ){
+                        instance.stop();
+                        clearInterval( interval );
+                    }
+                }, 200 );
+            }
+        });
+
+    });
 
 </script>
