@@ -299,6 +299,22 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                if(data.length > 0){
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                    $('#idDegree_and_Certificate').val('');
+                    $('#GPA').val('');
+                }else{
+                    $('.Faculty_Detail').addClass('hidden');
+                    $('#idFaculty_Detail').val('');
+                    $('.Department').addClass('hidden');
+                    $('#idDepartment').val('');
+                    $('.Major_Subject').addClass('hidden');
+                    $('#idMajor_Subject').val('');
+                }
                 $('select.chosen').trigger("chosen:updated");
             }
         });
@@ -383,6 +399,7 @@ $(document).ready(function(){
                         text: v.Name_TH
                     }));
                 });
+                //$("#type_of_institue").val(data[0].idType_of_Institute);
                 if(data.length > 0){
                     $('.Faculty_Detail').removeClass('hidden');
                     $('.Department').addClass('hidden');
@@ -397,10 +414,16 @@ $(document).ready(function(){
                     $('.Major_Subject').addClass('hidden');
                     $('#idMajor_Subject').val('');
                 }
-                
                 $('select.chosen').trigger("chosen:updated");
-             }
-         });
+            }
+        });
+        $.request('onGetTypeOfInstitue', {
+            data: {value: this.value},
+            success: function(data) {
+                $("#type_of_institue").val(data.idType_of_Institute);
+                $('select.chosen').trigger("chosen:updated");
+            }
+        });
     }).on('change','#idEducation_Level',function(){
         if(this.value ==""){
             $('#boxidGeography,#boxtype_of_institue,#boxidInstitute_Detail,#boxidFaculty_Detail,#boxidDepartment,#boxidMajor_Subject,#boxidDegree_and_Certificate,#boxGPA').addClass('hidden');
@@ -481,23 +504,29 @@ $(document).ready(function(){
         }
     }).on('click','.source_type',function(){
         $(".source_type").addClass("btn-outline");
+        $('.imgSourceType').addClass('grayscaled');
+        var spl=this.id.split("_");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
-        var spl=this.id.split("_");
-        $('input[name="idSources_Type"]').val(spl[1]);
+        
+       // $('input[name="idSources_Type"]').val(spl[1]);
+        $('#SourcesType_'+spl[1]).prop('checked',true);
+        $('#imgSourceType'+spl[1]).removeClass('grayscaled');
         if(spl[1]=="99"){
-            $("#OtherType").removeClass("hidden");
+            $("#boxidSources_TypeOther").removeClass("hidden");
         }else{
-            $("#OtherType").addClass("hidden");
+            $("#boxidSources_TypeOther").addClass("hidden");
         }
     }).on('click','.JobSeeking',function(){
         $(".JobSeeking").addClass("btn-outline");
-        if($(this).hasClass("btn-outline")==true){
-            $(this).removeClass("btn-outline");
-        }
+        $('.imgJobSeek').addClass('grayscaled');
         var spl=this.id.split("_");
-        $('input[name="idJob_Seeking_Status"]').val(spl[1]);
+        if($("#JobSeeking_"+spl[1]).hasClass("btn-outline")==true){
+            $("#JobSeeking_"+spl[1]).removeClass("btn-outline");
+        }
+        $('#JobSeekingStatus_'+spl[1]).prop('checked',true);
+        $('#imgJobSeek'+spl[1]).removeClass('grayscaled');
     }).on('click','.TypeofEmployment',function(){
         var spl=this.id.split("_");
         if(this.checked == true){
@@ -518,21 +547,18 @@ $(document).ready(function(){
        var spl=this.id.split("_");
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
+            $('#idTypeofEmployment_'+spl[1]).prop('checked',true);
+            if(spl[1]=='1'){
+                $('#boxWelFares').removeClass('hidden');
+                $(".select2-container").css('width','100%');
+            }
         }else{
             $(this).addClass("btn-outline");
+            $('#idTypeofEmployment_'+spl[1]).prop('checked',false);
+            if(spl[1]=='1'){
+                $('#boxWelFares').addClass('hidden');
+            }
         }
-        /*$(".TypeofEmployment").addClass("btn-outline");
-        if($(this).hasClass("btn-outline")==true){
-            $(this).removeClass("btn-outline");
-        }
-        var spl=this.id.split("_");
-        $('input[name="idType_of_Employment"]').val(spl[1]);
-        if(spl[1]!=1){
-            $('#boxWelFares').addClass('hidden');
-        }else{
-            $('#boxWelFares').removeClass('hidden');
-            $(".select2-container").css('width','100%');
-        }*/
     }).on('click','.ExperienceWorkStatus',function(){
         $(".ExperienceWorkStatus").addClass("btn-outline");
         if($(this).hasClass("btn-outline")==true){
@@ -566,11 +592,13 @@ $(document).ready(function(){
         }
     }).on('click','.Availability',function(){
         $(".Availability").addClass("btn-outline");
+        $('.imgAvailability').addClass('grayscaled');
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
         var spl=this.id.split("_");
-        $('input[name="idAvailability_of_Work"]').val(spl[1]);
+        $('#AvailabilityofWork_'+spl[1]).prop('checked',true);
+        $('#imgAvailability'+spl[1]).removeClass('grayscaled');
     }).on('change','.chooseTran',function(){
         var TranSpl=this.id.split('_');
         if(this.value!=""){
