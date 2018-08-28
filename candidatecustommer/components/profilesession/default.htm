@@ -7,8 +7,14 @@
 	{% endif %}
 </span>
 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-	<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ user.name }} {{ str_limit(user.surname, 1,'.') }}</strong>
-	</span> <span class="text-muted text-xs block">{{ profiles.JobTitle }} <b class="caret"></b></span> </span> </a>
+	<span class="clear"> 
+		<span class="block m-t-xs"> 
+			<strong class="font-bold">{{ user.name }} {{ str_limit(user.surname, 1,'.') }}</strong>
+		</span> 
+		<span class="text-muted text-xs block">{{ profiles.JobTitle }} <b class="caret"></b></span> 
+		<span class="text-muted text-xs block"><i class="fa fa-circle text-danger"></i> อาจจะสนใจ เมื่อมีข้อเสนอที่ดี</span> 
+	</span> 
+</a>
 	<ul class="dropdown-menu animated fadeInRight m-t-xs">
 		<li><a href="profile.html">Profile</a></li>
 		<li><a href="contacts.html">Contacts</a></li>

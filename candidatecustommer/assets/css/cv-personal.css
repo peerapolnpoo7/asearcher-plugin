@@ -34,3 +34,28 @@ textarea.form-control{
     overflow:hidden !important;
 	white-space: nowrap !important;
 }
+
+.grayscaled{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.btn-outline:focus{
+  color : #23c6c8 !important;
+  background-color: transparent !important;
+  transition: all .5s !important;
+}
+
+.checkboxCV label::before {
+  top:15px !important;
+}
+.checkboxCV label::after {
+  top: 15px !important;
+}
+
+.radioCV label::before {
+  top:12px !important;
+}
+.radioCV label::after {
+  top: 15px !important;
+}
