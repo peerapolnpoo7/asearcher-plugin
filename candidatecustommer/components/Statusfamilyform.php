@@ -134,25 +134,15 @@ class Statusfamilyform extends ComponentBase
                   $rules_more= array(
                           //คู่สมรส
                           // 'idPrefix_Spouse' => array('required'),
-<<<<<<< HEAD
-                          'FirstName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
-                          'LastName_TH_Spouse' => array('required','regex:/^[\ก-์\s]+$/u'),
-                          'NickName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
-=======
                           'FirstName_TH_Spouse' => array('regex:/^[ก-์]+$/u'),
                           'LastName_TH_Spouse' => array('regex:/^[\ก-์\s]+$/u'),
                           'NickName_TH_Spouse' => array('regex:/^[ก-์]+$/u'),
->>>>>>> e95caef2461b5dad959ed6ecc5d09181c0ae44de
 
                           'Amount_of_Children' => array('required'),
                   );
                   $messages_more = [
                           // 'idPrefix_Spouse.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
-<<<<<<< HEAD
-                          'FirstName_TH_Spouse.required' => 'กรุณากรอก "ชื่อ"',
-=======
                           // 'FirstName_TH_Spouse.required' => 'กรุณากรอก "ชื่อ"',
->>>>>>> e95caef2461b5dad959ed6ecc5d09181c0ae44de
                           'FirstName_TH_Spouse.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
                           // 'LastName_TH_Spouse.required' => 'กรุณากรอก "นามสกุล"',
                           'LastName_TH_Spouse.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
