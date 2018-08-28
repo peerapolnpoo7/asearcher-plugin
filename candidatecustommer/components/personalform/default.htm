@@ -126,7 +126,7 @@
 				</div>
 				<div class="form-group col-md-4">
 					<label class="control-label">เชื้อชาติ <span class="text-danger">*</span></label>
-					<select name="Nationality" id="Nationality" class="form-control chosen">
+					<select name="idRace" id="idRace" class="form-control chosen">
 						<option value="">เลือก</option>
 						{% for race in races %}
 						{% set selected = '' %}
@@ -200,6 +200,10 @@
 					</select>
 					<span class="help-block"></span>
 				</div>
+				<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
+					<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
+					<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
+				</div>
 				<div class="form-group col-sm-12">
 					<label class="control-label">กรุ๊ปเลือด</label><br>
 					{% for blood_group in blood_groups %}
@@ -225,7 +229,7 @@
 				<div class="form-group col-md-6">
 					<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
 					<div class="input-group">
-						<input type="text" name="" id="" class="form-control" placeholder="" value="">
+						<input type="text" name="Weight" id="Weight" class="form-control" placeholder="" value="">
 						<span class="input-group-addon">กก.</span>
 					</div>
 					<span class="help-block"></span>
@@ -233,7 +237,7 @@
 				<div class="form-group col-md-6">
 					<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
 					<div class="input-group">
-						<input type="text" name="" id="" class="form-control" placeholder="" value="">
+						<input type="text" name="Height" id="Height" class="form-control" placeholder="" value="">
 						<span class="input-group-addon">ซม.</span>
 					</div>
 					<span class="help-block"></span>
@@ -275,13 +279,16 @@
 			<fieldset>
 				<div class="form-group col-sm-12">
 					<label class="control-label">แนะนำตัวเอง</label>
-					<textarea name="" class="form-control notes" cols='10'></textarea>
+					<textarea name="Text" id="Text" class="form-control notes" cols='10'></textarea>
 				</div>
 				<div class="form-group col-sm-12">
 					<label class="control-label">แนะนำตัวผ่านวีดิโอ</label>
-					<input type="text" name="" id="" class="form-control video-link " placeholder="ใส่Link" value="">
+					<input type="text" name="Video_Link" id="Video_Link" class="form-control video-link " placeholder="ใส่Link" value="">
 				</div>
 			</fieldset>
+		</div>
+		<div class="col-sm-12 col-xs-12 text-center m-t-md">
+			<button type="button" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
 		</div>
 	</div>
 </form>

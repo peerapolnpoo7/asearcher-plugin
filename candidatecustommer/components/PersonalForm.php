@@ -75,6 +75,10 @@ class PersonalForm extends ComponentBase
          return array($file);
     }
 
+     public function onSave(){
+        return post();
+     }
+
     public function loadImageCV()
     {
         return PhotoProfileCV::where('idCandidate',Session::get('idCandidate'))->first();
@@ -108,11 +112,6 @@ class PersonalForm extends ComponentBase
     public function loadBloodGroup()
     {
         return BloodGroup::all();
-    }
-
-    public function loadJobSeekingStatus()
-    {
-        return JobSeekingStatus::all();
     }
 
     public function loadRequirementOfWork()
@@ -188,6 +187,5 @@ class PersonalForm extends ComponentBase
     public $job_seeker_statuses;
     public $requirement_of_works;
     public $communication_providers;
-    public $job_seeker_statuses;
     public $candidates;
 }

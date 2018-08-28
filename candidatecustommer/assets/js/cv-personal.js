@@ -18,7 +18,13 @@ $(document).ready(function(){
         search_contains: true
     });
 
-    $('body').on('click','#upImage',function(){
+    $('body').on('click','button.save',function(){
+        $('form').request('onSave', {
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }).on('click','#upImage',function(){
         $('#PhotoFile').trigger('click'); 
     }).on('change','#PhotoFile',function(){
         $('form').request('onUpload', {
@@ -71,5 +77,20 @@ $(document).ready(function(){
                 $('select.chosen').trigger("chosen:updated");
             }
         });
+    }).on('click','.JobSeeking',function(){
+        $(".JobSeeking").addClass("btn-outline");
+        $('.imgJobSeek').addClass('grayscaled');
+        var spl=this.id.split("_");
+        if($("#JobSeeking_"+spl[1]).hasClass("btn-outline")==true){
+            $("#JobSeeking_"+spl[1]).removeClass("btn-outline");
+        }
+        $('#JobSeekingStatus_'+spl[1]).prop('checked',true);
+        $('#imgJobSeek'+spl[1]).removeClass('grayscaled');
+    }).on('change','#idCommunication_Provider',function(){
+        if(this.value=="5"){
+            $(".boxComunication").removeClass('hidden');
+        }else{
+            $(".boxComunication").addClass('hidden');
+        }
     });
 });
