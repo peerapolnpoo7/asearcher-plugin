@@ -9,6 +9,10 @@
 {% set communication_providers = __SELF__.communication_providers %}
 {% set job_seeker_statuses = __SELF__.job_seeker_statuses %}
 {% set candidates = __SELF__.candidates %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
 <h3>1.ข้อมูลส่วนบุคคล</h3>
 <form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
 	<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
@@ -41,7 +45,7 @@
 					<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="javascript:void(0)">เปลี่ยนภาพโปรไฟล์</a>
 					<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
 				</div>
-				<div class="col-md-3 col-xs-12 m-t-40">
+				<div class="col-md-3 col-xs-12 m-t-40" id="boxidGender">
 					<label class="control-label">เพศ <span class="text-danger">*</span></label>
 				</div>
 				<div class="col-md-3 col-xs-6 m-t-40 text-right no-padding">
@@ -67,7 +71,7 @@
 		</div>
 		<div class="col-md-6 m-t-20">
 			<fieldset>
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-6"  id="boxidPrefix">
 					<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
 					<select class="form-control chosen " name="idPrefix" id="idPrefix">
 						<option value="">เลือก</option>
@@ -292,3 +296,7 @@
 		</div>
 	</div>
 </form>
+</div>
+		</div>
+	</div>
+</div>
