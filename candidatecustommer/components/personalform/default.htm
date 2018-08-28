@@ -6,6 +6,9 @@
 {% set countrycallingcodes = __SELF__.countrycallingcodes %}
 {% set blood_groups = __SELF__.blood_groups %}
 {% set requirement_of_works = __SELF__.requirement_of_works %}
+{% set communication_providers = __SELF__.communication_providers %}
+{% set job_seeker_statuses = __SELF__.job_seeker_statuses %}
+{% set candidates = __SELF__.candidates %}
 <h3>1.ข้อมูลส่วนบุคคล</h3>
 <form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
 	<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
@@ -102,7 +105,7 @@
 					<label class="control-label">รหัสบัตรประชาชน <span class="text-danger">*</span></label>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
-						<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
+						<input type="text" name="ID_Card_Number" id="ID_Card_Number" class="form-control" data-mask="9-9999-99999-99-9" placeholder="" value="{{ candidates.ID_Card_Number }}">
 						<span class="help-block"></span>
 					</div>
 				</div>
@@ -235,21 +238,33 @@
 					</div>
 					<span class="help-block"></span>
 				</div>
-				<div class="form-group col-sm-6 col-xs-12">
-					<label class="control-label">สถานะการหางาน</label>
-					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
-						<option value="0">เลือก</option>
-						{% for communication_provider in communication_providers %}
-						{% set selected = '0' %}
-						{% if communication_provider.idCommunication_Provider == '0' and candidates.idCommunication_Provider == "" %}
-						{% set selected = 'selected' %}
+				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
+					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+					{% for job_seeker_status in job_seeker_statuses %}
+					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+						{% set isChecked = '' %}
+						{% set isActive = 'grayscaled' %}
+						{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
+						{% if job_seeker_status.isSelect == "selected" %}
+							{% set isChecked = 'checked' %}
+							{% set isActive = '' %}
 						{% endif %}
-						{% if communication_provider.idCommunication_Provider == candidates.idCommunication_Provider %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{communication_provider.idCommunication_Provider}}" {{ selected }}>{{communication_provider.Name}}</option>
-						{% endfor %}
-					</select>
+						<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
+
+						<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
+							<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
+						</label><br/>
+						{{ job_seeker_status.Name_TH }}
+					</div>
+					{% endfor %}
+				</div>
+				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
+					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+					{% for job_seeker_status in job_seeker_statuses %}
+					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
+						{{ job_seeker_status.Name_TH}}
+					</a>
+					{% endfor %}
 					<span class="help-block"></span>
 				</div>
 			</fieldset>
