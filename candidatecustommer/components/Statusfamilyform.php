@@ -94,13 +94,13 @@ class Statusfamilyform extends ComponentBase
                   // 'TitleNameFather' => array('required'),
                   'FirstName_TH_Father' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Father' => array('regex:/^[\ก-์\s]+$/u'),
-                  'Age_Father' => array('regex:/^[1-9][0-9]*$/'),
+                  'Age_Father' => array('numeric','regex:/^0*(?:[1-9][0-9]?|100)$/'),
                   'TelephoneNumber_Father' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
                   //มารดา
                   // 'TitleNameMother' => array('required'),
                   'FirstName_TH_Mother' => array('regex:/^[ก-์]+$/u'),
                   'LastName_TH_Mother' => array('regex:/^[\ก-์\s]+$/u'),
-                  'Age_Mother' => array('regex:/^[1-9][0-9]*$/'),
+                  'Age_Mother' => array('numeric','regex:/^0*(?:[1-9][0-9]?|100)$/'),
                   'TelephoneNumber_Mother' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
               );
               $messages_more = [
@@ -110,7 +110,8 @@ class Statusfamilyform extends ComponentBase
                   // 'TitleNameFather.required' => 'กรุณาเลือก "คำนำหน้าชื่อบิดา"',
                   'FirstName_TH_Father.regex' => 'กรุณากรอก "ชื่อบิดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Father.regex' => 'กรุณากรอก "นามสกุลบิดา" เป็นตัวอักษรไทยเท่านั้น',
-                  'Age_Father.regex' => '"อายุบิดา" ต้องเป็นตัวเลขเท่านั้น',
+                  'Age_Father.numeric' => '"อายุบิดา" ต้องเป็นตัวเลขเท่านั้น',
+                  'Age_Father.regex' => '"อายุบิดา" ต้องไม่เกิน 110 ปี',
                   'TelephoneNumber_Father.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
                   'TelephoneNumber_Father.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                   'TelephoneNumber_Father.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
@@ -118,7 +119,8 @@ class Statusfamilyform extends ComponentBase
                   // 'TitleNameMother.required' => 'กรุณาเลือก "คำนำหน้าชื่อมารดา"',
                   'FirstName_TH_Mother.regex' => 'กรุณากรอก "ชื่อมารดา" เป็นตัวอักษรไทยเท่านั้น',
                   'LastName_TH_Mother.regex' => 'กรุณากรอก "นามสกุลมารดา" เป็นตัวอักษรไทยเท่านั้น',
-                  'Age_Mother.regex' => '"อายุมารดา" ต้องเป็นตัวเลขเท่านั้น',
+                  'Age_Mother.numeric' => '"อายุมารดา" ต้องเป็นตัวเลขเท่านั้น',
+                  'Age_Mother.regex' => '"อายุมารดา" ต้องไม่เกิน 110 ปี',
                   'TelephoneNumber_Mother.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
                   'TelephoneNumber_Mother.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                   'TelephoneNumber_Mother.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
@@ -131,22 +133,22 @@ class Statusfamilyform extends ComponentBase
               if(Input::get('typeMarital') != 1){
                   $rules_more= array(
                           //คู่สมรส
-                          'idPrefix_Spouse' => array('required'),
-                          'FirstName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
-                          'LastName_TH_Spouse' => array('required','regex:/^[\ก-์\s]+$/u'),
-                          'NickName_TH_Spouse' => array('required','regex:/^[ก-์]+$/u'),
+                          // 'idPrefix_Spouse' => array('required'),
+                          'FirstName_TH_Spouse' => array('regex:/^[ก-์]+$/u'),
+                          'LastName_TH_Spouse' => array('regex:/^[\ก-์\s]+$/u'),
+                          'NickName_TH_Spouse' => array('regex:/^[ก-์]+$/u'),
 
                           'Amount_of_Children' => array('required'),
                   );
                   $messages_more = [
-                          'idPrefix_Spouse.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
-                          'FirstName_TH_Spouse.required' => 'กรุณากรอก "ชื่อ"',
+                          // 'idPrefix_Spouse.required' => 'กรุณาเลือก "คำนำหน้าชื่อ"',
+                          // 'FirstName_TH_Spouse.required' => 'กรุณากรอก "ชื่อ"',
                           'FirstName_TH_Spouse.regex' => 'กรุณากรอก "ชื่อ" เป็นตัวอักษรไทยเท่านั้น',
-                          'LastName_TH_Spouse.required' => 'กรุณากรอก "นามสกุล"',
+                          // 'LastName_TH_Spouse.required' => 'กรุณากรอก "นามสกุล"',
                           'LastName_TH_Spouse.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
-                          'NickName_TH_Spouse.required' => 'กรุณากรอก "ชื่อเล่น"',
+                          // 'NickName_TH_Spouse.required' => 'กรุณากรอก "ชื่อเล่น"',
                           'NickName_TH_Spouse.regex' => 'กรุณากรอก "ชื่อเล่น" เป็นตัวอักษรไทยเท่านั้น',
-                          'Amount_of_Children.required' => 'กรุณากรอก "จำนวนบุตร"',
+                          // 'Amount_of_Children.required' => 'กรุณากรอก "จำนวนบุตร"',
                   ];
 
                   $rules = array_merge($rules,$rules_more);
@@ -155,19 +157,19 @@ class Statusfamilyform extends ComponentBase
                   if(Input::get('typeMarital') != 4){
                       $rules_more= array(
                         //ถ้าหม่ายไม่ต้องใส่
-                        'idOccupation_Spouse' => array('required'),
-                        'Age_Spouse' => array('required','regex:/^[1-9][0-9]*$/'),
-                        'idCountry_Calling_Code_Spouse' => array('required'),
-                        'TelephoneNumber_Spouse' => array('required','min:9','max:10','regex:/\d{10}|\d{9}$/'),
+                        // 'idOccupation_Spouse' => array('required'),
+                        'Age_Spouse' => array('regex:/^[1-9][0-9]*$/'),
+                        // 'idCountry_Calling_Code_Spouse' => array('required'),
+                        'TelephoneNumber_Spouse' => array('min:9','max:10','regex:/\d{10}|\d{9}$/'),
                         //--------
                       );
                       $messages_more = [
                         //ถ้าหม่ายไม่ต้องใส่
-                        'idOccupation_Spouse.required' => 'กรุณาเลือก "อาชีพ"',
-                        'Age_Spouse.required' => 'กรุณากรอก "อายุ"',
+                        // 'idOccupation_Spouse.required' => 'กรุณาเลือก "อาชีพ"',
+                        // 'Age_Spouse.required' => 'กรุณากรอก "อายุ"',
                         'Age_Spouse.regex' => '"อายุ" ต้องเป็นตัวเลขเท่านั้น',
-                        'idCountry_Calling_Code_Spouse.required' => 'กรุณาเลือก "หมายเลขโทรศัทพ์ระหว่างประเทศ"',
-                        'TelephoneNumber_Spouse.required' => 'กรุณากรอก "เบอร์โทรศัพท์"',
+                        // 'idCountry_Calling_Code_Spouse.required' => 'กรุณาเลือก "หมายเลขโทรศัทพ์ระหว่างประเทศ"',
+                        // 'TelephoneNumber_Spouse.required' => 'กรุณากรอก "เบอร์โทรศัพท์"',
                         'TelephoneNumber_Spouse.min' => 'เบอร์โทรศัพท์ต้องมากกว่าหรือเท่ากับ 9 ตัวเลข',
                         'TelephoneNumber_Spouse.max' => 'เบอร์โทรศัพท์ต้องไม่เกิน 10 ตัวเลข',
                         'TelephoneNumber_Spouse.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
@@ -223,7 +225,7 @@ class Statusfamilyform extends ComponentBase
         }
         $families_spouse->idCandidate = Session::get('idCandidate');
         $families_spouse->idUser = Auth::getUser()->id;
-        $families_spouse->idPrefix = Input::get('idPrefix_Spouse');
+        $families_spouse->idPrefix = Input::get('idPrefix_Spouse') !='' ? Input::get('idPrefix_Spouse'):NULL ;
         $families_spouse->FirstName_TH = Input::get('FirstName_TH_Spouse');
         $families_spouse->LastName_TH = Input::get('LastName_TH_Spouse');
         $families_spouse->NickName_TH = Input::get('NickName_TH_Spouse');
@@ -233,10 +235,10 @@ class Statusfamilyform extends ComponentBase
         $families_spouse->idCountry_Calling_Code = 83;
         $families_spouse->TelephoneNumber = NULL;
         }else {
-          $families_spouse->idOccupation = Input::get('idOccupation_Spouse');
-          $families_spouse->Age = Input::get('Age_Spouse');
-          $families_spouse->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Spouse');
-          $families_spouse->TelephoneNumber = Input::get('TelephoneNumber_Spouse');
+          $families_spouse->idOccupation = Input::get('idOccupation_Spouse')!='' ? Input::get('idOccupation_Spouse'):NULL ;
+          $families_spouse->Age = Input::get('Age_Spouse')!='' ? Input::get('Age_Spouse'):NULL ;
+          $families_spouse->idCountry_Calling_Code = Input::get('idCountry_Calling_Code_Spouse')!='' ? Input::get('idCountry_Calling_Code_Spouse'): 83 ;
+          $families_spouse->TelephoneNumber = Input::get('TelephoneNumber_Spouse')!='' ? Input::get('TelephoneNumber_Spouse'):NULL ;
         }
 
         $families_spouse->Amount_of_Children = Input::get('Amount_of_Children');
@@ -445,10 +447,10 @@ class Statusfamilyform extends ComponentBase
                throw new ValidationException($validator);
            }
 
-           $get = Candidate::WHERE('idUser',Auth::getUser()->id)->first();
+           //$get = Candidate::WHERE('idUser',Auth::getUser()->id)->first();
            // for ($i=0; $i < post('NumBrethren') ; $i++) {
-                  $families_brethren = Families::where('idCandidate',$get->idCandidate)->where('idFamilies',post('numedit'));
-
+           // dd(post('idFamiliesBrethren'));
+                  $families_brethren = Families::where('idUser',Auth::getUser()->id)->where('idFamilies',post('idFamiliesBrethren'));
                   $families_brethren->update(['idPrefix' => post('TitleNameBrethren')]);
                   $families_brethren->update(['FirstName_TH' => post('NameBrethren')]);
                   $families_brethren->update(['LastName_TH' => post('LastNameBrethren')]);
@@ -476,7 +478,7 @@ class Statusfamilyform extends ComponentBase
 
      public function onDelBrethren(){
         $can = Candidate::WHERE('idUser',Auth::getUser()->id)->first();
-        return Families::where('idCandidate',$can->idCandidate)->where('idFamilies',post('numedit'))->delete();
+        return Families::where('idCandidate',$can->idCandidate)->where('idFamilies',post('idFamiliesBrethren'))->delete();
      }
 
 
@@ -551,19 +553,17 @@ class Statusfamilyform extends ComponentBase
            }
 
            $get = Candidate::WHERE('idUser',Auth::getUser()->id)->first();
-                  $families_Children = Families::where('idCandidate',$get->idCandidate)->where('idFamilies',post('numedit'));
+                  $families_Children = Families::where('idCandidate',$get->idCandidate)->where('idFamilies',post('idFamiliesChildren'));
 
                   $families_Children->update(['idPrefix' => post('TitleNameChildren')]);
                   $families_Children->update(['FirstName_TH' => post('NameChildren')]);
                   $families_Children->update(['LastName_TH' => post('LastNameChildren')]);
                   $families_Children->update(['Age' => post('AgeChildren')]);
-
-
      }
 
      public function onDelChildren(){
         $can = Candidate::WHERE('idUser',Auth::getUser()->id)->first();
-        return Families::where('idCandidate',$can->idCandidate)->where('idFamilies',post('numedit'))->delete();
+        return Families::where('idCandidate',$can->idCandidate)->where('idFamilies',post('idFamiliesChildren'))->delete();
      }
 
 
