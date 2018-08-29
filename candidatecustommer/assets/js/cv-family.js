@@ -6,8 +6,6 @@ $(document).ready(function(){
 		// 				console.log(data);
 		// 		}
 		// });
-
-
 	}).on('click','input[name="typeMilitary"]',function(){
 		if ($('#radioOther').is(':checked')) {
 			$('#detailMilitary').prop('disabled',false);
@@ -15,17 +13,15 @@ $(document).ready(function(){
 			$('#detailMilitary').prop('disabled',true);
 		}
 	}).on('click','input[name="typeMarital"]',function(){
-		if ($('#สมรส').is(':checked') || $('#หย่า').is(':checked') || $('#หม้าย').is(':checked') || $('#แยกกันอยู่').is(':checked') ){
+		if ($('#Married').is(':checked') || $('#Divorced').is(':checked') || $('#Windowed').is(':checked') || $('#Separated').is(':checked') ){
 			$('.boxMarital').removeClass('hidden');
-			$("#boxChildren").removeClass('hidden');
-			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',true);
+			$('#Unregistered').prop('checked',true);
 		}else{
 			$('.boxMarital').addClass('hidden');
-			$("#boxChildren").addClass('hidden');
-			$('#ไม่ได้จดทะเบียนสมรส').prop('checked',false);
+			$('#Unregistered').prop('checked',false);
 		}
 
-		if ($('#หม้าย').is(':checked')){
+		if ($('#Windowed').is(':checked')){
 			$('.widow').prop('disabled',true);
 			$('#idCountry_Calling_Code_Spouse').prop('disabled', true).trigger("chosen:updated");
 			$('#idOccupation_Spouse').val('');
@@ -36,10 +32,9 @@ $(document).ready(function(){
 			$('#idCountry_Calling_Code_Spouse').prop('disabled', false).trigger("chosen:updated");
 		}
 
-
 	}).on("change","#Status_Father",function(){
 		if(this.value=="2"){
-			$('.FatherRelateStatus').prop('disabled',true);
+			$('.FatherRelateStatus').val('').prop('disabled',true);
 			$('#idCountry_Calling_Code_Father').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.FatherRelateStatus').prop('disabled',false);
@@ -47,257 +42,393 @@ $(document).ready(function(){
 		}
 	}).on("change","#Status_Mother",function(){
 		if(this.value=="2"){
-			$('.MotherRelateStatus').prop('disabled',true);
+			$('.MotherRelateStatus').val('').prop('disabled',true);
 			$('#idCountry_Calling_Code_Mother').prop('disabled', true).trigger("chosen:updated");
 		}else{
 			$('.MotherRelateStatus').prop('disabled',false);
 			$('#idCountry_Calling_Code_Mother').prop('disabled', false).trigger("chosen:updated");
 		}
-	}).on("keyup","#NumChildren",function(){
-		$("#boxChildren").find('.row:not(:first-child)').remove();
-		if(this.value=="" || this.value=="0"){
-			$("#boxChildren").find('.row:first-child').addClass('hidden');
-		}else{
-			$("#boxChildren").find('.row:first-child').removeClass('hidden');
-			if(this.value > 1){
-				for(var i=2;i<=this.value;i++){
-					$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
-					$("#boxChildren .row:last-child").find(".No").text(i);
-					$("#boxChildren .row:last-child").find(".Children").each(function(){
-						var idExp=this.id.split("_");
-						$(this).attr('id',idExp[0]+'_'+i);
-					});
-				}
-			}
-		}
-	}).on("keyup","#NumBrethren",function(){
-		$("#boxBrethren").find('.row:not(:first-child)').remove();
-		if(this.value=="" || this.value=="0"){
-			$("#boxBrethren").find('.row:first-child').addClass('hidden');
-		}else{
-			$("#boxBrethren").find('.row:first-child').removeClass('hidden');
-			if(this.value > 1 ){
-				for(var i=2;i<=this.value;i++){
-					$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren");
-					$("#boxBrethren .row:last-child").find(".No").text(i);
-					$("#boxBrethren .row:last-child").find(".Brethren").each(function(){
-						var idExp=this.id.split("_");
-						$(this).attr('id',idExp[0]+'_'+i);
-					});
-				}
-			}
-		}
-	}).on("change",".BrethrenStatus",function(){
-		var idBox=this.id.split("_");
-		if(this.value=="2"){
-			$('#AgeBrethren_'+idBox[1]).prop('disabled',true);
-			$('#OccupationBrethren_'+idBox[1]).prop('disabled',true);
-		}else{
-			$('#AgeBrethren_'+idBox[1]).prop('disabled',false);
-			$('#OccupationBrethren_'+idBox[1]).prop('disabled',false);
-		}
 	})
+
+	// .on("change",".BrethrenStatus",function(){
+	// 	var idBox=this.id.split("_");
+	// 	if(this.value=="2"){
+	// 		$('#AgeBrethren_'+idBox[1]).prop('disabled',true);
+	// 		$('#OccupationBrethren_'+idBox[1]).prop('disabled',true);
+	// 	}else{
+	// 		$('#AgeBrethren_'+idBox[1]).prop('disabled',false);
+	// 		$('#OccupationBrethren_'+idBox[1]).prop('disabled',false);
+	// 	}
+	// })
 
 	var i = 0;
 	$('form').request('onChildren',{
 			success: function(data) {
-				$('#btnRemove_C').attr('disabled', true);
-					// console.log(data.length);
 					i = data.length;
 					if (i != 0) {
 						$('#NumChildren').val(i);
-
-						for (var k = 1; k <= i; k++) {
-							if (k == 1) {
-									$("#boxChildren").find('.row:first-child').removeClass('hidden');
-							}else if (k >= 2) {
-								$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren");
-								$("#boxChildren .row:last-child").find(".No").text(k);
-								$("#boxChildren .row:last-child").find(".Children").each(function(){
-									var idExp=this.id.split("_");
-									$(this).attr('id',idExp[0]+'_'+k);
-								});
-							}
-							$("#TitleNameChildren_"+k+" option[value='" + data[k-1].idPrefix +"']").attr("selected","selected");
-							$("#NameChildren_"+k+"").val(data[k-1].FirstName_TH);
-							$("#LastNameChildren_"+k+"").val(data[k-1].LastName_TH);
-							$("#AgeChildren_"+k+"").val(data[k-1].Age);
-						}
 					}else {
 						 i = 0;
 						$('#NumChildren').val(i);
 					}
-
-					$("body").on('click','#btnAdd_C',function(){
-						i = i + 1;
-						if (i == 9) {
-							$('#btnAdd_C').attr('disabled', true);
-						}else {
-							$('#btnAdd_C').attr('disabled', false);
-						}
-
-						if (i > data.length ) {
-									$('#btnRemove_C').attr('disabled', false);
-						}
-
-						$('#NumChildren').val(i);
-						$("#boxChildren").find('.row:first-child').removeClass('hidden');
-						if (i >= 2) {
-							$("#boxChildren").find('.row:last-child' ).clone().appendTo("#boxChildren").val("");
-							$("#boxChildren .row:last-child").find(".No").text(i);
-							$("#boxChildren .row:last-child").find(".Children").val("").each(function(){
-								var idExp=this.id.split("_");
-								$(this).attr('id',idExp[0]+'_'+i);
-							});
-						}
-					}).on('click','#btnRemove_C',function(){
-						if (i == 1 ) {
-							$("#boxChildren").find('.row:first-child').addClass('hidden');
-						}else {
-							$("#boxChildren .row:last-child").remove();
-						}
-						i = i - 1;
-						$('#NumChildren').val(i);
-
-						if (data.length != 0) {
-							if (data.length == i) {
-			              $('#btnRemove_C').attr('disabled', true);
-			        }else {
-			              $('#btnRemove_C').attr('disabled', false);
-			        }
-
-							if (i != data.length) {
-			              $('#btnAdd_C').attr('disabled', false);
-			        }
-						} else {
-							if (i == 0) {
-			              $('#btnRemove_C').attr('disabled', true);
-			        }else {
-			              $('#btnRemove_C').attr('disabled', false);
-			        }
-
-							if (i != 0) {
-			              $('#btnAdd_C').attr('disabled', false);
-			        }
-						}
-
-					})
 			}
 	});
 
 	var j = 0;
 	$('form').request('onBrethren',{
 			success: function(data) {
-				$('#btnRemove_B').attr('disabled', true);
-					console.log(data);
 					j = data.length;
 					if (j != 0) {
 						$('#NumBrethren').val(j);
-
-						for (var h = 1; h <= j; h++) {
-							if (h == 1) {
-									$("#boxBrethren").find('.row:first-child').removeClass('hidden');
-							}else if (h >= 2) {
-								$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren");
-								$("#boxBrethren .row:last-child").find(".No").text(h);
-								$("#boxBrethren .row:last-child").find(".Brethren").each(function(){
-									var idExp=this.id.split("_");
-									$(this).attr('id',idExp[0]+'_'+h);
-								});
-							}
-							$("#TitleNameBrethren_"+h+" option[value='" + data[h-1].idPrefix +"']").attr("selected","selected");
-							$("#NameBrethren_"+h+"").val(data[h-1].FirstName_TH);
-							$("#LastNameBrethren_"+h+"").val(data[h-1].LastName_TH);
-							// $("#BrethrenStatus_"+h+"").val(data[h-1].idLife_Status);
-							$("#BrethrenStatus_"+h+" option[value='" + data[h-1].idLife_Status +"']").attr("selected","selected");
-							$("#AgeBrethren_"+h+"").val(data[h-1].Age);
-							// $("#OccupationBrethren_"+h+"").val(data[h-1].idOccupation);
-							$("#OccupationBrethren_"+h+" option[value='" + data[h-1].idOccupation +"']").attr("selected","selected");
-						}
 					}else {
 						 j = 0;
 						$('#NumBrethren').val(j);
 					}
-
-					$("body").on('click','#btnAdd_B',function(){
-						j = j + 1;
-						if (j == 9) {
-							$('#btnAdd_B').attr('disabled', true);
-						}else {
-							$('#btnAdd_B').attr('disabled', false);
-						}
-
-						if (j > data.length ) {
-									$('#btnRemove_B').removeClass('btn-danger');
-									$("#btnRemove_B").addClass('btn-white');
-									$('#btnRemove_B').attr('disabled', false);
-						}
-
-						$('#NumBrethren').val(j);
-						$("#boxBrethren").find('.row:first-child').removeClass('hidden');
-						if (j >= 2) {
-							$("#boxBrethren").find('.row:last-child' ).clone().appendTo("#boxBrethren").val("");
-							$("#boxBrethren .row:last-child").find(".No").text(j);
-							$("#boxBrethren .row:last-child").find(".Brethren").val("").each(function(){
-								var idExp=this.id.split("_");
-								$(this).attr('id',idExp[0]+'_'+j);
-							});
-						}
-					// console.log(j);
-						$("#TitleNameBrethren_"+j+" option[value='']").attr("selected","selected");
-						$("#BrethrenStatus_"+j+" option[value='1']").attr("selected","selected").trigger("BrethrenStatus:updated");;
-						$("#OccupationBrethren_"+j+" option[value='']").attr("selected","selected");
-					}).on('click','#btnRemove_B.btn-danger',function(){
-								swal({
-		                title: "Are you sure?",
-		                text: "You will not be able to recover this imaginary file!",
-		                type: "warning",
-		                showCancelButton: true,
-		                confirmButtonColor: "#DD6B55",
-		                confirmButtonText: "Yes, delete it!",
-		                closeOnConfirm: false
-		            }, function () {
-		                swal("Deleted!", "Your imaginary file has been deleted.", "success");
-		            })
-
-					}).on('click','#btnRemove_B.btn-white',function(){
-						if (j == 1 ) {
-							$("#boxBrethren").find('.row:first-child').addClass('hidden');
-						}else {
-							$("#boxBrethren .row:last-child").remove();
-						}
-						j = j - 1;
-						$('#NumBrethren').val(j);
-
-						if (data.length != 0) {
-							if (data.length == j) {
-										// $('#btnRemove_B').attr('disabled', true);
-										$('#btnRemove_B').removeClass('btn-white');
-										$("#btnRemove_B").addClass('btn-danger');
-							}else {
-										$('#btnRemove_B').removeClass('btn-danger');
-										$("#btnRemove_B").addClass('btn-white');
-										// $('#btnRemove_B').attr('disabled', false);
-							}
-
-							if (j != data.length) {
-										$('#btnAdd_B').attr('disabled', false);
-							}
-						} else {
-							if (j == 0) {
-										$('#btnRemove_B').attr('disabled', true);
-							}else {
-										$('#btnRemove_B').attr('disabled', false);
-							}
-
-							if (j != 0) {
-										$('#btnAdd_B').attr('disabled', false);
-							}
-						}
-
-					})
 			}
 	});
+
+	$('#insert_Brethren').on('click','#addbrethren',function(){
+				$('form').request('onAddBrethren', {
+						data: {TitleNameBrethren: $('#TitleNameBrethren').val(),
+									 NameBrethren: $('#NameBrethren').val(),
+								   LastNameBrethren: $('#LastNameBrethren').val(),
+							     BrethrenStatus: $('#BrethrenStatus').val(),
+						       AgeBrethren: $('#AgeBrethren').val(),
+					         OccupationBrethren: $('#OccupationBrethren').val(),},
+						success: function(data) {
+									 $(".bbb").remove();
+									 $('form').request('onBrethren',{
+										 success: function(dataBre) {
+											 $(".bbbh:first").removeClass('hidden');
+											 $(".bbbh").not(':first').remove();
+											 $('#NumBrethren').val(dataBre.length);
+											for (var i = 0; i < dataBre.length; i++) {
+													var $tableBody = $('#data-b').find("tbody"),
+									        $trLast = $tableBody.find("tr:last"),
+									        $trNew = $trLast.clone();
+									    		$trLast.after($trNew);
+
+												$(".idFami-b:last").val(dataBre[i].idFamilies);
+												$(".pfFirstName-b:last").html(dataBre[i].nameprefix+dataBre[i].FirstName_TH);
+												$(".LastName-b:last").html(dataBre[i].LastName_TH);
+												$(".life-b:last").html(dataBre[i].namelife);
+												$(".Age-b:last").html(dataBre[i].Age);
+												if (dataBre[i].idOccupation == null) {
+													 $(".occupation-b:last").html('');
+												}else {
+													 $(".occupation-b:last").html(dataBre[i].nameoccupation);
+												}
+											}
+											$(".bbbh:first").addClass('hidden');
+	 									 $('#moDalAddBrethren').modal('hide');
+										 }
+									 })
+										// swal({
+		            		// 		title: "เพิ่มพี่น้องสำเร็จ!",
+		            		// 		type: "success"
+		        				// 	}, function() {
+										// 			$('#moDalAddBrethren').modal('hide');
+		            		// 			location.reload();
+		        				// 	});
+						}
+				});
+	}).on("change",".BrethrenStatus",function(){
+			if(this.value=="2"){
+				$('#AgeBrethren').prop('disabled',true);
+				$('#OccupationBrethren').prop('disabled',true);
+			}else{
+				$('#AgeBrethren').prop('disabled',false);
+				$('#OccupationBrethren').prop('disabled',false);
+			}
+		})
+
+	$('form').on('click','.editBrethren',function(){
+		 var edit = this.value;
+		 $("#idFamiliesBrethren_edit").val(this.value);
+		 // alert(this.value);
+		 $('form').request('onBrethrenedit', {
+			 data: {numedit: edit},
+			 success: function(data) {
+				 // alert(data.idFamilies);
+				$("#TitleNameBrethren_edit").val(data.idPrefix).trigger("chosen:updated");
+				$("#NameBrethren_edit").val(data.FirstName_TH);
+				$("#LastNameBrethren_edit").val(data.LastName_TH);
+				$("#BrethrenStatus_edit").val(data.idLife_Status).trigger("chosen:updated");
+				if (data.idLife_Status == 2) {
+					$("#AgeBrethren_edit").prop('disabled',true);
+					$("#OccupationBrethren_edit").prop('disabled',true);
+					$("#AgeBrethren_edit").val(data.Age);
+					$("#OccupationBrethren_edit").val(data.idOccupation).trigger("chosen:updated");
+				}else {
+					$("#AgeBrethren_edit").prop('disabled',false);
+					$("#OccupationBrethren_edit").prop('disabled',false);
+					$("#AgeBrethren_edit").val(data.Age);
+					$("#OccupationBrethren_edit").val(data.idOccupation).trigger("chosen:updated");
+				}
+			 }
+		})
+	}).on("change","#BrethrenStatus_edit",function(){
+		// console.log(this.value);
+			if(this.value=="2"){
+				$('#AgeBrethren_edit').val('');
+				$('#AgeBrethren_edit').prop('disabled',true);
+				$('#OccupationBrethren_edit').val('').trigger("chosen:updated");
+				$('#OccupationBrethren_edit').prop('disabled',true);
+			}else{
+				$('#AgeBrethren_edit').prop('disabled',false);
+				$('#OccupationBrethren_edit').prop('disabled',false);
+			}
+		}).on('click','#AddBrethren',function(){
+		$("#TitleNameBrethren").val('').trigger("chosen:updated");
+		$("#NameBrethren").val('');
+		$("#LastNameBrethren").val('');
+		$("#BrethrenStatus").val('').trigger("chosen:updated");
+		$("#AgeBrethren").val('');
+		$("#OccupationBrethren").val('').trigger("chosen:updated");
+	})
+
+	$('#edit_Brethren').on('click','#upbrethren',function(){
+		// alert($('#idFamiliesBrethren_edit').val());
+		$('form').request('onUpdateBrethren', {
+				data: {idFamiliesBrethren: $('#idFamiliesBrethren_edit').val(),
+							 TitleNameBrethren: $('#TitleNameBrethren_edit').val(),
+							 NameBrethren: $('#NameBrethren_edit').val(),
+							 LastNameBrethren: $('#LastNameBrethren_edit').val(),
+							 BrethrenStatus: $('#BrethrenStatus_edit').val(),
+							 AgeBrethren: $('#AgeBrethren_edit').val(),
+							 OccupationBrethren: $('#OccupationBrethren_edit').val(),},
+				success: function(data) {
+							$(".bbb").remove();
+							$('form').request('onBrethren',{
+								success: function(dataBre) {
+									$(".bbbh:first").removeClass('hidden');
+									$(".bbbh").not(':first').remove();
+									$('#NumBrethren').val(dataBre.length);
+								 for (var i = 0; i < dataBre.length; i++) {
+										 var $tableBody = $('#data-b').find("tbody"),
+										 $trLast = $tableBody.find("tr:last"),
+										 $trNew = $trLast.clone();
+										 $trLast.after($trNew);
+									 $(".idFami-b:last").val(dataBre[i].idFamilies);
+									 $(".pfFirstName-b:last").html(dataBre[i].nameprefix+dataBre[i].FirstName_TH);
+									 $(".LastName-b:last").html(dataBre[i].LastName_TH);
+									 $(".life-b:last").html(dataBre[i].namelife);
+									 $(".Age-b:last").html(dataBre[i].Age);
+									 if (dataBre[i].idOccupation == null) {
+											$(".occupation-b:last").html('');
+									 }else {
+											$(".occupation-b:last").html(dataBre[i].nameoccupation);
+									 }
+								 }
+								 $(".bbbh:first").addClass('hidden');
+								$('#moDaleditBrethren').modal('hide');
+								// $('#idFamiliesBrethren_edit').val('')
+								}
+							})
+								// swal({
+								 // 	 title: "แก้ไขสำเร็จ!",
+								 // 	 type: "success"
+								 //  }, function() {
+								 // 		 $('#moDaleditBrethren').modal('hide');
+								 // 		 location.reload();
+								 // 	 });
+					}
+			});
+	 }).on('click','#delbrethren',function(){
+		swal({
+				title: "คุณแน่ใจที่จะลบ ?",
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText: "ไม่, ยังก่อน!",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "ใช่, ลบเลย!",
+				closeOnConfirm: false
+		}, function () {
+				$('form').request('onDelBrethren', {
+					data: {idFamiliesBrethren: $('#idFamiliesBrethren_edit').val()},
+					success: function(data) {
+						$(".bbb").remove();
+						$('form').request('onBrethren',{
+							success: function(dataBre) {
+								$(".bbbh:first").removeClass('hidden');
+								$(".bbbh").not(':first').remove();
+								$('#NumBrethren').val(dataBre.length);
+							 for (var i = 0; i < dataBre.length; i++) {
+									 var $tableBody = $('#data-b').find("tbody"),
+									 $trLast = $tableBody.find("tr:last"),
+									 $trNew = $trLast.clone();
+									 $trLast.after($trNew);
+								 $(".idFami-b:last").val(dataBre[i].idFamilies);
+								 $(".pfFirstName-b:last").html(dataBre[i].nameprefix+dataBre[i].FirstName_TH);
+								 $(".LastName-b:last").html(dataBre[i].LastName_TH);
+								 $(".life-b:last").html(dataBre[i].namelife);
+								 $(".Age-b:last").html(dataBre[i].Age);
+								 if (dataBre[i].idOccupation == null) {
+										$(".occupation-b:last").html('');
+								 }else {
+										$(".occupation-b:last").html(dataBre[i].nameoccupation);
+								 }
+							 }
+							 $(".bbbh:first").addClass('hidden');
+							$('#moDaleditBrethren').modal('hide');
+							// $('#idFamiliesBrethren_edit').val('')
+							swal({
+									title: "ลบสำเร็จ!",
+									type: "success",
+							},function () {
+								// location.reload();
+							})
+							}
+						})
+
+					}
+				})
+		})
+	})
+
+
+	$('#insert_Children').on('click','#addChildren',function(){
+				$('form').request('onAddChildren', {
+						data: {TitleNameChildren: $('#TitleNameChildren').val(),
+									 NameChildren: $('#NameChildren').val(),
+									 LastNameChildren: $('#LastNameChildren').val(),
+									 AgeChildren: $('#AgeChildren').val(),},
+						success: function(data) {
+							$(".ccc").remove();
+							$('form').request('onChildren',{
+								success: function(dataChil) {
+									$(".ccch:first").removeClass('hidden');
+									$(".ccch").not(':first').remove();
+									$('#NumChildren').val(dataChil.length);
+								 for (var i = 0; i < dataChil.length; i++) {
+										 var $tableBody = $('#data-c').find("tbody"),
+										 $trLast = $tableBody.find("tr:last"),
+										 $trNew = $trLast.clone();
+										 $trLast.after($trNew);
+
+									 $(".idFami-c:last").val(dataChil[i].idFamilies);
+									 $(".pfFirstName-c:last").html(dataChil[i].nameprefix+dataChil[i].FirstName_TH);
+									 $(".LastName-c:last").html(dataChil[i].LastName_TH);
+									 $(".Age-c:last").html(dataChil[i].Age);
+								 }
+								 $(".ccch:first").addClass('hidden');
+								$('#moDalAddChildren').modal('hide');
+								}
+							})
+										// swal({
+										// 		title: "เพิ่มบุตรสำเร็จ!",
+										// 		type: "success"
+										// 	}, function() {
+										// 			$('#moDalAddChildren').modal('hide');
+										// 			// location.reload();
+										// 	});
+						}
+				});
+	})
+
+
+	$('form').on('click','.editChildren',function(){
+		 var edit = this.value;
+		 $("#idFamiliesChildren_edit").val(this.value);
+		 // alert(this.value);
+		 $('form').request('onChildrenedit', {
+			 data: {numedit: edit},
+			 success: function(data) {
+				$("#TitleNameChildren_edit").val(data.idPrefix).trigger("chosen:updated");
+				$("#NameChildren_edit").val(data.FirstName_TH);
+				$("#LastNameChildren_edit").val(data.LastName_TH);
+				$("#AgeChildren_edit").val(data.Age);
+			 }
+			 })
+
+	}).on('click','#AddChildren',function(){
+		$("#TitleNameChildren").val('').trigger("chosen:updated");
+		$("#NameChildren").val('');
+		$("#LastNameChildren").val('');
+		$("#AgeChildren").val('');
+	})
+
+	$('#edit_Children').on('click','#upChildren',function(){
+		$('form').request('onUpdateChildren', {
+				data: {idFamiliesChildren: $('#idFamiliesChildren_edit').val(),
+							 TitleNameChildren: $('#TitleNameChildren_edit').val(),
+							 NameChildren: $('#NameChildren_edit').val(),
+							 LastNameChildren: $('#LastNameChildren_edit').val(),
+							 AgeChildren: $('#AgeChildren_edit').val(),},
+				success: function(data) {
+					$(".ccc").remove();
+					$('form').request('onChildren',{
+						success: function(dataChil) {
+							$(".ccch:first").removeClass('hidden');
+							$(".ccch").not(':first').remove();
+							$('#NumChildren').val(dataChil.length);
+						 for (var i = 0; i < dataChil.length; i++) {
+								 var $tableBody = $('#data-c').find("tbody"),
+								 $trLast = $tableBody.find("tr:last"),
+								 $trNew = $trLast.clone();
+								 $trLast.after($trNew);
+							 $(".idFami-c:last").val(dataChil[i].idFamilies);
+							 $(".pfFirstName-c:last").html(dataChil[i].nameprefix+dataChil[i].FirstName_TH);
+							 $(".LastName-c:last").html(dataChil[i].LastName_TH);
+							 $(".Age-c:last").html(dataChil[i].Age);
+						 }
+						 $(".ccch:first").addClass('hidden');
+						$('#moDaleditChildren').modal('hide');
+						}
+					})
+								// swal({
+								// 		title: "แก้ไขสำเร็จ!",
+								// 		type: "success"
+								// 	}, function() {
+								// 			$('#moDaleditChildren').modal('hide');
+								// 			location.reload();
+								// 		});
+				}
+		});
+ }).on('click','#delChildren',function(){
+	 swal({
+			 title: "คุณแน่ใจที่จะลบ ?",
+			 type: "warning",
+			 showCancelButton: true,
+			 cancelButtonText: "ไม่, ยังก่อน!",
+			 confirmButtonColor: "#DD6B55",
+			 confirmButtonText: "ใช่, ลบเลย!",
+			 closeOnConfirm: false
+	 }, function () {
+			 $('form').request('onDelChildren', {
+				 data: {idFamiliesChildren: $('#idFamiliesChildren_edit').val(),},
+				 success: function(data) {
+					 $(".ccc").remove();
+ 					$('form').request('onChildren',{
+ 						success: function(dataChil) {
+ 							$(".ccch:first").removeClass('hidden');
+ 							$(".ccch").not(':first').remove();
+ 							$('#NumChildren').val(dataChil.length);
+ 						 for (var i = 0; i < dataChil.length; i++) {
+ 								 var $tableBody = $('#data-c').find("tbody"),
+ 								 $trLast = $tableBody.find("tr:last"),
+ 								 $trNew = $trLast.clone();
+ 								 $trLast.after($trNew);
+ 							 $(".idFami-c:last").val(dataChil[i].idFamilies);
+ 							 $(".pfFirstName-c:last").html(dataChil[i].nameprefix+dataChil[i].FirstName_TH);
+ 							 $(".LastName-c:last").html(dataChil[i].LastName_TH);
+ 							 $(".Age-c:last").html(dataChil[i].Age);
+ 						 }
+ 						 $(".ccch:first").addClass('hidden');
+ 						$('#moDaleditChildren').modal('hide');
+ 						}
+ 					})
+					 swal({
+							 title: "ลบสำเร็จ!",
+							 type: "success",
+					 },function () {
+						 // $('#moDaleditChildren').modal('hide');
+						 // location.reload();
+					 })
+				 }
+				 })
+	 })
+ })
 
 
 
@@ -330,10 +461,11 @@ $(document).ready(function(){
 						if (data.idMarital_Status != 1) {
 								$('.boxMarital').removeClass('hidden');
 						}
+						if (data.idMarital_Status == null) {
+								$('.boxMarital').addClass('hidden');
+						}
 				}
 		});
-
-
 
 
 
