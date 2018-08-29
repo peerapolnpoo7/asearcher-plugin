@@ -1,5 +1,10 @@
 {% set provinces = __SELF__.provinces %}
 {% set address = __SELF__.address %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
+				<h3>1.ที่อยู่ตามบัตรประชาชน</h3>
 <form class="m-t-md" data-request="onSave" data-request-flash>
 	<input type="hidden" name="idAddress" value="{{ address.idAddress }}"/>
 	<div class="row">
@@ -339,3 +344,7 @@
 		</div>
 	</div>
 </form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -9,286 +9,294 @@
 {% set communication_providers = __SELF__.communication_providers %}
 {% set job_seeker_statuses = __SELF__.job_seeker_statuses %}
 {% set candidates = __SELF__.candidates %}
-<h3>1.ข้อมูลส่วนบุคคล</h3>
-<form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
-	<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
-	<div class="row">
-		{% flash %}
-			<p
-			data-control="flash-message"
-			class="flash-message fade {{ type }}"
-			data-interval="5">
-			{{ message }}
-		    </p>
-		{% endflash %}
-		<div class="col-md-6">
-			<fieldset>
-				<div class="col-sm-12 text-center">
-					{% if imgcvs.thumb=="" %}
-					<img src="{{ 'assets/img/default-non-user-no-photo-meduim.jpg'|theme }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
-					{% else %}
-					<img src="{{ imgcvs.thumb }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
-					{% endif %}
-					<div class="m-b-md">
-						<h3 class="font-bold no-margins">
-							{{ user.name }} {{ user.surname }}
-						</h3>
-						<small>{{ requirement_of_works.Name_TH }}</small>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
+				<h3>1.ข้อมูลส่วนบุคคล</h3>
+				<form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
+					<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
+					<div class="row">
+						{% flash %}
+						<p
+						data-control="flash-message"
+						class="flash-message fade {{ type }}"
+						data-interval="5">
+						{{ message }}
+					</p>
+					{% endflash %}
+					<div class="col-md-6">
+						<fieldset>
+							<div class="col-sm-12 text-center">
+								{% if imgcvs.thumb=="" %}
+								<img src="{{ 'assets/img/default-non-user-no-photo-meduim.jpg'|theme }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
+								{% else %}
+								<img src="{{ imgcvs.thumb }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
+								{% endif %}
+								<div class="m-b-md">
+									<h3 class="font-bold no-margins">
+										{{ user.name }} {{ user.surname }}
+									</h3>
+									<small>{{ requirement_of_works.Name_TH }}</small>
+								</div>
+								<input type="hidden" name="Photos" value="{{ imgcvs.Photo }}"/>
+								<input type="hidden" name="path" value="{{ imgcvs.path }}"/>
+								<input type="hidden" name="thumb" value="{{ imgcvs.thumb }}"/>
+								<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="javascript:void(0)">เปลี่ยนภาพโปรไฟล์</a>
+								<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
+							</div>
+							<div class="col-md-3 col-xs-12 m-t-40" id="boxidGender">
+								<label class="control-label">เพศ <span class="text-danger">*</span></label>
+							</div>
+							<div class="col-md-3 col-xs-6 m-t-40 text-right no-padding">
+								<a href="javascript:void(0);" id="Male" class="gender">
+									{% if candidates.idGender == '1' %}
+									<img src="{{ 'assets/img/CV/male_hover.png'|theme }}" alt="gender" id="ImgMale"/>
+									{% else %}
+									<img src="{{ 'assets/img/CV/male.png'|theme }}" alt="gender" id="ImgMale"/>
+									{% endif %}
+								</a>
+							</div>
+							<div class="col-md-3 col-xs-6 m-t-40 text-left no-padding">
+								<a href="javascript:void(0);" id="Female" class="gender">
+									{% if candidates.idGender == '2' %}
+									<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgMale"/>
+									{% else %}
+									<img src="{{ 'assets/img/CV/female.png'|theme }}" alt="gender" id="ImgFemale"/>
+									{% endif %}
+								</a>
+							</div>
+							<input type="hidden" name="idGender" value="{{ candidates.idGender }}"/>
+						</fieldset>
 					</div>
-					<input type="hidden" name="Photos" value="{{ imgcvs.Photo }}"/>
-					<input type="hidden" name="path" value="{{ imgcvs.path }}"/>
-					<input type="hidden" name="thumb" value="{{ imgcvs.thumb }}"/>
-					<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="javascript:void(0)">เปลี่ยนภาพโปรไฟล์</a>
-					<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
-				</div>
-				<div class="col-md-3 col-xs-12 m-t-40">
-					<label class="control-label">เพศ <span class="text-danger">*</span></label>
-				</div>
-				<div class="col-md-3 col-xs-6 m-t-40 text-right no-padding">
-					<a href="javascript:void(0);" id="Male" class="gender">
-						{% if candidates.idGender == '1' %}
-							<img src="{{ 'assets/img/CV/male_hover.png'|theme }}" alt="gender" id="ImgMale"/>
-						{% else %}
-							<img src="{{ 'assets/img/CV/male.png'|theme }}" alt="gender" id="ImgMale"/>
-						{% endif %}
-					</a>
-				</div>
-				<div class="col-md-3 col-xs-6 m-t-40 text-left no-padding">
-					<a href="javascript:void(0);" id="Female" class="gender">
-						{% if candidates.idGender == '2' %}
-							<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgMale"/>
-						{% else %}
-							<img src="{{ 'assets/img/CV/female.png'|theme }}" alt="gender" id="ImgFemale"/>
-						{% endif %}
-					</a>
-				</div>
-				<input type="hidden" name="idGender" value="{{ candidates.idGender }}"/>
-			</fieldset>
-		</div>
-		<div class="col-md-6 m-t-20">
-			<fieldset>
-				<div class="form-group col-md-6">
-					<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
-					<select class="form-control chosen " name="idPrefix" id="idPrefix">
-						<option value="">เลือก</option>
-						{% for prefix in prefixs %}
-						{% set selected = '' %}
-						{% if prefix.idPrefix == candidates.idPrefix %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div style="clear:both"></div>
-				<div class="form-group col-md-6">
-					<label class="control-label">ชื่อ <span class="text-danger">*</span></label>
-					<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6">
-					<label class="control-label">นามสกุล <span class="text-danger">*</span></label>
-					<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4">
-					<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile" value="{{ candidates.Date_of_Birth }}">
-						<span class="help-block"></span>
+					<div class="col-md-6 m-t-20">
+						<fieldset>
+							<div class="form-group col-md-6"  id="boxidPrefix">
+								<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
+								<select class="form-control chosen " name="idPrefix" id="idPrefix">
+									<option value="">เลือก</option>
+									{% for prefix in prefixs %}
+									{% set selected = '' %}
+									{% if prefix.idPrefix == candidates.idPrefix %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									<option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+									{% endfor %}
+								</select>
+								<span class="help-block"></span>
+							</div>
+							<div style="clear:both"></div>
+							<div class="form-group col-md-6">
+								<label class="control-label">ชื่อ <span class="text-danger">*</span></label>
+								<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label">นามสกุล <span class="text-danger">*</span></label>
+								<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-4">
+								<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile" value="{{ candidates.Date_of_Birth }}">
+									<span class="help-block"></span>
+								</div>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-8">
+								<label class="control-label">รหัสบัตรประชาชน <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
+									<input type="text" name="ID_Card_Number" id="ID_Card_Number" class="form-control" data-mask="9-9999-99999-99-9" placeholder="" value="{{ candidates.ID_Card_Number }}">
+									<span class="help-block"></span>
+								</div>
+							</div>
+							<div style="clear:both"></div>
+							<div class="form-group col-md-4">
+								<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
+								<select class="form-control chosen " name="idReligion" id="idReligion">
+									<option value="">เลือก</option>
+									{% for religion in religions %}
+									{% set selected = '' %}
+									{% if religion.idReligion == '' %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									<option value="{{religion.idReligion}}" {{ selected }}>{{religion.Name_TH}}</option>
+									{% endfor %}
+								</select>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-4">
+								<label class="control-label">เชื้อชาติ <span class="text-danger">*</span></label>
+								<select name="idRace" id="idRace" class="form-control chosen">
+									<option value="">เลือก</option>
+									{% for race in races %}
+									{% set selected = '' %}
+									<option value="{{race.idRace}}" {{ selected }}>{{race.Name_TH}}</option>
+									{% endfor %}
+								</select>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-4">
+								<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
+								<select name="Nationality" id="Nationality" class="form-control chosen">
+									<option value="">เลือก</option>
+									{% for countrycallingcode in countrycallingcodes %}
+									{% set selected = '' %}
+									{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.Nationality == "" %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									{% if countrycallingcode.idCountry_Calling_Code == candidates.Nationality %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Nationality_TH}}</option>
+									{% endfor %}
+								</select>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
+								<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label">ไลน์ไอดี</label>
+								<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-8">
+								<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
+								<div class="col-md-4 col-xs-4 no-padding-left">
+									<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
+										<option value="0">เลือก</option>
+										{% for countrycallingcode in countrycallingcodes %}
+										{% set selected = '0' %}
+										
+										{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+ {{countrycallingcode.Code}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="col-sm-8 col-xs-8 no-padding">
+									<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
+									<span class="help-block"></span>
+								</div>
+							</div>
+							<div class="form-group col-sm-4">
+								<label class="control-label">เครือข่าย</label>
+								<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
+									<option value="0">เลือก</option>
+									{% for communication_provider in communication_providers %}
+									{% set selected = '0' %}
+									{% if communication_provider.idCommunication_Provider == '0' and candidates.idCommunication_Provider == "" %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									{% if communication_provider.idCommunication_Provider == candidates.idCommunication_Provider %}
+									{% set selected = 'selected' %}
+									{% endif %}
+									<option value="{{communication_provider.idCommunication_Provider}}" {{ selected }}>{{communication_provider.Name}}</option>
+									{% endfor %}
+								</select>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
+								<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
+							</div>
+							<div class="form-group col-sm-12">
+								<label class="control-label">กรุ๊ปเลือด</label><br>
+								{% for blood_group in blood_groups %}
+								<div class="radio radio-info col-sm-3 col-xs-3">
+									<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}">
+									<label for="bloodgroup_{{ blood_group.idBlood_Group }}">
+										{{ blood_group.Blood_Group }}
+									</label>
+								</div>
+								{% endfor %}
+							</div>
+						</fieldset>
 					</div>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-8">
-					<label class="control-label">รหัสบัตรประชาชน <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
-						<input type="text" name="ID_Card_Number" id="ID_Card_Number" class="form-control" data-mask="9-9999-99999-99-9" placeholder="" value="{{ candidates.ID_Card_Number }}">
-						<span class="help-block"></span>
-					</div>
-				</div>
-				<div style="clear:both"></div>
-				<div class="form-group col-md-4">
-					<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
-					<select class="form-control chosen " name="idReligion" id="idReligion">
-						<option value="">เลือก</option>
-						{% for religion in religions %}
-						{% set selected = '' %}
-						{% if religion.idReligion == '' %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{religion.idReligion}}" {{ selected }}>{{religion.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4">
-					<label class="control-label">เชื้อชาติ <span class="text-danger">*</span></label>
-					<select name="idRace" id="idRace" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for race in races %}
-						{% set selected = '' %}
-						<option value="{{race.idRace}}" {{ selected }}>{{race.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4">
-					<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
-					<select name="Nationality" id="Nationality" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for countrycallingcode in countrycallingcodes %}
-						{% set selected = '' %}
-						{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.Nationality == "" %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						{% if countrycallingcode.idCountry_Calling_Code == candidates.Nationality %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Nationality_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6">
-					<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
-					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6">
-					<label class="control-label">ไลน์ไอดี</label>
-					<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-8">
-					<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
-					<div class="col-md-4 col-xs-4 no-padding-left">
-						<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
-							<option value="0">เลือก</option>
-							{% for countrycallingcode in countrycallingcodes %}
-							{% set selected = '0' %}
+					<div class="col-md-12">
+						<fieldset>
 							
-							{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
-							{% set selected = 'selected' %}
-							{% endif %}
-							<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+ {{countrycallingcode.Code}}</option>
-							{% endfor %}
-						</select>
-						<span class="help-block"></span>
+						</fieldset>
 					</div>
-					<div class="col-sm-8 col-xs-8 no-padding">
-						<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
-						<span class="help-block"></span>
+					<div class="col-md-6">&nbsp;
 					</div>
-				</div>
-				<div class="form-group col-sm-4">
-					<label class="control-label">เครือข่าย</label>
-					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
-						<option value="0">เลือก</option>
-						{% for communication_provider in communication_providers %}
-						{% set selected = '0' %}
-						{% if communication_provider.idCommunication_Provider == '0' and candidates.idCommunication_Provider == "" %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						{% if communication_provider.idCommunication_Provider == candidates.idCommunication_Provider %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{communication_provider.idCommunication_Provider}}" {{ selected }}>{{communication_provider.Name}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
-					<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
-					<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
-				</div>
-				<div class="form-group col-sm-12">
-					<label class="control-label">กรุ๊ปเลือด</label><br>
-					{% for blood_group in blood_groups %}
-					<div class="radio radio-info col-sm-3 col-xs-3">
-						<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}">
-						<label for="bloodgroup_{{ blood_group.idBlood_Group }}">
-							{{ blood_group.Blood_Group }}
-						</label>
-					</div>
-					{% endfor %}
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-12">
-			<fieldset>
-				
-			</fieldset>
-		</div>
-		<div class="col-md-6">&nbsp;
-		</div>
-		<div class="col-md-6">
-			<fieldset>
-				<div class="form-group col-md-6">
-					<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<input type="text" name="Weight" id="Weight" class="form-control" placeholder="" value="">
-						<span class="input-group-addon">กก.</span>
-					</div>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6">
-					<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<input type="text" name="Height" id="Height" class="form-control" placeholder="" value="">
-						<span class="input-group-addon">ซม.</span>
-					</div>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
-					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
-					{% for job_seeker_status in job_seeker_statuses %}
-					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
-						{% set isChecked = '' %}
-						{% set isActive = 'grayscaled' %}
-						{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
-						{% if job_seeker_status.isSelect == "selected" %}
-							{% set isChecked = 'checked' %}
-							{% set isActive = '' %}
-						{% endif %}
-						<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
+					<div class="col-md-6">
+						<fieldset>
+							<div class="form-group col-md-6">
+								<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<input type="text" name="Weight" id="Weight" class="form-control" placeholder="" value="">
+									<span class="input-group-addon">กก.</span>
+								</div>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<input type="text" name="Height" id="Height" class="form-control" placeholder="" value="">
+									<span class="input-group-addon">ซม.</span>
+								</div>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
+								<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+								{% for job_seeker_status in job_seeker_statuses %}
+								<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+									{% set isChecked = '' %}
+									{% set isActive = 'grayscaled' %}
+									{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
+									{% if job_seeker_status.isSelect == "selected" %}
+									{% set isChecked = 'checked' %}
+									{% set isActive = '' %}
+									{% endif %}
+									<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
 
-						<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
-							<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
-						</label><br/>
-						{{ job_seeker_status.Name_TH }}
+									<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
+										<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
+									</label><br/>
+									{{ job_seeker_status.Name_TH }}
+								</div>
+								{% endfor %}
+							</div>
+							<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
+								<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+								{% for job_seeker_status in job_seeker_statuses %}
+								<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
+									{{ job_seeker_status.Name_TH}}
+								</a>
+								{% endfor %}
+								<span class="help-block"></span>
+							</div>
+						</fieldset>
 					</div>
-					{% endfor %}
+					<div class="col-md-6">&nbsp;
+					</div>
+					<div class="col-md-6 personal">
+						<fieldset>
+							<div class="form-group col-sm-12">
+								<label class="control-label">แนะนำตัวเอง</label>
+								<textarea name="Text" id="Text" class="form-control notes" cols='10'></textarea>
+							</div>
+							<div class="form-group col-sm-12">
+								<label class="control-label">แนะนำตัวผ่านวีดิโอ</label>
+								<input type="text" name="Video_Link" id="Video_Link" class="form-control video-link " placeholder="ใส่Link" value="">
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-sm-12 col-xs-12 text-center m-t-md">
+						<button type="button" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
+					</div>
 				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
-					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
-					{% for job_seeker_status in job_seeker_statuses %}
-					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
-						{{ job_seeker_status.Name_TH}}
-					</a>
-					{% endfor %}
-					<span class="help-block"></span>
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-6">&nbsp;
-		</div>
-		<div class="col-md-6 personal">
-			<fieldset>
-				<div class="form-group col-sm-12">
-					<label class="control-label">แนะนำตัวเอง</label>
-					<textarea name="Text" id="Text" class="form-control notes" cols='10'></textarea>
-				</div>
-				<div class="form-group col-sm-12">
-					<label class="control-label">แนะนำตัวผ่านวีดิโอ</label>
-					<input type="text" name="Video_Link" id="Video_Link" class="form-control video-link " placeholder="ใส่Link" value="">
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-sm-12 col-xs-12 text-center m-t-md">
-			<button type="button" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
+			</form>
 		</div>
 	</div>
-</form>
+</div>
+</div>
