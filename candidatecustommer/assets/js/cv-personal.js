@@ -3,7 +3,7 @@ $(document).ready(function(){
     var now = new Date();
     $('.BirthDate').scroller({ 
         theme: 'android-ics light',
-        startYear: (now.getFullYear()+543)-50,
+        startYear: (now.getFullYear()+543)-70,
         endYear: (now.getFullYear()+543)-18,
         setText: 'เลือก',
         cancelText: 'ยกเลิก',

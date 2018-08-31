@@ -39,8 +39,10 @@ $(document).ready(function(){
 			$(".boxPre").addClass("hidden");
 			$(".boxPreBuilding").addClass('hidden');
 			$(".Btn-PreAdd").addClass("btn-outline");
+			$("#PreAdd-Home").removeClass('btn-outline');
 		}else{
 			$(".boxPre").removeClass("hidden");
+			$("#PreAdd-Home").removeClass('btn-outline');
 		}
 	}).on("click",".Btn-PreAdd",function(){
 		$(".Btn-PreAdd").addClass("btn-outline");
@@ -54,22 +56,22 @@ $(document).ready(function(){
 			$(".boxPreBuilding").removeClass('hidden');
 			$('#Home_Condo_1').val('2');
 		}
-	}).on('change','#Provinces',function(){
-		callComponent("onGetDistrict",this.value,"#District",'0');
-	}).on('change','#District',function(){
-		callComponent("onGetSubDistrict",this.value,"#SubDistrict",'0');
-	}).on('change','#SubDistrict',function(){
+	}).on('change','#idProvinces',function(){
+		callComponent("onGetDistrict",this.value,"#idDistricts",'0');
+	}).on('change','#idDistricts',function(){
+		callComponent("onGetSubDistrict",this.value,"#idSubdistricts",'0');
+	}).on('change','#idSubdistricts',function(){
 		$.request('onGetPostcode', {
 			data: {value: this.value},
 			success: function(data) {
 				$('#Postcode').val(data.Code);
 			}
 		});
-	}).on('change','#Provinces1',function(){
-		callComponent("onGetDistrict",this.value,"#District1",'0');
-	}).on('change','#District1',function(){
-		callComponent("onGetSubDistrict",this.value,"#SubDistrict1",'0');
-	}).on('change','#SubDistrict1',function(){
+	}).on('change','#idProvinces_1',function(){
+		callComponent("onGetDistrict",this.value,"#idDistricts_1",'0');
+	}).on('change','#idDistricts_1',function(){
+		callComponent("onGetSubDistrict",this.value,"#idSubdistrict_1",'0');
+	}).on('change','#idSubdistrict_1',function(){
 		$.request('onGetPostcode', {
 			data: {value: this.value},
 			success: function(data) {
@@ -92,17 +94,17 @@ $(document).ready(function(){
 		}
 	});
 	//Test
-	$("#Provinces").each(function(){
-		callComponent("onGetDistrict",this.value,"#District",$('#temDistrict').val());
+	$("#idProvinces").each(function(){
+		callComponent("onGetDistrict",this.value,"#idDistricts",$('#temDistrict').val());
 	});
-	$("#District").each(function(){
-		callComponent("onGetSubDistrict",$('#temDistrict').val(),"#SubDistrict",$('#temSubdistricts').val());
+	$("#idDistricts").each(function(){
+		callComponent("onGetSubDistrict",$('#temDistrict').val(),"#idSubdistricts",$('#temSubdistricts').val());
 	});
-	$("#Provinces1").each(function(){
-		callComponent("onGetDistrict",this.value,"#District1",$('#temDistricts_1').val());
+	$("#idProvinces_1").each(function(){
+		callComponent("onGetDistrict",this.value,"#idDistricts_1",$('#temDistricts_1').val());
 	});
-	$("#District1").each(function(){
-		callComponent("onGetSubDistrict",$('#temDistricts_1').val(),"#SubDistrict1",$('#temSubdistrict_1').val());
+	$("#idDistricts_1").each(function(){
+		callComponent("onGetSubDistrict",$('#temDistricts_1').val(),"#idSubdistrict_1",$('#temSubdistrict_1').val());
 	});
 	$("input[name='Address_Present']").each(function(){
 		if(this.checked==true){

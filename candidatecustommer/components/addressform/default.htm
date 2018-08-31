@@ -24,11 +24,23 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-4 col-xs-4">
-						<button class="btn {% if address.Home_Condo != '1' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Home"><i class="fa fa-home"></i></button>
+						{% set chkbtn = '' %}
+						{% if address.Home_Condo == "" %}
+						{% set chkbtn = '' %}
+						{% else %}
+							{% if address.Home_Condo != '1' %}
+								{% set chkbtn = 'btn-outline' %}
+							{% endif %}
+						{% endif %}
+						<button class="btn {{ chkbtn }} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Home"><i class="fa fa-home"></i></button>
 						<span>บ้าน, ห้องเช่า</span>
 					</div>
 					<div class="col-sm-5 col-xs-5">
-						<button class="btn {% if address.Home_Condo != '2' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Building"><i class="fa fa-building-o"></i></button>
+						{% set chkbtn = '' %}
+						{% if address.Home_Condo != '2' %}
+							{% set chkbtn = 'btn-outline' %}
+						{% endif %}
+						<button class="btn {{ chkbtn }} btn-lg btn-success dim Btn-PerAdd" type="button" id="PerAdd-Building"><i class="fa fa-building-o"></i></button>
 						<span>อพาร์ทเม้นท์, คอนโด</span>
 					</div>
 					<input type="hidden" name="Home_Condo" id="Home_Condo" value="{% if address.Home_Condo != '' %}{{address.Home_Condo}}{%else%}1{%endif%}" />
@@ -49,8 +61,8 @@
 		<div class="col-sm-4">
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label">ซอย</label>
-					<input type="text" class="form-control" name="Soi_TH" id="Soi_TH" placeholder="" value="{{ address.Soi_TH }}">
+					<label class="control-label">หมู่</label>
+					<input type="text" class="form-control" name="Moo_TH" id="Moo_TH" placeholder="" value="{{ address.Moo_TH }}">
 					<span class="help-block"></span>
 				</div>
 			</fieldset>
@@ -58,8 +70,8 @@
 		<div class="col-sm-4">
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label">หมู่</label>
-					<input type="text" class="form-control" name="Moo_TH" id="Moo_TH" placeholder="" value="{{ address.Moo_TH }}">
+					<label class="control-label">ซอย</label>
+					<input type="text" class="form-control" name="Soi_TH" id="Soi_TH" placeholder="" value="{{ address.Soi_TH }}">
 					<span class="help-block"></span>
 				</div>
 			</fieldset>
@@ -113,11 +125,11 @@
 				</div>
 			</fieldset>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidProvinces">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">จังหวัด</label>
-					<select class="form-control chosen" name="idProvinces" id="Provinces">
+					<select class="form-control chosen" name="idProvinces" id="idProvinces">
 						<option value="">เลือก</option>
 						{% for province in provinces %}
 						{% set selected = '' %}
@@ -133,11 +145,11 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidDistricts">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">อำเภอ/เขต</label>
-					<select name="idDistricts" id="District" class="form-control chosen">
+					<select name="idDistricts" id="idDistricts" class="form-control chosen">
 						<option value="">เลือก</option>
 					</select>
 					<span class="help-block"></span>
@@ -145,11 +157,11 @@
 				</div>
 			</fieldset>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidSubdistricts">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">ตำบล/แขวง</label>
-					<select name="idSubdistricts" id="SubDistrict" class="form-control chosen">
+					<select name="idSubdistricts" id="idSubdistricts" class="form-control chosen">
 						<option value="">เลือก</option>
 					</select>
 					<span class="help-block"></span>
@@ -172,13 +184,24 @@
 			<div class="form-group">
 				<label><h3>2.ที่อยู่ปัจจุบัน</h3></label><br>
 				<div class="radio radio-info col-sm-6 col-xs-6">
-					<input type="radio" name="Address_Present" id="radioPer" value="1" {% if address.Address_Present == '1' %}checked="checked"{% endif %} >
+					{% set checked = '' %}
+					{% if address.Address_Present == '1' %}
+						{% set checked = 'checked' %}
+					{% endif %}
+					{% if address.Address_Present == '' %}
+						{% set checked = 'checked' %}
+					{% endif %}
+					<input type="radio" name="Address_Present" id="radioPer" value="1" {{ checked }} >
 					<label for="radioPer">
 						ตามที่อยู่บัตรประชาชน
 					</label>
 				</div>
 				<div class="radio radio-info col-sm-6 col-xs-6">
-					<input type="radio" name="Address_Present" id="radioPre" value="2" {% if address.Address_Present == '2' %}checked="checked"{% endif %} >
+					{% set checked = '' %}
+					{% if address.Address_Present == '2' %}
+						{% set checked = 'checked' %}
+					{% endif %}
+					<input type="radio" name="Address_Present" id="radioPre" value="2" {{ checked }} >
 					<label for="radioPre">
 						ที่อยู่ใหม่
 					</label>
@@ -195,11 +218,23 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-4 col-xs-4">
-						<button class="btn {% if address.Home_Condo_1 != '1' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Home"><i class="fa fa-home"></i></button>
+						{% set chkbtn = '' %}
+						{% if address.Home_Condo_1 == "" %}
+						{% set chkbtn = '' %}
+						{% else %}
+							{% if address.Home_Condo_1 != '1' %}
+								{% set chkbtn = 'btn-outline' %}
+							{% endif %}
+						{% endif %}
+						<button class="btn {{ chkbtn }} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Home"><i class="fa fa-home"></i></button>
 						<span>บ้าน, ห้องเช่า</span>
 					</div>
 					<div class="col-sm-4 col-xs-4">
-						<button class="btn {% if address.Home_Condo_1 != '2' %}btn-outline{% endif %} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Building"><i class="fa fa-building-o"></i></button>
+						{% set chkbtn = '' %}
+						{% if address.Home_Condo_1 != 2 %}
+						{% set chkbtn = 'btn-outline' %}
+						{% endif %}
+						<button class="btn {{ chkbtn }} btn-lg btn-success dim Btn-PreAdd" type="button" id="PreAdd-Building"><i class="fa fa-building-o"></i></button>
 						<span>อพาร์ทเม้นท์, คอนโด</span>
 					</div>
 					<input type="hidden" name="Home_Condo_1" id="Home_Condo_1" value="{% if address.Home_Condo_1 != '' %}{{address.Home_Condo_1}}{%else%}1{%endif%}" />
@@ -220,8 +255,8 @@
 		<div class="col-sm-4">
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label">ซอย</label>
-					<input type="text" class="form-control" name="Soi_TH_1" id="Soi_TH_1" placeholder="" value="{{ address.Soi_TH_1 }}">
+					<label class="control-label">หมู่</label>
+					<input type="text" class="form-control" name="Moo_TH_1" id="Moo_TH_1" placeholder=""  value="{{ address.Moo_TH_1 }}">
 					<span class="help-block"></span>
 				</div>
 			</fieldset>
@@ -229,8 +264,8 @@
 		<div class="col-sm-4">
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label">หมู่</label>
-					<input type="text" class="form-control" name="Moo_TH_1" id="Moo_TH_1" placeholder=""  value="{{ address.Moo_TH_1 }}">
+					<label class="control-label">ซอย</label>
+					<input type="text" class="form-control" name="Soi_TH_1" id="Soi_TH_1" placeholder="" value="{{ address.Soi_TH_1 }}">
 					<span class="help-block"></span>
 				</div>
 			</fieldset>
@@ -284,14 +319,14 @@
 				</div>
 			</fieldset>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidProvinces_1">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">จังหวัด</label>
-					<select class="form-control chosen" name="idProvinces_1" id="Provinces1">
-						<option value="0">เลือก</option>
+					<select class="form-control chosen" name="idProvinces_1" id="idProvinces_1">
+						<option value="">เลือก</option>
 						{% for province in provinces %}
-						{% set selected = '0' %}
+						{% set selected = '' %}
 						{% if province.idProvinces == address.idProvinces_1 %}
 						{% set selected = 'selected' %}
 						{% endif %}
@@ -304,24 +339,24 @@
 		</div>
 	</div>
 	<div class="row hidden boxPre">
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidDistricts_1">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">อำเภอ/เขต</label>
-					<select name="idDistricts_1" id="District1" class="form-control chosen">
-						<option value="0">เลือก</option>
+					<select name="idDistricts_1" id="idDistricts_1" class="form-control chosen">
+						<option value="">เลือก</option>
 					</select>
 					<span class="help-block"></span>
 					<input type="hidden" id="temDistricts_1" value="{{ address.idDistricts_1 }}"/>
 				</div>
 			</fieldset>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" id="boxidSubdistrict_1">
 			<fieldset>
 				<div class="form-group">
 					<label class="control-label">ตำบล/แขวง</label>
-					<select name="idSubdistrict_1" id="SubDistrict1" class="form-control chosen">
-						<option value="0">เลือก</option>
+					<select name="idSubdistrict_1" id="idSubdistrict_1" class="form-control chosen">
+						<option value="">เลือก</option>
 					</select>
 					<span class="help-block"></span>
 					<input type="hidden" id="temSubdistrict_1" value="{{ address.idSubdistrict_1 }}"/>

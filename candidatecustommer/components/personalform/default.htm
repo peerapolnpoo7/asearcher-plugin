@@ -63,7 +63,7 @@
 							<div class="col-md-3 col-xs-6 m-t-40 text-left no-padding">
 								<a href="javascript:void(0);" id="Female" class="gender">
 									{% if candidates.idGender == '2' %}
-									<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgMale"/>
+									<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgFemale"/>
 									{% else %}
 									<img src="{{ 'assets/img/CV/female.png'|theme }}" alt="gender" id="ImgFemale"/>
 									{% endif %}
@@ -145,7 +145,7 @@
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-4 col-sm-4">
+							<div class="form-group col-md-4 col-sm-4" id="boxNationality">
 								<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
 								<select name="Nationality" id="Nationality" class="form-control chosen">
 									<option value="">เลือก</option>
@@ -274,6 +274,7 @@
 								{% endfor %}
 								<span class="help-block"></span>
 							</div>
+							<div style="clear:both"></div>
 							<div class="form-group col-sm-12">
 								<label class="control-label">แนะนำตัวเอง</label>
 								<textarea name="Text" id="Text" class="form-control notes" cols='10'>{{ presentations.Text }}</textarea>
