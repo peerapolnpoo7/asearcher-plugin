@@ -9,6 +9,7 @@ use Auth;
 use Db;
 use Session;
 use ValidationException;
+use ApplicationException;
 use Flash;
 use System\Models\File as File;
 use Asearcher\CandidateCustommer\Models\Users;
@@ -23,6 +24,9 @@ use Asearcher\CandidateCustommer\Models\JobSeekingStatus;
 use Asearcher\CandidateCustommer\Models\RequirementOfWork;
 use Asearcher\CandidateCustommer\Models\Candidate;
 use Asearcher\CandidateCustommer\Models\CommunicationProvider;
+use Asearcher\CandidateCustommer\Models\StatusCandidate;
+use Asearcher\CandidateCustommer\Models\BodyInformation;
+use Asearcher\CandidateCustommer\Models\Presentation;
 
 class PersonalForm extends ComponentBase
 {
@@ -53,6 +57,9 @@ class PersonalForm extends ComponentBase
         $this->requirement_of_works=$this->loadRequirementOfWork();
         $this->communication_providers=$this->loadCommunicationProvider();
         $this->candidates=$this->loadCandidate();
+        $this->status_candidate=$this->loadStatusCandidate();
+        $this->body_informations=$this->loadBodyInformation();
+        $this->presentations = $this->loadPresentation(); 
     }
 
     public function onUpload()
@@ -75,6 +82,17 @@ class PersonalForm extends ComponentBase
          return array($file);
     }
 
+    public function chkCID($ID_Card_Number)
+    {
+        $pid=str_replace('-', '', $ID_Card_Number);
+        if(strlen($pid) != 13) return false;
+          for($i=0, $sum=0; $i<12;$i++)
+            $sum += (int)($pid{$i})*(13-$i);
+            if((11-($sum%11))%10 == (int)($pid{12}))
+            return true;
+            return false;
+    }
+
      public function onSave(){
         $rules = array(
             'idGender' => array('required'),
@@ -89,12 +107,20 @@ class PersonalForm extends ComponentBase
             'TelephoneNumber' => array('required','min:9','max:10','regex:/\d{10}|\d{9}$/'),
             'idCommunication_Provider' => array('required'),
         );
+
         if(Input::get('idCommunication_Provider')=="5"){
             $rules_more= array( 
-                    'Communication_Provider' => array('required'),
-                );
+                'Communication_Provider' => array('required'),
+            );
             $rules = array_merge($rules,$rules_more);
         }
+
+         $rules_more= array( 
+                'Weight' => array('regex:/\d{2}|\d{3}|\s/'),
+                'Height' => array('regex:/\d{2}|\d{3}|\s/'),
+                'idJob_Seeking_Status' => array('required'),
+            );
+            $rules = array_merge($rules,$rules_more);
 
         $messages = [
             'idGender.required' => 'กรุณาเลือก "เพศ"',
@@ -108,6 +134,7 @@ class PersonalForm extends ComponentBase
             'LastName_TH.regex' => 'กรุณากรอก "นามสกุล" เป็นตัวอักษรไทยเท่านั้น',
             'Date_of_Birth.required' => 'กรุณาเลือก "วันเกิด"',
             'ID_Card_Number.required' => 'กรุณากรอก "รหัสบัตรประชาชน"',
+            'Nationality.required' => 'กรุณาเลือก "สัญชาติ"',
             'Email.required' => 'กรุณากรอก "อีเมล์"',
             'Email.email' => 'รูปแบบ "อีเมล์" ไม่ถูกต้อง',
             'Email.between' => '"อีเมล์" ต้องมีความยาวระหว่าง 6-255 อักษร',
@@ -118,36 +145,9 @@ class PersonalForm extends ComponentBase
             'TelephoneNumber.regex' => '"เบอร์โทรศัพท์" ต้องเป็นตัวเลขเท่านั้น',
             'idCommunication_Provider.required' => 'กรุณาเลือก "เครื่อข่ายโทรศัพท์มือถือที่ใช้"',
             'Communication_Provider.required' => 'กรุณาระบุ "เครือข่าย อื่นๆ"',
-            'Nationality.required' => 'กรุณาเลือก "สัญชาติ"',
-            'Type_Candidate.required' => 'กรุณาเลือก "จบใหม่/ฝึกงาน หรือ มีประสบการณ์"',
-            'idEducation_Level.required' => 'กรุณาเลือก "ระดับการศึกษา"',
-            'idGeography.required' => 'กรุณาเลือก "ที่ตั้งสถาบัน"',
-            'type_of_institue.required' => 'กรุณาเลือก "ประเภทสถาบัน"',
-            'idInstitute_Detail.required' => 'กรุณากรอก "ชื่อสถาบัน"',
-            'idFaculty_Detail.required' => 'กรุณาเลือก "คณะ"',
-            'idDepartment.required' => 'กรุณาเลือก "ภาควิชา"',
-            'idDegree_and_Certificate.required' => 'กรุณาเลือก "วุฒิการศึกษา"',
-            'GPA.required' => 'กรุณากรอก "GPA"',
-            'GPA.between' => 'กรุณากรอก "GPA" ไม่เกิน 4.00',
-            'GPA.regex' => 'รปูแบบของ "GPA" ไม่ถูกต้อง',
-            'LastSeniority.required' => 'กรุณาเลือก "ระดับการทำงาน"',
-            'LastJob_Title.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน"',
-            'idExperience_Work_Status.required' => 'กรุณาเลือก "สถานะการทำงาน"',
-            'Date_Start.required' => 'กรุณาเลือก "วันที่เริ่ม"',
-            'Date_End.required' => 'กรุณาเลือก "วันที่สิ้นสุด"',
-            'job_CategoryNew.required' => 'กรุณาเลือก "หมวดหมู่งาน" ที่คาดหวัง',
-            'Seniority.required' => 'กรุณาเลือก "ระดับการทำงาน" ที่คาดหวัง',
-            'Job_TitleRequire.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน" ที่คาดหวัง',
-            'Job_TitleRequireOther.required' => 'กรุณาระบุ "ตำแหน่งงานที่คุณคาดหวัง" ',
-            'idSkill_List.required' => 'กรุณาเลือก "ทักษะที่ถนัดที่สุด"',
-            'Skill_ListOther.required' => 'กรุณาระบุ "ทักษะที่คุณถนัดที่สุด"',
-            'LangidCountry_Calling_Code.required' => 'กรุณาเลือก "ภาษาที่ถนัดที่สุด"',
-            'Expected_Salary.required' => 'กรุณาเลือก "เงินเดือนที่ต้องการ"',
-            'idType_of_Employment.required' => 'กรุณาเลือก "ประเภทการจ้างงาน"',
-            'idAvailability_of_Work.required' => 'กรุณาเลือก "ความพร้อมในการเริ่มงาน"',
-            'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"',
-            'idSources_Type.required'=> 'กรุณาบอก "คุณรู้จัก aSearcher ได้อย่างไร"',
-            'OtherType.required' => 'กรุณาระบุ "คุณรู้จัก aSearcher ได้อย่างไร"',
+            'Weight.regex' => 'ตัวเลข "น้ำหนัก" ไม่ถูกต้อง',
+            'Height.regex' => 'ตัวเลข "ส่วนสูง" ไม่ถูกต้อง',
+            'idJob_Seeking_Status.required' => 'กรุณาเลือก "สถานะการค้นหางาน"'
         ];
         
         $validator = Validator::make(Input::all(), $rules, $messages);
@@ -155,6 +155,82 @@ class PersonalForm extends ComponentBase
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
+
+        if($this->chkCID(post('ID_Card_Number'))==false){
+            throw new ApplicationException('รูปแบบ "บัตรประชาชน" ไม่ถูกต้อง');
+        }
+        $users=Users::find(Auth::getUser()->id);
+        $users->name = Input::get('FirstName_TH');
+        $users->surname = Input::get('LastName_TH');
+        $users->save();
+
+        if(Input::get('idCommunication_Provider')=="5"){
+            $communicattions = new CommunicationProvider();
+            $communicattions->Name = Input::get('Communication_Provider');
+            $communicattions->Status = '2';
+            $communicattions->Verify = '0';
+            $communicattions->save();
+            $idCommunication_Provider=$communicattions->id;
+        }else{
+            $idCommunication_Provider = Input::get('idCommunication_Provider');
+        }
+
+        $candidate = Candidate::find(Auth::getUser()->id);
+        $candidate->idGender = Input::get('idGender');
+        $candidate->idPrefix = Input::get('idPrefix');
+        $candidate->FirstName_TH = Input::get('FirstName_TH');
+        $candidate->LastName_TH = Input::get('LastName_TH');
+        $candidate->Date_of_Birth = $this->convertDateToDB(Input::get('Date_of_Birth'));
+        $candidate->ID_Card_Number = str_replace('-', '', Input::get('ID_Card_Number'));
+        $candidate->idCountry_Calling_Code = Input::get('idCountry_Calling_Code');
+        $candidate->TelephoneNumber = Input::get('TelephoneNumber');
+        $candidate->idCommunication_Provider = $idCommunication_Provider;
+        $candidate->Line_ID = Input::get('Line_ID');
+        $candidate->Nationality = Input::get('Nationality');
+        $candidate->save();
+
+        $chk=StatusCandidate::where('idUser',Auth::getUser()->id);
+        if($chk->count() > 0){
+            $status_candidate = StatusCandidate::find($chk->first()->idStatus_Candidate);
+        }else{
+            $status_candidate = new StatusCandidate();
+            $status_candidate->idUser = Auth::getUser()->id;
+            $status_candidate->idCandidate = $candidate->idCandidate;
+            $status_candidate->idMilitary = NULL;
+             $status_candidate->idMarital_Status = NULL;
+        }
+        $status_candidate->idRace = Input::get('idRace')?Input::get('idRace'):NULL;
+        $status_candidate->idReligion = Input::get('idReligion')?Input::get('idReligion'):NULL;
+        $status_candidate->save();
+
+        $chk=BodyInformation::where('idUser',Auth::getUser()->id);
+        if($chk->count() > 0){
+            $body_information = BodyInformation::find($chk->first()->idBody_Information);
+        }else{
+            $body_information = new BodyInformation();
+            $body_information->idUser = Auth::getUser()->id;
+            $body_information->idCandidate = $candidate->idCandidate;
+        }
+
+        $body_information->Height = Input::get('Height')?Input::get('Height'):NULL;
+        $body_information->Weight = Input::get('Weight')?Input::get('Weight'):NULL;
+        $body_information->idBlood_Group = Input::get('idBlood_Group')?Input::get('idBlood_Group'):NULL;
+        $body_information->save();
+
+        $chk = Presentation::where('idUser',Auth::getUser()->id);
+        if($chk->count() > 0){
+            $presentations = Presentation::find($chk->first()->idPresentation);
+        }else{
+            $presentations = new Presentation();
+            $presentations->idUser = Auth::getUser()->id;
+            $presentations->idCandidate = $candidate->idCandidate;
+        }
+        $presentations->Text =  Input::get('Text');
+        $presentations->Video_Link =  Input::get('Video_Link');
+        $presentations->save();
+        
+        Flash::success('บันทึกข้อมูลเรียบร้อยแล้ว');
+        return Redirect::to('/cv-personal');
      }
 
     public function loadImageCV()
@@ -199,6 +275,12 @@ class PersonalForm extends ComponentBase
         return $get;
     }
 
+    public function convertDateToDB($date)
+    {
+        $dateExp=explode("/",$date);
+        return $dateExp['2'].'-'.$dateExp['1'].'-'.$dateExp['0'];
+    }
+
     public function convertDateToForm($date)
     {
         if($date==""){
@@ -208,11 +290,22 @@ class PersonalForm extends ComponentBase
         return $dateExp['2'].'/'.$dateExp['1'].'/'.$dateExp['0'];
     }
 
+    function FnID($var)
+    {
+        $srt[0] = substr($var, 0, 1);
+        $srt[1] = substr($var, 1, 4);
+        $srt[2] = substr($var, 5, 5);
+        $srt[3] = substr($var, 10, 2);
+        $srt[4] = substr($var, 12, 1);
+        return $srt[0]."-".$srt[1]."-".$srt[2]."-".$srt[3]."-".$srt[4];
+    }
+
     public function loadCandidate()
     { 
         $get=Candidate::where('idUser',Auth::getUser()->id)->first();
         if($get){
             $get->Date_of_Birth=$this->convertDateToForm($get->Date_of_Birth);
+            $get->ID_Card_Number = $this->FnID($get->ID_Card_Number);
         }
         return $get;
     }
@@ -249,6 +342,24 @@ class PersonalForm extends ComponentBase
         return $get;
     }
 
+    public function loadStatusCandidate()
+    {
+        $get = StatusCandidate::where('idUser',Auth::getUser()->id)->first();
+        return $get;
+    }
+
+    public function loadBodyInformation()
+    {
+        $get = BodyInformation::where('idUser',Auth::getUser()->id)->first();
+        return $get;
+    }
+
+    public function loadPresentation()
+    {
+        $get = Presentation::where('idUser',Auth::getUser()->id)->first();
+        return $get;
+    }
+
     public function onGetPrefix()
     {
         return Prefix::select('idPrefix AS id','Name_TH')->whereIn('idGender',[post('value'),'99'])->where('Type','C')->get();
@@ -266,4 +377,7 @@ class PersonalForm extends ComponentBase
     public $requirement_of_works;
     public $communication_providers;
     public $candidates;
+    public $status_candidate;
+    public $body_informations;
+    public $presentations;
 }
