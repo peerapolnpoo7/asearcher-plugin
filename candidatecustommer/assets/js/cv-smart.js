@@ -164,20 +164,26 @@ $(document).ready(function(){
     var now = new Date();
     $('.BirthDate').scroller({ 
         theme: 'android-ics light',
-        startYear: (now.getFullYear()+543)-100,
+        startYear: (now.getFullYear()+543)-50,
         endYear: (now.getFullYear()+543)-18,
+        setText: 'เลือก',
+        cancelText: 'ยกเลิก',
         monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     });
     $('.dateMobileStart').scroller({ 
         theme: 'android-ics light',
-        startYear: (now.getFullYear()+543)-100,
+        startYear: (now.getFullYear()+543)-50,
         endYear: (now.getFullYear()+543),
+        setText: 'เลือก',
+        cancelText: 'ยกเลิก',
         monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     });
     $('.dateMobileEnd').scroller({ 
         theme: 'android-ics light',
-        startYear: (now.getFullYear()+543)-100,
+        startYear: (now.getFullYear()+543)-50,
         endYear: (now.getFullYear()+543),
+        setText: 'เลือก',
+        cancelText: 'ยกเลิก',
         monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     });
 	$("body").on('click','button.save',function(){
