@@ -15,6 +15,7 @@ class Plugin extends PluginBase
            'Asearcher\CandidateCustommer\Components\Statusfamilyform' => 'statusfamilyform',
            'Asearcher\CandidateCustommer\Components\Education' => 'education',
            'Asearcher\CandidateCustommer\Components\PersonalForm' => 'personalform'
+           'Asearcher\CandidateCustommer\Components\Skill' => 'skill'
 
         ];
     }
