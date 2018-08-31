@@ -1,5 +1,12 @@
 $(document).ready(function(){
 	$('.dateMobile').scroller({ theme: 'android-ics light' });
+    var now = new Date();
+    $('.BirthDate').scroller({ 
+        theme: 'android-ics light',
+        startYear: (now.getFullYear()+543)-100,
+        endYear: (now.getFullYear()+543)-18,
+        monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+    });
 	var lines = 6;
     var linesUsed = $('#linesUsed');
 
