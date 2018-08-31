@@ -19,11 +19,11 @@ $(document).ready(function(){
     });
 
     $('body').on('click','button.save',function(){
-        $('form').request('onSave', {
+        /*$('form').request('onSave', {
             success: function(data) {
                 console.log(data);
             }
-        });
+        });*/
     }).on('click','#upImage',function(){
         $('#PhotoFile').trigger('click'); 
     }).on('change','#PhotoFile',function(){

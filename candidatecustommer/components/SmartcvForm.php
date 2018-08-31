@@ -304,7 +304,6 @@ class SmartcvForm extends ComponentBase
         $users=Users::find(Auth::getUser()->id);
         $users->name = Input::get('FirstName_TH');
         $users->surname = Input::get('LastName_TH');
-        $users->surname = Input::get('LastName_TH');
         $users->save();
         if(Input::get('idCommunication_Provider')=="5"){
             $communicattions = new CommunicationProvider();
@@ -337,7 +336,7 @@ class SmartcvForm extends ComponentBase
         $candidate->idCountry_Calling_Code = Input::get('idCountry_Calling_Code');
         $candidate->TelephoneNumber = Input::get('TelephoneNumber');
         $candidate->idCommunication_Provider = $idCommunication_Provider;
-        $candidate->Email = Input::get('Email');
+        //$candidate->Email = Input::get('Email');
         $candidate->Line_ID = Input::get('Line_ID');
         $candidate->Type_Candidate = Input::get('Type_Candidate');
         $candidate->Nationality = Input::get('Nationality');

@@ -9,6 +9,9 @@
 {% set communication_providers = __SELF__.communication_providers %}
 {% set job_seeker_statuses = __SELF__.job_seeker_statuses %}
 {% set candidates = __SELF__.candidates %}
+{% set status_candidate = __SELF__.status_candidate %}
+{% set body_informations = __SELF__.body_informations %}
+{% set presentations = __SELF__.presentations %}
 <div class="row">
 	<div class="col-lg-12">
 		<div class="ibox float-e-margins">
@@ -71,7 +74,7 @@
 					</div>
 					<div class="col-md-6 m-t-20">
 						<fieldset>
-							<div class="form-group col-md-6"  id="boxidPrefix">
+							<div class="form-group col-md-6 col-sm-4"  id="boxidPrefix">
 								<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
 								<select class="form-control chosen " name="idPrefix" id="idPrefix">
 									<option value="">เลือก</option>
@@ -85,18 +88,18 @@
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div style="clear:both"></div>
-							<div class="form-group col-md-6">
+							<div style="clear:both" class="visible-md"></div>
+							<div class="form-group col-md-6 col-sm-4">
 								<label class="control-label">ชื่อ <span class="text-danger">*</span></label>
 								<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-6">
+							<div class="form-group col-md-6 col-sm-4">
 								<label class="control-label">นามสกุล <span class="text-danger">*</span></label>
 								<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-5 col-sm-4">
 								<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -105,7 +108,7 @@
 								</div>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-8">
+							<div class="form-group col-md-7 col-sm-4">
 								<label class="control-label">รหัสบัตรประชาชน <span class="text-danger">*</span></label>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
@@ -114,13 +117,13 @@
 								</div>
 							</div>
 							<div style="clear:both"></div>
-							<div class="form-group col-md-4">
-								<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
+							<div class="form-group col-md-4 col-sm-4">
+								<label class="control-label">ศาสนา</label>
 								<select class="form-control chosen " name="idReligion" id="idReligion">
 									<option value="">เลือก</option>
 									{% for religion in religions %}
 									{% set selected = '' %}
-									{% if religion.idReligion == '' %}
+									{% if religion.idReligion == status_candidate.idReligion %}
 									{% set selected = 'selected' %}
 									{% endif %}
 									<option value="{{religion.idReligion}}" {{ selected }}>{{religion.Name_TH}}</option>
@@ -128,18 +131,21 @@
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-4">
-								<label class="control-label">เชื้อชาติ <span class="text-danger">*</span></label>
+							<div class="form-group col-md-4 col-sm-4">
+								<label class="control-label">เชื้อชาติ</label>
 								<select name="idRace" id="idRace" class="form-control chosen">
 									<option value="">เลือก</option>
 									{% for race in races %}
 									{% set selected = '' %}
+									{% if race.idRace == status_candidate.idRace %}
+									{% set selected = 'selected' %}
+									{% endif %}
 									<option value="{{race.idRace}}" {{ selected }}>{{race.Name_TH}}</option>
 									{% endfor %}
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-4 col-sm-4">
 								<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
 								<select name="Nationality" id="Nationality" class="form-control chosen">
 									<option value="">เลือก</option>
@@ -156,17 +162,17 @@
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-6">
+							<div class="form-group col-md-6 col-sm-6">
 								<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
-								<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ candidates.Email }}">
+								<input type="text" name="Email" id="Email" class="form-control" placeholder="" {% if user.email !='' %} readonly="readonly"{% endif %} value="{{ candidates.Email }}">
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-6">
+							<div class="form-group col-md-6 col-sm-6">
 								<label class="control-label">ไลน์ไอดี</label>
 								<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-8">
+							<div class="form-group col-md-8 col-sm-8">
 								<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
 								<div class="col-md-4 col-xs-4 no-padding-left">
 									<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
@@ -187,7 +193,7 @@
 									<span class="help-block"></span>
 								</div>
 							</div>
-							<div class="form-group col-sm-4">
+							<div class="form-group col-md-4 col-sm-4">
 								<label class="control-label">เครือข่าย</label>
 								<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
 									<option value="0">เลือก</option>
@@ -204,44 +210,37 @@
 								</select>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
+							<div class="form-group col-md-12 col-sm-12 boxComunication hidden">
 								<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
 								<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
 							</div>
-							<div class="form-group col-sm-12">
+							<div class="form-group col-md-12 col-sm-4">
 								<label class="control-label">กรุ๊ปเลือด</label><br>
 								{% for blood_group in blood_groups %}
+								{% set checked = '' %}
+								{% if body_informations.idBlood_Group == blood_group.idBlood_Group %}
+								{% set checked = 'checked' %}
+								{% endif %}
 								<div class="radio radio-info col-sm-3 col-xs-3">
-									<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}">
+									<input type="radio" name="idBlood_Group" id="bloodgroup_{{ blood_group.idBlood_Group }}" value="{{ blood_group.idBlood_Group }}" {{ checked }}>
 									<label for="bloodgroup_{{ blood_group.idBlood_Group }}">
 										{{ blood_group.Blood_Group }}
 									</label>
 								</div>
 								{% endfor %}
 							</div>
-						</fieldset>
-					</div>
-					<div class="col-md-12">
-						<fieldset>
-							
-						</fieldset>
-					</div>
-					<div class="col-md-6">&nbsp;
-					</div>
-					<div class="col-md-6">
-						<fieldset>
-							<div class="form-group col-md-6">
-								<label class="control-label">น้ำหนัก <span class="text-danger">*</span></label>
+							<div class="form-group col-md-6 col-sm-4 col-xs-6">
+								<label class="control-label">น้ำหนัก</label>
 								<div class="input-group">
-									<input type="text" name="Weight" id="Weight" class="form-control" placeholder="" value="">
+									<input type="text" name="Weight" id="Weight" class="form-control" placeholder="" value="{{ body_informations.Weight }}" maxlength="3">
 									<span class="input-group-addon">กก.</span>
 								</div>
 								<span class="help-block"></span>
 							</div>
-							<div class="form-group col-md-6">
-								<label class="control-label">ส่วนสูง <span class="text-danger">*</span></label>
+							<div class="form-group col-md-6 col-sm-4 col-xs-6">
+								<label class="control-label">ส่วนสูง</label>
 								<div class="input-group">
-									<input type="text" name="Height" id="Height" class="form-control" placeholder="" value="">
+									<input type="text" name="Height" id="Height" class="form-control" placeholder="" value="{{ body_informations.Height }}" maxlength="3">
 									<span class="input-group-addon">ซม.</span>
 								</div>
 								<span class="help-block"></span>
@@ -275,24 +274,18 @@
 								{% endfor %}
 								<span class="help-block"></span>
 							</div>
-						</fieldset>
-					</div>
-					<div class="col-md-6">&nbsp;
-					</div>
-					<div class="col-md-6 personal">
-						<fieldset>
 							<div class="form-group col-sm-12">
 								<label class="control-label">แนะนำตัวเอง</label>
-								<textarea name="Text" id="Text" class="form-control notes" cols='10'></textarea>
+								<textarea name="Text" id="Text" class="form-control notes" cols='10'>{{ presentations.Text }}</textarea>
 							</div>
 							<div class="form-group col-sm-12">
 								<label class="control-label">แนะนำตัวผ่านวีดิโอ</label>
-								<input type="text" name="Video_Link" id="Video_Link" class="form-control video-link " placeholder="ใส่Link" value="">
+								<input type="text" name="Video_Link" id="Video_Link" class="form-control video-link " placeholder="ใส่Link" value="{{ presentations.Video_Link }}">
 							</div>
 						</fieldset>
 					</div>
 					<div class="col-sm-12 col-xs-12 text-center m-t-md">
-						<button type="button" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
+						<button type="submit" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
 					</div>
 				</div>
 			</form>
