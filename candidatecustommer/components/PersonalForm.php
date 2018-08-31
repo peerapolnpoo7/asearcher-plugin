@@ -189,6 +189,20 @@ class PersonalForm extends ComponentBase
         $candidate->Nationality = Input::get('Nationality');
         $candidate->save();
 
+        $chkImgCV=PhotoProfileCV::where('idUser',$candidate->idCandidate);
+        if($chkImgCV->count() > 0)
+        {
+            $imgcv = PhotoProfileCV::find($chkImgCV->first()->idPhoto_Profile_CV);
+        }else{
+            $imgcv = new PhotoProfileCV();
+        }
+        $imgcv->idCandidate=$candidate->idCandidate;
+        $imgcv->idUser = Auth::getUser()->id;
+        $imgcv->Photo = Input::get('Photos');
+        $imgcv->path = Input::get('path');
+        $imgcv->thumb = Input::get('thumb');
+        $imgcv->save();
+
         $chk=StatusCandidate::where('idUser',Auth::getUser()->id);
         if($chk->count() > 0){
             $status_candidate = StatusCandidate::find($chk->first()->idStatus_Candidate);
