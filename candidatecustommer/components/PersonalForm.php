@@ -230,7 +230,14 @@ class PersonalForm extends ComponentBase
         $body_information->Weight = Input::get('Weight')?Input::get('Weight'):NULL;
         $body_information->idBlood_Group = Input::get('idBlood_Group')?Input::get('idBlood_Group'):NULL;
         $body_information->save();
-
+        $chkReOfWork=RequirementOfWork::where('idUser',Auth::getUser()->id);
+        if($chkReOfWork->count() > 0){
+            $requirement_of_works = RequirementOfWork::find($chkReOfWork->first()->idRequirement_of_Work);
+        }else{
+            $requirement_of_works = new RequirementOfWork();
+        }
+        $requirement_of_works->idJob_Seeking_Status = Input::get('idJob_Seeking_Status');
+        $requirement_of_works->save();
         $chk = Presentation::where('idUser',Auth::getUser()->id);
         if($chk->count() > 0){
             $presentations = Presentation::find($chk->first()->idPresentation);
