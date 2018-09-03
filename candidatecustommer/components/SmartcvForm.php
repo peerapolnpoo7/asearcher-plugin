@@ -374,8 +374,8 @@ class SmartcvForm extends ComponentBase
             $education->idFaculty_Detail = Input::get('idFaculty_Detail');
             $education->idDepartment = Input::get('idDepartment');
             $education->idMajor_Subject = Input::get('idMajor_Subject');
-            $education->Year_of_Admission = '0000-00-00';
-            $education->Year_of_Graduation = '0000-00-00';
+            $education->Year_of_Admission = '0000';
+            $education->Year_of_Graduation = '0000';
         }else{
             $education->idInstitute_Detail = NULL;
             $education->idEducation_Status = NULL;
