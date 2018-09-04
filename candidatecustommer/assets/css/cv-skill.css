@@ -26,4 +26,10 @@
 .lang-detail{
 	border-width:0px 1px 1px 1px;
 	border-style: solid solid solid;
+	margin-bottom: 20px;
+}
+
+.genaral-skill .btn-soundcloud, .genaral-skill .btn-tumblr, .genaral-skill .btn-vk {
+	float: left !important;
+	margin:2px;
 }
