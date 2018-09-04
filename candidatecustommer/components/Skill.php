@@ -16,4 +16,9 @@ class Skill extends ComponentBase
     {
         return [];
     }
+
+     public function onRun(){
+        $this->addJs('assets/js/cv-skill.js');
+        $this->addCss('assets/css/cv-skill.css');
+    }
 }

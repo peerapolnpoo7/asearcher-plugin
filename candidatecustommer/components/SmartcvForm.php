@@ -385,6 +385,7 @@ class SmartcvForm extends ComponentBase
             $education->Year_of_Admission = NULL;
             $education->Year_of_Graduation = NULL;
         }
+        $education->Setting_Edu_CV = '1';
         $education->idDegree_and_Certificate = Input::get('idDegree_and_Certificate');
         $education->GPA = Input::get('GPA');
         $education->save();
@@ -1034,7 +1035,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadEducation()
     {
-        $get=Education::where('idUser',Auth::getUser()->id);
+        $get=Education::where('idUser',Auth::getUser()->id)->where('Setting_Edu_CV','1');
         if($get->count() > 0 and $get->first()->idEducation_Level!=1){
             $get->join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
             ->join('geography','institute_detail.idGeography','=','geography.idGeography');
