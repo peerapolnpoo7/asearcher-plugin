@@ -901,7 +901,7 @@ class SmartcvForm extends ComponentBase
     public function chkExpectedSelected($idExpected_Detail)
     {
 
-        $chk=Db::table('expectation_of_work')->where('idCandidate',Session::get('idCandidate'));
+        $chk=Db::table('expectation_of_work')->where('idUser',Auth::getUser()->id);
         if($chk->count() == 0){
             return "selected";
         }
@@ -926,7 +926,8 @@ class SmartcvForm extends ComponentBase
 
     public function loadLanguate()
     {
-        return CountryCallingCode::where('Language_TH','!=','')->get();
+        $get = CountryCallingCode::where('Language_TH','!=','');
+        return $get->get();
     }
 
     public function onGetPrefix()
