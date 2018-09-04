@@ -926,11 +926,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadLanguate()
     {
-        $chkNation = Candidate::where('idUser',Auth::getUser()->id)->first();
         $get = CountryCallingCode::where('Language_TH','!=','');
-        if($chkNation->Nationality == 83){
-            $get->whereNotIn('idCountry_Calling_Code',[83]);
-        }
         return $get->get();
     }
 
