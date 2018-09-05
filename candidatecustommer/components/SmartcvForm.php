@@ -71,7 +71,7 @@ class SmartcvForm extends ComponentBase
     }
 
     public function onRun(){
-       
+
         $this->addJs('assets/js/cv-smart.js');
         $this->addCss('assets/css/cv-smart.css');
         $this->candidates=$this->loadCandidate();
@@ -158,7 +158,7 @@ class SmartcvForm extends ComponentBase
             'idCommunication_Provider' => array('required'),
         );
         if(Input::get('idCommunication_Provider')=="5"){
-            $rules_more= array( 
+            $rules_more= array(
                     'Communication_Provider' => array('required'),
                 );
             $rules = array_merge($rules,$rules_more);
@@ -194,12 +194,12 @@ class SmartcvForm extends ComponentBase
             );
             $rules = array_merge($rules,$rules_more);
             if(Input::get('idExperience_Work_Status')=='2'){
-                $rules_more= array( 
+                $rules_more= array(
                     'Date_End' => array('required'),
                 );
                 $rules = array_merge($rules,$rules_more);
             }
-            
+
         }
         $rules_more=array(
             'job_CategoryNew' => array('required'),
@@ -211,15 +211,15 @@ class SmartcvForm extends ComponentBase
             $rules_more=array(
                 'Job_TitleRequireOther' => array('required'),
             );
-            $rules = array_merge($rules,$rules_more); 
+            $rules = array_merge($rules,$rules_more);
         }
         if(Input::get('chkValidateSkill')=="yes"){
-            $rules_more= array( 
+            $rules_more= array(
                 'idSkill_List' => array('required'),
             );
             $rules = array_merge($rules,$rules_more);
             if(Input::get('idSkill_List')=='other'){
-                $rules_more= array( 
+                $rules_more= array(
                 'Skill_ListOther' => array('required'),
                 );
                 $rules = array_merge($rules,$rules_more);
@@ -235,7 +235,7 @@ class SmartcvForm extends ComponentBase
         );
         $rules = array_merge($rules,$rules_more);
         if(Input::get('idSources_Type')=="99"){
-            $rules_more= array( 
+            $rules_more= array(
                     'OtherType' => array('required'),
                 );
             $rules = array_merge($rules,$rules_more);
@@ -271,8 +271,7 @@ class SmartcvForm extends ComponentBase
             'idDepartment.required' => 'กรุณาเลือก "ภาควิชา"',
             'idDegree_and_Certificate.required' => 'กรุณาเลือก "วุฒิการศึกษา"',
             'GPA.required' => 'กรุณากรอก "GPA"',
-            'GPA.between' => 'กรุณากรอก "GPA" ไม่เกิน 4.00',
-            'GPA.regex' => 'รปูแบบของ "GPA" ไม่ถูกต้อง',
+            'GPA.regex' => 'รูปแบบของ "GPA" ไม่ถูกต้อง',
             'LastSeniority.required' => 'กรุณาเลือก "ระดับการทำงาน"',
             'LastJob_Title.required' => 'กรุณาเลือก "ชื่อตำแหน่งาน"',
             'idExperience_Work_Status.required' => 'กรุณาเลือก "สถานะการทำงาน"',
@@ -292,14 +291,14 @@ class SmartcvForm extends ComponentBase
             'idSources_Type.required'=> 'กรุณาบอก "คุณรู้จัก aSearcher ได้อย่างไร"',
             'OtherType.required' => 'กรุณาระบุ "คุณรู้จัก aSearcher ได้อย่างไร"',
         ];
-        
+
         $validator = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
 
-        
+
 
         $users=Users::find(Auth::getUser()->id);
         $users->name = Input::get('FirstName_TH');
@@ -375,8 +374,8 @@ class SmartcvForm extends ComponentBase
             $education->idFaculty_Detail = Input::get('idFaculty_Detail');
             $education->idDepartment = Input::get('idDepartment');
             $education->idMajor_Subject = Input::get('idMajor_Subject');
-            $education->Year_of_Admission = '0000-00-00';
-            $education->Year_of_Graduation = '0000-00-00';
+            $education->Year_of_Admission = '0000';
+            $education->Year_of_Graduation = '0000';
         }else{
             $education->idInstitute_Detail = NULL;
             $education->idEducation_Status = NULL;
@@ -397,7 +396,7 @@ class SmartcvForm extends ComponentBase
             }else{
                 $experience = new Experience();
             }
-            
+
             $experience->idCandidate = $candidate->idCandidate;
             $experience->idUser =  Auth::getUser()->id;
             $experience->idExperience_Type = '2';
@@ -753,9 +752,9 @@ class SmartcvForm extends ComponentBase
             $chk->where('idWelfare_Type',$idWelfare_Type);
             if($chk->count() > 0){
                 return "selected";
-            }    
+            }
         }
-        
+
     }
 
     public function loadWelfareType()
@@ -1000,7 +999,7 @@ class SmartcvForm extends ComponentBase
     }
 
     public function onGetSeniority()
-    {   
+    {
         $get=Seniority::select('idSeniority AS id','Name_TH')->orderBy('Level','ASC');
         if(post('value')=='1'){
             $get->whereIn('idSeniority',[1,9]);
@@ -1025,7 +1024,7 @@ class SmartcvForm extends ComponentBase
     }
 
     public function loadCandidate()
-    { 
+    {
         $get=Candidate::where('idUser',Auth::getUser()->id)->first();
         if($get){
             $get->Date_of_Birth=$this->convertDateToForm($get->Date_of_Birth);
