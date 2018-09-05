@@ -287,44 +287,7 @@ $(document).ready(function(){
 	})
 
 
-	$('#insert_Children').on('click','#addChildren',function(){
-				$('form').request('onAddChildren', {
-						data: {TitleNameChildren: $('#TitleNameChildren').val(),
-									 NameChildren: $('#NameChildren').val(),
-									 LastNameChildren: $('#LastNameChildren').val(),
-									 AgeChildren: $('#AgeChildren').val(),},
-						success: function(data) {
-							$(".ccc").remove();
-							$('form').request('onChildren',{
-								success: function(dataChil) {
-									$(".ccch:first").removeClass('hidden');
-									$(".ccch").not(':first').remove();
-									$('#NumChildren').val(dataChil.length);
-								 for (var i = 0; i < dataChil.length; i++) {
-										 var $tableBody = $('#data-c').find("tbody"),
-										 $trLast = $tableBody.find("tr:last"),
-										 $trNew = $trLast.clone();
-										 $trLast.after($trNew);
-
-									 $(".idFami-c:last").val(dataChil[i].idFamilies);
-									 $(".pfFirstName-c:last").html(dataChil[i].nameprefix+dataChil[i].FirstName_TH);
-									 $(".LastName-c:last").html(dataChil[i].LastName_TH);
-									 $(".Age-c:last").html(dataChil[i].Age);
-								 }
-								 $(".ccch:first").addClass('hidden');
-								$('#moDalAddChildren').modal('hide');
-								}
-							})
-										// swal({
-										// 		title: "เพิ่มบุตรสำเร็จ!",
-										// 		type: "success"
-										// 	}, function() {
-										// 			$('#moDalAddChildren').modal('hide');
-										// 			// location.reload();
-										// 	});
-						}
-				});
-	})
+1
 
 
 	$('form').on('click','.editChildren',function(){
