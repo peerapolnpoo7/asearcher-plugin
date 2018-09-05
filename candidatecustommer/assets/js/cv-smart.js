@@ -162,7 +162,7 @@ $(document).ready(function(){
         autoclose: true
     });
     var now = new Date();
-    $('.BirthDate').scroller({ 
+    $('.BirthDate').scroller({
         theme: 'android-ics light',
         startYear: (now.getFullYear()+543)-70,
         endYear: (now.getFullYear()+543)-18,
@@ -170,7 +170,7 @@ $(document).ready(function(){
         cancelText: 'ยกเลิก',
         monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     });
-    $('.dateMobileStart').scroller({ 
+    $('.dateMobileStart').scroller({
         theme: 'android-ics light',
         startYear: (now.getFullYear()+543)-70,
         endYear: (now.getFullYear()+543),
@@ -178,7 +178,7 @@ $(document).ready(function(){
         cancelText: 'ยกเลิก',
         monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
     });
-    $('.dateMobileEnd').scroller({ 
+    $('.dateMobileEnd').scroller({
         theme: 'android-ics light',
         startYear: (now.getFullYear()+543)-70,
         endYear: (now.getFullYear()+543),
@@ -193,7 +193,7 @@ $(document).ready(function(){
             }
         });*/
     }).on('click','#upImage',function(){
-        $('#PhotoFile').trigger('click'); 
+        $('#PhotoFile').trigger('click');
     }).on('change','#PhotoFile',function(){
         $('form').request('onUpload', {
             success: function(data) {
@@ -332,7 +332,7 @@ $(document).ready(function(){
         $.request('onGetJobTitle', {
             data: {value: this.value},
             success: function(data) {
-                $(".boxSkillList").addClass('hidden'); 
+                $(".boxSkillList").addClass('hidden');
                 $('#Job_TitleRequire').children('option:not(:first)').remove();
                 $.each(data, function(k, v) {
                     $('#Job_TitleRequire').append($('<option>', {
@@ -379,7 +379,7 @@ $(document).ready(function(){
                         $("input[name='chkValidateSkill']").val('yes');
                         $(".boxSkillList").removeClass('hidden');
                     }else{
-                        $(".boxSkillList").addClass('hidden'); 
+                        $(".boxSkillList").addClass('hidden');
                         $("input[name='chkValidateSkill']").val('no');
                     }
                     $('select.chosen').trigger("chosen:updated");
@@ -518,7 +518,7 @@ $(document).ready(function(){
         if($(this).hasClass("btn-outline")==true){
             $(this).removeClass("btn-outline");
         }
-        
+
        // $('input[name="idSources_Type"]').val(spl[1]);
         $('#SourcesType_'+spl[1]).prop('checked',true);
         $('#imgSourceType'+spl[1]).removeClass('grayscaled');
@@ -626,7 +626,14 @@ $(document).ready(function(){
         $("#ionrangeSpeakingLevel").data("ionRangeSlider").update({from: 0});
         $("#ionrangeReadingLevel").data("ionRangeSlider").update({from: 0});
         $("#ionrangeWritingLevel").data("ionRangeSlider").update({from: 0});
-    });
+    }).on('click','#AddEducation',function(){
+  		// $("#TitleNameChildren").val('').trigger("chosen:updated");
+  		// $("#NameChildren").val('');
+  		// $("#LastNameChildren").val('');
+  		// $("#AgeChildren").val('');
+  	})
+
+
     $('#idGeography').each(function(){
         $.request('onGetInstituteDetail', {
             data: {idGeography: this.value,type_of_institue: $('#type_of_institue').val()},
@@ -783,14 +790,14 @@ $(document).ready(function(){
                     }));
                 });
                 if(data.length > 0){
-                    $(".boxSkillList").removeClass('hidden'); 
+                    $(".boxSkillList").removeClass('hidden');
                     $("input[name='chkValidateSkill']").val('yes');
                     $('#idSkill_List').append($('<option>', {
                             value: 'other',
                             text: 'อื่นๆ'
                         }));
                 }else{
-                    $(".boxSkillList").addClass('hidden'); 
+                    $(".boxSkillList").addClass('hidden');
                     $("input[name='chkValidateSkill']").val('no');
                 }
                 $('#idSkill_List').val($('input[name="tempidSkill_List"]').val());
@@ -798,4 +805,5 @@ $(document).ready(function(){
             }
         });
     });
+
 });
