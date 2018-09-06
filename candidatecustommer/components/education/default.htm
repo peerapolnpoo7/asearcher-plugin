@@ -57,29 +57,23 @@
                             <td>
                               <div class="form-group">
                               <label class="control-label">ระดับการศึกษา</label>
-                              <p style="font-size:18px;" class="nameeducation_level"></p>
+                              <p style="font-size:18px;" class="nameeducation_level-under"></p>
                               </div>
                             </td>
                             <td>
                               <label class="control-label">วุฒิการศึกษา</label>
-                              <h3 class="namedegree"></h3>
+                              <h3 class="namedegree-under"></h3>
                             </td>
                             <td>
-                              <label class="control-label">ปีที่ศึกษา</label>
-                              <!-- {% if underdegrees.Year_of_Admission == '0' %}
-                              <div class="h4 m-t-xs text-info">
-                                <span class="loading bullet"></span>
-                              </div>
-                              {% else %}
-                              <h3>{{underdegrees.Year_of_Admission}}-{{underdegrees.Year_of_Graduation !=  0 ? underdegrees.Year_of_Graduation : 'ปัจจุบัน'}}</h3>
-                              {% endif %} -->
+                              <label class="control-label" >ปีที่ศึกษา</label>
+                              <div class="h4 m-t-xs text-info lod-under"></div>
                             </td>
                             <td>
                               <label class="control-label">เกรดเฉลี่ย</label>
-                              <h3 class="GPA"></h3>
+                              <h3 class="GPA-under"></h3>
                             </td>
                             <td  style="vertical-align:middle;">
-                              <button  value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b btnEditunder" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                              <button  value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editEndu-under" ><i class="fa fa-pencil"></i> แก้ไข</button>
                             </td>
                         </tr>
                       <tr class="ddd">
@@ -124,24 +118,18 @@
                         <tr class="mmmh hidden">
                           <td width="3%" style="vertical-align:middle;">
                             <center>
-                              <!-- <p>
-                                {{underdegrees.idEducation}}
-                              </p> -->
-                                <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value="{{underdegrees.idEducation}}"/></label>
-                                <button  value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value=""/></label>
+                                <button  value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editEndu-under-mo" ><i class="fa fa-pencil"></i> แก้ไข</button>
                             </center>
-                              </td>
+                          </td>
                           <td>
                             <div class="form-group">
-                              <p style="font-size:20px;" class="nameeducation_level"></p>
-                              <h3 style="display: inline-block;" class="namedegree"></h3>&nbsp;&nbsp;
-                              <!-- {% if underdegrees.Year_of_Admission == '0' %}
-                              <div class="h4 m-t-xs text-info" style="display: inline-block;"><span class="loading bullet"></span></div>
-                              {% else %}
-                              <h5 style="display: inline-block;">{{underdegrees.Year_of_Admission}}-{{underdegrees.Year_of_Graduation !=  0 ? underdegrees.Year_of_Graduation : 'ปัจจุบัน'}}</h5>
-                              {% endif %} -->
+                              <p style="font-size:20px;" class="nameeducation_level-under-mo"></p>
+                              <h3 style="display: inline-block;" class="namedegree-under-mo"></h3>&nbsp;&nbsp;
+                              <div class="h4 m-t-xs text-info lod-under-mo" style="display: inline-block;"></div>
+                              <!-- <h5 style="display: inline-block;" >{{underdegrees.Year_of_Admission}}-{{underdegrees.Year_of_Graduation !=  0 ? underdegrees.Year_of_Graduation : 'ปัจจุบัน'}}</h5> -->
                               <br />
-                              <p style="font-size:15px; display: inline-block;">เกรดเฉลี่ย</p>&nbsp;&nbsp;<h3 style="display: inline-block;" class="GPA"></h3>
+                              <p style="font-size:15px; display: inline-block;">เกรดเฉลี่ย</p>&nbsp;&nbsp;<h3 style="display: inline-block;" class="GPA-under-mo"></h3>
                             </div>
                           </td>
                         </tr>
@@ -154,7 +142,7 @@
                                   <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value="{{underdegrees.idEducation}}" {{ underdegrees.Setting_Edu_CV ==  1 ? 'checked' :'' }}/></label>
                                   <button  value="{{underdegrees.idEducation}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b" ><i class="fa fa-pencil"></i> แก้ไข</button>
                               </center>
-                                </td>
+                            </td>
                             <td>
                               <div class="form-group">
                                 <p style="font-size:20px;">{{underdegrees.nameeducation_level}}</p>
@@ -200,12 +188,6 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-up"></i>
             </a>
-            <!-- <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-wrench"></i>
-            </a> -->
-            <!-- <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a> -->
         </div>
     </div>
     <div class="ibox-content">
@@ -216,54 +198,39 @@
                 <div class="row">
                 </div>
                 <span id="boxUpDegree">
-                  <!-- desk -->
                   <table class="table" id="data-UpDegree">
                     {% for updegrees in updegree %}
-                      <tbody class="desk data-ddUP" >
-                        <tr class="dddhUP" hidden>
-                        <td width="3%" style="vertical-align:middle;">
-                          <!-- <p>
-                            {{ updegrees.idEducation}}
-                          </p> -->
-                        <center>
-                            <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV" value="{{updegrees.idEducation}}"   {{ updegrees.Setting_Edu_CV == 1 ? 'checked' :'' }}/></label>
-                        </center>
-                        </td>
+                      <tbody class="desk data-dddUP" >
+                        <tr class="dddhUP hidden">
+                          <td width="3%" style="vertical-align:middle;">
+                          <center>
+                              <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV" value=""/></label>
+                          </center>
+                          </td>
                           <td width="30%">
                             <div class="form-group">
                             <label class="control-label">ชื่อสถาบัน</label>
-                            <p style="font-size:18px;" class="nameinstitute"></p>
+                            <p style="font-size:18px;" class="nameinstitute-Up"></p>
                             </div>
                           </td>
                           <td width="15%">
                             <label class="control-label">วุฒิการศึกษา</label>
-                            <h3 class="namedegree"></h3>
+                            <h3 class="namedegree-Up"></h3>
                           </td>
                           <td width="15%">
-                            {% if updegrees.namedepartment != '' %}
-                            <label class="control-label">ภาควิชา/สาขาวิชา</label>
-                            <h3 class="namedepartment"></h3>
-              							{% else %}
-                            <label class="control-label">คณะ</label>
-                            <h3 class="namefaculty"></h3>
-              							{% endif %}
+                            <label class="control-label deparfacu"></label>
+                            <h3 class="namedeparfacu"></h3>
                           </td>
                           <td width="15%">
                             <label class="control-label">ปีที่ศึกษา</label>
-                            <!-- {% if updegrees.Year_of_Admission == '0' %}
-                            <div class="h4 m-t-xs text-info">
-                              <span class="loading bullet"></span>
-                            </div>
-                            {% else %}
-                            <h3>{{updegrees.Year_of_Admission}}-{{updegrees.Year_of_Graduation !=  0 ? updegrees.Year_of_Graduation : 'ปัจจุบัน'}}</h3>
-                            {% endif %} -->
+                            <div class="h4 m-t-xs text-info lod-Up"><span class='loading bullet spanlo-Up hidden'></span></div>
                           </td>
                           <td width="15%">
                             <label class="control-label">เกรดเฉลี่ย</label>
-                            <h3 class="GPA"></h3>
+                            <h3 class="GPA-Up"></h3>
                           </td>
                           <td  style="vertical-align:middle;">
-                            <button   value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b " ><i class="fa fa-pencil"></i> แก้ไข</button>
+                            <button   value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editEndu-Up" ><i class="fa fa-pencil"></i> แก้ไข</button>
                           </td>
                       </tr>
                       <tr class="dddUP">
@@ -309,30 +276,24 @@
                             <h3>{{updegrees.GPA}}</h3>
                           </td>
                           <td  style="vertical-align:middle;">
-                            <button   value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b " ><i class="fa fa-pencil"></i> แก้ไข</button>
+                            <button   value="{{updegrees.idEducation}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i> แก้ไข</button>
                           </td>
                       </tr>
                       </tbody>
-                      <tbody class="mo data-mmUP" >
-                        <tr class="mmmhUP" hidden>
-                          <td width="3%" style="vertical-align:middle;">
-                            <center>
-                              <!-- <p>
-                                {{ updegrees.idEducation}}
-                              </p> -->
-                                <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value="{{updegrees.idEducation}}" {{ updegrees.Setting_Edu_CV ==  1 ? 'checked' :'' }}/></label>
-                                <button  value="" type="button" data-toggle="modal" id="Setting_Edu_CV" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b Setting_Edu_CV" ><i class="fa fa-pencil"></i> แก้ไข</button>
-                            </center>
-                              </td>
+                      <tbody class="mo data-mmmUP" >
+                        <tr class="mmmhUP hidden" >
+                            <td width="3%" style="vertical-align:middle;">
+                              <center>
+                                  <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value="{{updegrees.idEducation}}" {{ updegrees.Setting_Edu_CV ==  1 ? 'checked' :'' }}/></label>
+                                  <button  value="" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editEndu-Up-Mo" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                              </center>
+                            </td>
                               <td width="97%">
-                              <p style="font-size:20px;" class="nameinstitute"></p>
-                              <h3 style="display: inline-block;" class="namedegree"></h3>&nbsp;&nbsp;<h3 style="display: inline-block;" class="namedepartment"></h3>&nbsp;&nbsp;
-                              <!-- {% if updegrees.Year_of_Admission == '0' %}<div class="h4 m-t-xs text-info" style="display: inline-block;"><span class="loading bullet"></span></div>
-                              {% else %}
-                              <h5 style="display: inline-block;">{{updegrees.Year_of_Admission}}-{{updegrees.Year_of_Graduation !=  0 ? updegrees.Year_of_Graduation : 'ปัจจุบัน'}}</h5>
-                              {% endif %} -->
+                              <p style="font-size:20px;" class="nameinstitute-Up-Mo"></p>
+                              <h3 style="display: inline-block;" class="namedegree-Up-Mo"></h3>&nbsp;&nbsp;<h3 style="display: inline-block;" class="namedeparfacu-Mo"></h3>&nbsp;&nbsp;
+                              <div class="h4 m-t-xs text-info lod-Up-Mo" style="display: inline-block;"><span class='loading bullet spanlo-Up-Mo hidden'></span></div>
                               <br />
-                              <p style="font-size:15px; display: inline-block;">เกรดเฉลี่ย</p>&nbsp;&nbsp;<h3 style="display: inline-block;" class="GPA"></h3>
+                              <p style="font-size:15px; display: inline-block;">เกรดเฉลี่ย</p>&nbsp;&nbsp;<h3 style="display: inline-block;" class="GPA-Up-Mo"></h3>
                               <br />
                             <!-- </div> -->
                           </td>
@@ -344,7 +305,7 @@
                                   {{ updegrees.idEducation}}
                                 </p> -->
                                   <label data-toggle="tooltip" data-placement="top" title="ใช้วุฒินี้ในการสมัครงาน"><input class="up Setting_Edu_CV" type="radio" name="Setting_Edu_CV_Mo" value="{{updegrees.idEducation}}" {{ updegrees.Setting_Edu_CV ==  1 ? 'checked' :'' }}/></label>
-                                  <button  value="" type="button" data-toggle="modal" id="Setting_Edu_CV" data-target="#moDaleditBrethren" class="btn btn-white btn-sm editBrethren idFami-b Setting_Edu_CV" ><i class="fa fa-pencil"></i> แก้ไข</button>
+                                  <button  value="{{updegrees.idEducation}}" type="button" data-toggle="modal" data-target="#moDaleditBrethren" class="btn btn-white btn-sm" ><i class="fa fa-pencil"></i> แก้ไข</button>
                               </center>
                                 </td>
                                 <td width="97%">

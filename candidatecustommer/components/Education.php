@@ -273,7 +273,14 @@ class Education extends ComponentBase
 
     public function onEducation()
     {
-        $get = Educations::where('idUser',Auth::getUser()->id)->get();
+        $get = Educations::select('education.*','institute_detail.Name_TH AS nameinstitute','geography.Name_TH AS namegeography','degree_and_certificate.Abbreviation_TH AS namedegree','department.Name_TH AS namedepartment','education_level.Name_TH AS nameeducation_level','faculty_detail.Name_TH AS namefaculty')
+        ->leftJoin('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
+        ->leftJoin('degree_and_certificate','education.idDegree_and_Certificate','=','degree_and_certificate.idDegree_and_Certificate')
+        ->leftJoin('geography','institute_detail.idGeography','=','geography.idGeography')
+        ->leftJoin('department','education.idDepartment','=','department.idDepartment')
+        ->leftJoin('education_level','education.idEducation_Level','=','education_level.idEducation_Level')
+        ->leftJoin('faculty_detail','education.idFaculty_Detail','=','faculty_detail.idFaculty_Detail')
+        ->where('idUser',Auth::getUser()->id)->get();
         return $get;
     }
 

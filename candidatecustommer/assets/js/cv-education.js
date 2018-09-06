@@ -322,11 +322,6 @@ $(document).ready(function(){
 		$('#start_Year').each(function(){
 			var start = new Date().getFullYear()+543-30;
 			var end = new Date().getFullYear()+543;
-			// var options = "";
-			// for(var year = start ; year <=end; year++){
-			//   options += "<option>"+ year +"</option>";
-			// }
-			// document.getElementById("start_Year").innerHTML = options;
 			select = document.getElementById( 'start_Year' );
 				for ( i = start; i <= end; i ++ ) {
 						option = document.createElement('option');
@@ -338,11 +333,6 @@ $(document).ready(function(){
 		$('#end_Year').each(function(){
 			var start = new Date().getFullYear()+543-30;
 			var end = new Date().getFullYear()+543;
-			// var options = "";
-			// for(var year = start ; year <=end; year++){
-			//   options += "<option>"+ year +"</option>";
-			// }
-			// document.getElementById("end_Year").innerHTML = options;
 			select = document.getElementById( 'end_Year' );
 				for ( i = start; i <= end; i ++ ) {
 				    option = document.createElement('option');
@@ -350,17 +340,7 @@ $(document).ready(function(){
 				    select.add( option );
 			}
 		})
-		// $('.start_Year').scroller({
-    //     theme: 'android-ics light',
-    //     startYear: now.getFullYear()-100,
-    //     endYear: now.getFullYear(),
-    // });
-		// $('#end_Year').scroller({
-    //     theme: 'android-ics light',
-    //     startYear: now.getFullYear()-100,
-    //     endYear: now.getFullYear(),
-    // });
-
+		//เพิ่มการศึกษา
 		$('#insert_Education').on('click','#addEducation',function(){
 				$(".ddd").remove();
 				$(".mmm").remove();
@@ -385,35 +365,119 @@ $(document).ready(function(){
 									$(".mmmhUP").not(':first').remove();
 
 				         for (var i = 0; i < data.length; i++) {
-									 	console.log(data[i].idEducation);
+									 	// console.log(data[i].idEducation);
 										if (data[i].idEducation_Level == 1) {
+											// ตำกว่าปริญญาตรี
 										 var $tableBody = $('#data-UnderDegree').find("tbody.data-dd"),
  				             $trLast = $tableBody.find("tr:last"),
  				             $trNew = $trLast.clone();
  				             $trLast.after($trNew);
+
+										 //radio
+										 $(".nameeducation_level-under:last").html(data[i].nameeducation_level);
+										 $(".namedegree-under:last").html(data[i].namedegree);
+										 $("span.spanlo-under:last").remove();
+										 $("h3.lod-under:last").remove();
+										 if (data[i].Year_of_Admission == 0) {
+											$("div.lod-under:last").append("<span class='loading bullet spanlo-under'></span>");
+										 }else {
+											 if (data[i].Year_of_Graduation == 0) {
+  											$("div.lod-under:last").after("<h3 class='lod-under'>"+data[i].Year_of_Admission+"-ปัจจุบัน</h3>");
+  										 }else {
+  											 $("div.lod-under:last").after("<h3>"+data[i].Year_of_Admission+"-"+data[i].Year_of_Graduation+"</h3>");
+  										 }
+										 }
+										 $(".GPA-under:last").html(data[i].GPA);
+										 $(".editEndu-under:last").val(data[i].idEducation);
 
  										 var $tableBody_M = $('#data-UnderDegree').find("tbody.data-mm"),
  				             $trLast_M = $tableBody_M.find("tr:last"),
  				             $trNew_M = $trLast_M.clone();
  				             $trLast_M.after($trNew_M);
 
-										}else {
-											// var $tableBody_UP = $('#data-UpDegree').find("tbody.data-ddUP"),
-  				            //  $trLast_UP = $tableBody_UP.find("tr:last"),
-  				            //  $trNew_UP = $trLast_UP.clone();
-  				            //  $trLast_UP.after($trNew_UP);
-											//
-  										//  var $tableBody_M_UP = $('#data-UpDegree').find("tbody.data-mmUP"),
-  				            //  $trLast_M_UP = $tableBody_M_UP.find("tr:last"),
-  				            //  $trNew_M_UP = $trLast_M_UP.clone();
-  				            //  $trLast_M_UP.after($trNew_M_UP);
+										 //radio
+										 $(".nameeducation_level-under-mo:last").html(data[i].nameeducation_level);
+										 $(".namedegree-under-mo:last").html(data[i].namedegree);
+										 $("span.spanlo-under-mo:last").remove();
+										 $("h5.lod-under-mo:last").remove();
+										 if (data[i].Year_of_Admission == 0) {
+											$("div.lod-under-mo:last").append("<span class='loading bullet spanlo-under-mo'></span>");
+										 }else {
+											 if (data[i].Year_of_Graduation == 0) {
+  											$("div.lod-under-mo:last").after("<h5 class='lod-under-mo' style='display: inline-block;'>"+data[i].Year_of_Admission+"-ปัจจุบัน</h5>");
+  										 }else {
+  											 $("div.lod-under-mo:last").after("<h5 style='display: inline-block;'>"+data[i].Year_of_Admission+"-"+data[i].Year_of_Graduation+"</h5>");
+  										 }
+										 }
+										 $(".GPA-under-mo:last").html(data[i].GPA);
+										 $(".editEndu-under-mo:last").val(data[i].idEducation);
+
+									 }else {
+										 // ปริญญาตรีขึ้นไป
+
+											var $tableBody_UP = $('#data-UpDegree').find("tbody.data-dddUP"),
+  				             $trLast_UP = $tableBody_UP.find("tr:last"),
+  				             $trNew_UP = $trLast_UP.clone();
+  				             $trLast_UP.after($trNew_UP);
+											 $(".spanlo-Up:last").addClass('hidden');
+
+											 //Radio
+											 $(".nameinstitute-Up:last").html(data[i].nameinstitute);
+											 $(".namedegree-Up:last").html(data[i].namedegree);
+											 if (data[i].namedepartment != null) {
+												 $(".deparfacu:last").html('ภาควิชา/สาขาวิชา');
+												 $(".namedeparfacu:last").html(data[i].namedepartment);
+											 }else {
+												 $(".deparfacu:last").html('คณะ');
+												 $(".namedeparfacu:last").html(data[i].namefaculty);
+											 }
+											 // $("span.spanlo-Up:first").remove();
+											 $("h3.lod-Up:last").remove();
+											 console.log(data[i].Year_of_Admission);
+											 if (data[i].Year_of_Admission == 0) {
+												// $("div.lod-Up:last").append("<span class='loading bullet spanlo-Up'></span>");
+													$(".spanlo-Up:last").removeClass('hidden');
+											 }else {
+												 if (data[i].Year_of_Graduation == 0) {
+	  											$("div.lod-Up:last").after("<h3 class='lod-Up'>"+data[i].Year_of_Admission+"-ปัจจุบัน</h3>");
+	  										 }else {
+	  											 $("div.lod-Up:last").after("<h3 class='lod-Up'>"+data[i].Year_of_Admission+"-"+data[i].Year_of_Graduation+"</h3>");
+	  										 }
+											 }
+											 $(".GPA-Up:last").html(data[i].GPA);
+											 $(".editEndu-Up:last").val(data[i].idEducation);
+
+  										 var $tableBody_M_UP = $('#data-UpDegree').find("tbody.data-mmmUP"),
+  				             $trLast_M_UP = $tableBody_M_UP.find("tr:last"),
+  				             $trNew_M_UP = $trLast_M_UP.clone();
+  				             $trLast_M_UP.after($trNew_M_UP);
+											 $(".spanlo-Up-Mo:last").addClass('hidden');
+
+											 //Radio
+											 $(".nameinstitute-Up-Mo:last").html(data[i].nameinstitute);
+											 $(".namedegree-Up-Mo:last").html(data[i].namedegree);
+											 if (data[i].namedepartment != null) {
+												 // $(".deparfacu-Mo:last").html('ภาควิชา/สาขาวิชา');
+												 $(".namedeparfacu-Mo:last").html(data[i].namedepartment);
+											 }else {
+												 // $(".deparfacu-Mo:last").html('คณะ');
+												 $(".namedeparfacu-Mo:last").html(data[i].namefaculty);
+											 }
+											 $("h5.lod-Up-Mo:last").remove();
+											 console.log(data[i].Year_of_Admission);
+											 if (data[i].Year_of_Admission == 0) {
+													$(".spanlo-Up-Mo:last").removeClass('hidden');
+											 }else {
+												 if (data[i].Year_of_Graduation == 0) {
+	  											$("div.lod-Up-Mo:last").after("<h5 class='lod-Up-Mo' style='display: inline-block;'>"+data[i].Year_of_Admission+"-ปัจจุบัน</h5>");
+	  										 }else {
+	  											 $("div.lod-Up-Mo:last").after("<h5 class='lod-Up-Mo' style='display: inline-block;'>"+data[i].Year_of_Admission+"-"+data[i].Year_of_Graduation+"</h5>");
+	  										 }
+											 }
+											 $(".GPA-Up-Mo:last").html(data[i].GPA);
+											 $(".editEndu-Up-Mo:last").val(data[i].idEducation);
+
 										}
-
-
-				           // $(".idFami-c:last").val(data[i].idFamilies);
-				           // $(".pfFirstName-c:last").html(data[i].nameprefix+data[i].FirstName_TH);
-				           // $(".LastName-c:last").html(data[i].LastName_TH);
-				           // $(".Age-c:last").html(data[i].Age);
 				         }
 				         $(".dddh:first").addClass('hidden');
 								 $(".mmmh:first").addClass('hidden');
