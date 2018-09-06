@@ -48,951 +48,951 @@
 	<div class="col-lg-12">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
-<h3>1.ข้อมูลส่วนบุคคล</h3>
-<!-- <form class="m-t-md" data-request-files data-request-flash> -->
-	<form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
-		<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
-		<div class="row">
-			{% flash %}
-			<p
-			data-control="flash-message"
-			class="flash-message fade {{ type }}"
-			data-interval="5">
-			{{ message }}
-		</p>
-		{% endflash %}
-		<div class="col-md-6">
-			<fieldset>
-				<div class="col-sm-12 text-center">
-					{% if imgcvs.thumb=="" %}
-					<img src="{{ 'assets/img/default-non-user-no-photo-meduim.jpg'|theme }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
-					{% else %}
-					<img src="{{ imgcvs.thumb }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
-					{% endif %}
-					<div class="m-b-md">
-						<h3 class="font-bold no-margins">
-							{{ user.name }} {{ user.surname }}
-						</h3>
-						<small>{{ requirement_of_works.Name_TH }}</small>
-					</div>
-					<input type="hidden" name="Photos" value="{{ imgcvs.Photo }}"/>
-					<input type="hidden" name="path" value="{{ imgcvs.path }}"/>
-					<input type="hidden" name="thumb" value="{{ imgcvs.thumb }}"/>
-					<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="javascript:void(0)">เปลี่ยนภาพโปรไฟล์</a>
-					<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-12 m-t-40">
-					<label class="control-label">เพศ <span class="text-danger">*</span></label>
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-6 m-t-40 text-right no-padding">
-					<a href="javascript:void(0);" id="Male" class="gender">
-						{% if candidates.idGender == '1' %}
-							<img src="{{ 'assets/img/CV/male_hover.png'|theme }}" alt="gender" id="ImgMale"/>
-						{% else %}
-							<img src="{{ 'assets/img/CV/male.png'|theme }}" alt="gender" id="ImgMale"/>
-						{% endif %}
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-6 m-t-40 text-left no-padding">
-					<a href="javascript:void(0);" id="Female" class="gender">
-						{% if candidates.idGender == '2' %}
-							<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgFemale"/>
-						{% else %}
-							<img src="{{ 'assets/img/CV/female.png'|theme }}" alt="gender" id="ImgFemale"/>
-						{% endif %}
-					</a>
-				</div>
-				<input type="hidden" name="idGender" id="idGender" value="{{ candidates.idGender }}"/>
-			</fieldset>
-		</div>
-		<div class="col-md-6 m-t-40">
-			<fieldset>
-				<div class="form-group col-md-6 col-sm-6" id="boxidPrefix">
-					<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
-					<select class="form-control chosen " name="idPrefix" id="idPrefix">
-						<option value="">เลือก</option>
-						{% for prefix in prefixs %}
-						{% set selected = '' %}
-						{% if prefix.idPrefix == candidates.idPrefix %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div style="clear:both"></div>
-				<div class="form-group col-md-6 col-sm-6">
-					<label class="control-label">ชื่อ <span class="text-danger">*</span></label>
-					<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6">
-					<label class="control-label">นามสกุล <span class="text-danger">*</span></label>
-					<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6">
-					<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-						<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile BirthDate" value="{{ candidates.Date_of_Birth!='00/00/0000' ? candidates.Date_of_Birth : '' }}">
-						<span class="help-block"></span>
-					</div>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4 hidden" id="boxidReligion">
-					<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
-					<select class="form-control chosen " name="idReligion" id="idReligion">
-						<option value="">เลือก</option>
-						{% for religion in religions %}
-						{% set selected = '' %}
-						{% if religion.idReligion == '' %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{religion.idReligion}}" {{ selected }}>{{religion.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6" id="boxNationality">
-					<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
-					<select name="Nationality" id="Nationality" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for countrycallingcode in countrycallingcodes %}
-						{% set selected = '' %}
-						{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.Nationality == "" %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						{% if countrycallingcode.idCountry_Calling_Code == candidates.Nationality %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Nationality_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6">
-					<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
-					<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ user.email }}" {% if user.email !='' %} readonly="readonly"{% endif %}>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6">
-					<label class="control-label">ไลน์ไอดี</label>
-					<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-8 col-sm-6" id="boxidCountry_Calling_Code">
-					<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
-					<div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
-						<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
-							<option value="0">เลือก</option>
-							{% for countrycallingcode in countrycallingcodes %}
-							{% set selected = '0' %}
-							{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
-							{% set selected = 'selected' %}
-							{% endif %}
-							{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
-							{% set selected = 'selected' %}
-							{% endif %}
-							<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
-							{% endfor %}
-						</select>
-						<span class="help-block"></span>
-					</div>
-					<div class="col-sm-8 col-xs-8 no-padding">
-						<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
-						<span class="help-block"></span>
-					</div>
-				</div>
-				<div class="form-group col-md-4 col-sm-6" id="boxidCommunication_Provider">
-					<label class="control-label">เครือข่าย <span class="text-danger">*</span></label>
-					<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
-						<option value="">เลือก</option>
-						{% for communication_provider in communication_providers %}
-						{% set selected = '' %}
-						{% if candidates.idCommunication_Provider != "5" and candidates.idCommunication_Provider == communication_provider.idCommunication_Provider %}
-							{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{ communication_provider.idCommunication_Provider }}" {{ selected }}>{{communication_provider.Name}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
-					<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
-					<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
-				</div>
-			</fieldset>
-		</div>
-		<div style="clear:both;"></div>
-		<div class="col-md-6">
-			<fieldset>
-				<h3>การศึกษา / ประสบการณ์ทำงาน</h3>
-				<div class="col-md-6 col-sm-6 col-xs-6 text-right">
-					<a href="javascript:void(0);" id="newGraduate" class="Type_Candidate">
-						{% if candidates.Type_Candidate == '1' %}
-						<img src="{{ 'assets/img/CV/NewGrad_hover.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
-						{% else %}
-						<img src="{{ 'assets/img/CV/NewGrad.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
-						{% endif %}
-					</a>
-				</div>
-				<div class="col-md-6 col-sm-6 col-xs-6 text-left">
-					<a href="javascript:void(0);" id="haveExp" class="Type_Candidate">
-						{% if candidates.Type_Candidate == '' or candidates.Type_Candidate == '2' %}
-						<img src="{{ 'assets/img/CV/Exp_hover.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
-						{% else %}
-						<img src="{{ 'assets/img/CV/Exp.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
-						{% endif %}
-					</a>
-					<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!="" ? candidates.Type_Candidate : '2' }}"/>
-				</div>
-				<div class="form-group col-md-6 col-sm-4 col-xs-12 m-t-20" id="boxidEducation_Level">
-					<label class="control-label">ระดับการศึกษา <span class="text-danger">*</span></label>
-					<select name="idEducation_Level" id="idEducation_Level" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for education_level in education_levels %}
-						{% set selected = '' %}
-						{% if education_level.idEducation_Level == '2' and educations.idEducation_Level=="" %}
-							{% set selected = 'selected' %}
-						{% endif %}
-						{% if education_level.idEducation_Level == educations.idEducation_Level %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{education_level.idEducation_Level}}" {{ selected }}>{{education_level.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level?educations.idEducation_Level:'2' }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidGeography">
-					<label class="control-label">ที่ตั้งสถาบัน <span class="text-danger">*</span></label>
-					<select name="idGeography" id="idGeography" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for geography in geographys %}
-						{% set selected = '' %}
-						{% if geography.idGeography == educations.idGeography %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{geography.idGeography}}" {{ selected }}>{{geography.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxtype_of_institue">
-					<label class="control-label">ประเภทสถาบัน <span class="text-danger">*</span></label>
-					<select name="type_of_institue" id="type_of_institue" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for type_of_institue in type_of_institues %}
-						{% set selected = '' %}
-						{% if type_of_institue.idType_of_Institute == educations.idType_of_Institute %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{type_of_institue.idType_of_Institute}}" {{ selected }}>{{type_of_institue.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidInstitute_Detail">
-					<label class="control-label">ชื่อสถาบัน <span class="text-danger">*</span></label>
-					<select name="idInstitute_Detail" id="idInstitute_Detail" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for institute_all in institute_alls %}
-						{% set selected = '0' %}
-						{% if institute_all.idInstitute_Detail == '' %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{institute_all.idInstitute_Detail}}" {{ selected }}>{{institute_all.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<input type="hidden" id="tempidInstitute_Detail" value="{{ educations.idInstitute_Detail }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 Faculty_Detail {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidFaculty_Detail">
-					<label class="control-label">คณะ</label>
-					<select name="idFaculty_Detail" id="idFaculty_Detail" class="form-control chosen">
-						<option value="0">เลือก</option>
-					</select>
-					<input type="hidden" id="tempidFaculty_Detail" value="{{ educations.idFaculty_Detail }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 Department {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidDepartment">
-					<label class="control-label">ภาควิชา / สาขาวิชา</label>
-					<select name="idDepartment" id="idDepartment" class="form-control chosen">
-						<option value="0">เลือก</option>
-					</select>
-					<input type="hidden" id="tempidDepartment" value="{{ educations.idDepartment }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-6 col-xs-12 Major_Subject {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidMajor_Subject">
-					<label class="control-label">วิชาเอก</label>
-					<select name="idMajor_Subject" id="idMajor_Subject" class="form-control chosen">
-						<option value="0">เลือก</option>
-					</select>
-					<input type="hidden" id="tempidMajor_Subject" value="{{ educations.idMajor_Subject }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div style="clear:both;"></div>
-				<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxidDegree_and_Certificate">
-					<label class="control-label">วุฒิการศึกษา <span class="text-danger">*</span></label>
-					<select name="idDegree_and_Certificate" id="idDegree_and_Certificate" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for degree_certifidate in degree_certifidates %}
-						{% set selected = '' %}
-						{% if degree_certifidate.idDegree_and_Certificate == '' %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{degree_certifidate.idDegree_and_Certificate}}" {{ selected }}>{{degree_certifidate.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<input type="hidden" id="tempidDegree_and_Certificate" value="{{ educations.idDegree_and_Certificate }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxGPA">
-					<label class="control-label">เกรดเฉลี่ย <span class="text-danger">*</span></label>
-					<input type="text" class="form-control" name="GPA" id="GPA" placeholder="Ex. 4.00" value="{{ educations.GPA }}" maxlength="4">
-					<span class="help-block"></span>
-				</div>
-				<div style="clear:both;"></div>
-				<span class="hidden boxRefExperience">
-					<h4>ประสบการณ์ทำงานล่าสุด</h4>
-					<div class="form-group col-md-6 col-sm-6 col-xs-12" id="boxLastSeniority">
-						<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
-						<select name="LastSeniority" id="LastSeniority" class="form-control chosen">
-							<option value="">เลือก</option>
-							{% for seniority in senioritys %}
-							{% set selected = '0' %}
-							{% if seniority.idSeniority == experiences.idSeniority %}
-							{% set selected = 'selected' %}
-							{% endif %}
-							<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
-							{% endfor %}
-						</select>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group col-md-6 col-sm-6 col-xs-12">
-						<label class="control-label">ชื่อตำแหน่งงาน  <span class="text-danger">*</span></label>
-						<input type="text" class="form-control" name="LastJob_Title" id="LastJob_Title" value="{{ experiences.Job_Title }}">
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group col-md-12 col-xs-12">
-						<label class="control-label">ชื่อบริษัท</label>
-						<input type="text" class="form-control" name="Company_Name_TH" id="Company_Name_TH" value="{{ experiences.Company_Name_TH }}">
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-lg visible-md visible-sm">
-						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
-						{% for experience_work_status in experience_work_statuss %}
-						<div class="radio radio-info col-md-6 col-sm-6 col-xs-6 text-center no-padding radioCV">
-							{% set checked = '' %}
-							{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'.png' %}
-							{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
-								{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
-								{% set checked = 'checked' %}
-							{% endif %}
-
-							{% if experiences.idExperience_Work_Status == "" and experience_work_status.idExperience_Work_Status == "2" %}
-								{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
-								{% set checked = 'checked' %}
-							{% endif %}
-							<input type="radio" name="ExperienceWorkStatus" id="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}" value="{{ experience_work_status.idExperience_Work_Status }}" {{ checked }} />
-							<label for="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}">
-								<img src="{{ image|theme }}" alt="{{ experience_work_status.Name_EN }}" id="ImageWorkStatus{{ experience_work_status.idExperience_Work_Status }}" class="ImageWorkStatus"/>
-							</label><br/>
-							{{ experience_work_status.Name_TH }}
+				<h3>1.ข้อมูลส่วนบุคคล</h3>
+				<!-- <form class="m-t-md" data-request-files data-request-flash> -->
+					<form data-request="onSave" class="m-t-md" data-request-files data-request-flash>
+						<input type="hidden" name="idUser" id="idUser" value="{{ user.id }}"/>
+						<div class="row">
+							{% flash %}
+							<p
+							data-control="flash-message"
+							class="flash-message fade {{ type }}"
+							data-interval="5">
+							{{ message }}
+						</p>
+						{% endflash %}
+						<div class="col-md-6">
+							<fieldset>
+								<div class="col-sm-12 text-center">
+									{% if imgcvs.thumb=="" %}
+									<img src="{{ 'assets/img/default-non-user-no-photo-meduim.jpg'|theme }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
+									{% else %}
+									<img src="{{ imgcvs.thumb }}" alt="profile" class="img-circle circle-border m-b-md" id="ImgProfile">
+									{% endif %}
+									<div class="m-b-md">
+										<h3 class="font-bold no-margins">
+											{{ user.name }} {{ user.surname }}
+										</h3>
+										<small>{{ requirement_of_works.Name_TH }}</small>
+									</div>
+									<input type="hidden" name="Photos" value="{{ imgcvs.Photo }}"/>
+									<input type="hidden" name="path" value="{{ imgcvs.path }}"/>
+									<input type="hidden" name="thumb" value="{{ imgcvs.thumb }}"/>
+									<a class="btn btn-info btn-rounded btn-sm" id="upImage" href="javascript:void(0)">เปลี่ยนภาพโปรไฟล์</a>
+									<input type="file" name="photo" accept="image/*" id="PhotoFile" class="hidden" />
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12 m-t-40">
+									<label class="control-label">เพศ <span class="text-danger">*</span></label>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-6 m-t-40 text-right no-padding">
+									<a href="javascript:void(0);" id="Male" class="gender">
+										{% if candidates.idGender == '1' %}
+										<img src="{{ 'assets/img/CV/male_hover.png'|theme }}" alt="gender" id="ImgMale"/>
+										{% else %}
+										<img src="{{ 'assets/img/CV/male.png'|theme }}" alt="gender" id="ImgMale"/>
+										{% endif %}
+									</a>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-6 m-t-40 text-left no-padding">
+									<a href="javascript:void(0);" id="Female" class="gender">
+										{% if candidates.idGender == '2' %}
+										<img src="{{ 'assets/img/CV/female_hover.png'|theme }}" alt="gender" id="ImgFemale"/>
+										{% else %}
+										<img src="{{ 'assets/img/CV/female.png'|theme }}" alt="gender" id="ImgFemale"/>
+										{% endif %}
+									</a>
+								</div>
+								<input type="hidden" name="idGender" id="idGender" value="{{ candidates.idGender }}"/>
+							</fieldset>
 						</div>
-						{% endfor %}
-					</div>
-					<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-xs">
-						<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
-						{% for experience_work_status in experience_work_statuss %}
-						{% set noselect = 'btn-outline' %}
-						{% if experiences.idExperience_Work_Status == "" %}
-							{% if experience_work_status.idExperience_Work_Status == 2 %}
-								{% set noselect = '' %}
-							{% endif %}
-						{% else %}
-							{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
-								{% set noselect = '' %}
-							{% endif %}
-						{% endif %}
-						<a class="btn btn-info btn-rounded btn-sm {{ noselect }} ExperienceWorkStatus" id="ExperienceWorkStatus_{{ experience_work_status.idExperience_Work_Status }}" href="javascript:void(0)">
-							{{experience_work_status.Name_TH}}
-						</a>
-						{% endfor %}
-						<input type="hidden" name="idExperience_Work_Status" value="{{ experiences.idExperience_Work_Status ? experiences.idExperience_Work_Status : 2 }}"/>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group col-md-6 col-sm-4 col-xs-12">
-						<label class="control-label">วันที่เริ่ม <span class="text-danger">*</span></label>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" name="Date_Start" id="Date_Start" class="form-control dateMobile dateMobileStart" value="{{ experiences.Date_Start }}">
-							<span class="help-block"></span>
-						</div>
-						<span class="help-block"></span>
-					</div>
-					<div class="form-group col-md-6 col-sm-4 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status == 1 %} hidden {% endif %}">
-						<label class="control-label">วันที่สิ้นสุด <span class="text-danger">*</span></label>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-							<input type="text" name="Date_End" id="Date_End" class="form-control dateMobile dateMobileEnd" value="{{ experiences.Date_End!='00/00/0000'?experiences.Date_End:'' }}">
-							<span class="help-block"></span>
-						</div>
-						<span class="help-block"></span>
-					</div>
-				</span>
-			</fieldset>
-		</div>
-		<div class="col-md-6 col-sm-6">
-			<fieldset>
-				<h3>ความสามารถ</h3>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 m-t-20" id="boxLangidCountry_Calling_Code">
-					<label class="control-label">ภาษาที่ถนัดที่สุด</label>
-					<select class="form-control chosen" name="LangidCountry_Calling_Code" id="LangidCountry_Calling_Code">
-						<option value="">เลือก</option>
-						{% for language in languages %}
-						{% set selected = '' %}
-						{% if language.idCountry_Calling_Code == '185' or language.idCountry_Calling_Code == skilllangs.idCountry_Calling_Code %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{language.idCountry_Calling_Code}}" {{ selected }}>{{language.Language_TH}}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgListen.png'|theme }}" alt="LanguageSkillListening" id="imgListen"/>
-						ฟัง
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="ionrangeListenLevel"></div>
-						<input type="hidden" name="ionrangeListenLevel" class=""  value="{{ skilllangs.Listening_Level ? skilllangs.Listening_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgSpeaking.png'|theme }}" alt="LanguageSkillSpeaking" id="imgSpeaking"/>
-						พูด
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="ionrangeSpeakingLevel"></div>
-						<input type="hidden" name="ionrangeSpeakingLevel" class=""  value="{{ skilllangs.Speaking_Level ? skilllangs.Speaking_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgReading.png'|theme }}" alt="LanguageSkillReading" id="imgReading"/>
-						อ่าน
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="ionrangeReadingLevel"></div>
-						<input type="hidden" name="ionrangeReadingLevel" class=""  value="{{ skilllangs.Reading_Level ? skilllangs.Reading_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgWriting.png'|theme }}" alt="LanguageSkillWriting" id="imgWriting"/>
-						เขียน
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="ionrangeWritingLevel"></div>
-						<input type="hidden" name="ionrangeWritingLevel" class=""  value="{{ skilllangs.Writing_Level ? skilllangs.Writing_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<h4>ความสามารถพื้นฐานด้านคอมพิวเตอร์</h4>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgWord.png'|theme }}" alt="ComputerSkillWord" id="imgWord"/>
-						Word
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="Word_Level"></div>
-						<input type="hidden" class="" name="Word_Level" value="{{ skill_basic_coms.Word_Level ? skill_basic_coms.Word_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgExcel.png'|theme }}" alt="ComputerSkillExcel" id="imgExcel"/>
-						Excel
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="Excel_Level"></div>
-						<input type="hidden" class="" name="Excel_Level" value="{{ skill_basic_coms.Excel_Level ? skill_basic_coms.Excel_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgPowerpoint.png'|theme }}" alt="ComputerSkillPowerpoint" id="imgPowerpoint"/>
-						Power<br class="visible-xs"/>point</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="Powerpoint_Level"></div>
-						<input type="hidden" class="" name="Powerpoint_Level" value="{{ skill_basic_coms.Powerpoint_Level ? skill_basic_coms.Powerpoint_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<h4>ความสามารถด้านการพิมพ์ (คำต่อนาที)</h4>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgTypingThai.png'|theme }}" alt="TypingSkillThai" id="imgTypingThai"/><br/>
-						การพิมพ์ไทย
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="Typing_Thai_Level"></div>
-						<input type="hidden" name="Typing_Thai_Level" value="{{ skill_basic_coms.Typing_Thai_Level ? skill_basic_coms.Typing_Thai_Level-1 : 0 }}" />
-					</div>
-				</div>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
-					<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
-						<img src="{{ 'assets/img/CV/imgTypingEnglish.png'|theme }}" alt="TypingSkillEnglish" id="imgTypingEnglish"/><br/>
-						การพิมพ์อังกฤษ
-					</label>
-					<div class="col-md-10 col-sm-10 col-xs-10">
-						<div id="Typing_English_Level"></div>
-						<input type="hidden" name="Typing_English_Level" value="{{ skill_basic_coms.Typing_English_Level ? skill_basic_coms.Typing_English_Level-1 : 0 }}" />
-					</div>
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-12 col-sm-6 col-xs-12">
-			<fieldset>
-				<h3>2.ข้อมูลความต้องการในการทำงาน</h3>
-			</fieldset>
-		</div>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4>ตำแหน่งงานที่คาดหวัง</h4>
-				<div class="form-group col-md-6 col-xs-12" id="boxjob_CategoryNew">
-					<label class="control-label">หมวดหมู่งาน  <span class="text-danger">*</span></label>
-					<select name="job_CategoryNew" id="job_CategoryNew" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for job_category in job_categorys %}
-						{% set selected = '' %}
-						{% if job_category.idJob_Category == requirement_of_works.idJob_Category %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{job_category.idJob_Category}}" {{ selected }}>{{job_category.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-6 col-xs-12 boxSeniority" id="boxSeniority">
-					<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
-					<select name="Seniority" id="Seniority" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for seniority in senioritys %}
-						{% set selected = '0' %}
-						{% if seniority.idSeniority == requirement_of_works.idSeniority %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<input type="hidden" name="temSeniority" value="{{ requirement_of_works.idSeniority }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12" id="boxJob_TitleRequire">
-					<label class="control-label">ชื่อตำแหน่ง <span class="text-danger">*</span></label>
-					<select name="Job_TitleRequire" id="Job_TitleRequire" class="form-control chosen">
-						<option value="">เลือก</option>
-					</select>
-					<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 hidden" id="boxJob_TitleRequireOther">
-					<label class="control-label">ระบุตำแหน่งที่คุณคาดหวัง <span class="text-danger">*</span></label>
-					<input type="text" name="Job_TitleRequireOther" id="Job_TitleRequireOther" class="form-control">
-				</div>
-				<input type="hidden" name="chkValidateSkill" value="no"/>
-				<div class="form-group col-md-12 col-xs-12 hidden  boxSkillList" id="boxidSkill_List">
-					<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
-					<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
-						<option value="">ไม่ระบุ</option>
-						
-					</select>
-					<input type="hidden" name="tempidSkill_List" value="{{ skillspecifics.idSkill_List }}"/>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 hidden" id="boxSkill_ListOther">
-					<label class="control-label">ระบุทักษะที่คุณถนัดที่สุด <span class="text-danger">*</span></label>
-					<input type="text" name="Skill_ListOther" id="Skill_ListOther" class="form-control">
-				</div>
-				<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
-					<label class="control-label">ระดับ</label>
-					<div id="ionrangeSkillListLevel"></div>
-					<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
-				</div>
-				<div class="form-group col-md-5 col-xs-12" id="boxExpected_Salary">
-					<label class="control-label">เงินเดือนที่ต้องการ <span class="text-danger">*</span></label>
-					<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
-						<option value="">เลือก</option>
-						{% for salary_range in salary_ranges %}
-						{% set selected = '0' %}
-						{% if salary_range.idSalary_Range == requirement_of_works.Expected_Salary %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{salary_range.idSalary_Range}}" {{ selected }}>{{salary_range.Name}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<fieldset>
-				<h4 class="hidden-xs">&nbsp;</h4>
-				<div class="form-group col-md-12 col-sm-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidType_of_Employment">
-					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
-					{% for type_of_employment in type_of_employments %}
-					<div class="checkbox checkbox-info col-md-4 col-sm-4 col-xs-4 text-center no-padding checkboxCV">
-						{% set isChecked = '' %}
-						{% set isActive = 'grayscaled' %}
-						{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
-						{% if type_of_employment.isSelect == "selected" %}
-							{% set isChecked = 'checked' %}
-							{% set isActive = '' %}
-						{% endif %}
-						<input type="checkbox" class="TypeofEmployment" name="idType_of_Employment[]" id="idTypeofEmployment_{{ type_of_employment.idType_of_Employment }}" value="{{ type_of_employment.idType_of_Employment }}" {{ isChecked }}/>
-
-						<label for="idTypeofEmployment_{{ type_of_employment.idType_of_Employment }}">
-							<img src="{{ image|theme }}" alt="" id="imgTypeEmp{{ type_of_employment.idType_of_Employment }}" class="{{ isActive }}"/>
-						</label><br/>
-						{{type_of_employment.Name_TH}}
-					</div>
-					{% endfor %}
-				</div>
-				<div class="form-group col-md-7 col-sm-12 col-xs-12 visible-xs" id="boxidType_of_Employment">
-					<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
-					{% for type_of_employment in type_of_employments %}
-						{% set isActive = 'btn-outline' %}
-						{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
-						{% if type_of_employment.isSelect == "selected" %}
-							{% set isActive = '' %}
-						{% endif %}
-						
-						<a class="btn btn-info btn-rounded btn-sm {{ isActive }} idTypeofEmployment nohover" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment }}" href="javascript:void(0)">
-						{{ type_of_employment.Name_TH}}
-						</a>
-					{% endfor %}
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 {{ type_of_employments[0].isSelect == 'selected' ? '' : 'hidden' }}" id="boxWelFares">
-					<label class="control-label">เลือกสวัสดิการบริษัทที่ต้องการ</label>
-					<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
-						{% for welfare_type in welfare_types %}
-						<option value="{{welfare_type.idWelfare_Type}}" {{ welfare_type.selected }}>{{welfare_type.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
-					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
-					{% for job_seeker_status in job_seeker_statuses %}
-					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
-						{% set isChecked = '' %}
-						{% set isActive = 'grayscaled' %}
-						{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
-						{% if job_seeker_status.isSelect == "selected" %}
-							{% set isChecked = 'checked' %}
-							{% set isActive = '' %}
-						{% endif %}
-						<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
-
-						<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
-							<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
-						</label><br/>
-						{{ job_seeker_status.Name_TH }}
-					</div>
-					{% endfor %}
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
-					<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
-					{% for job_seeker_status in job_seeker_statuses %}
-					<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
-						{{ job_seeker_status.Name_TH}}
-					</a>
-					{% endfor %}
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidAvailability_of_Work">
-					<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
-					{% for availability_of_work in availability_of_works %}
-					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
-						{% set isChecked = '' %}
-						{% set isActive = 'grayscaled' %}
-						{% set image = 'assets/img/CV/'~availability_of_work.Image~'_hover.png' %}
-						{% if availability_of_work.isSelect == "selected" %}
-							{% set isChecked = 'checked' %}
-							{% set isActive = '' %}
-						{% endif %}
-						<input type="radio" class="Availability" name="idAvailability_of_Work" id="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}" value="{{ availability_of_work.idAvailability_of_Work }}" {{ isChecked }}/>
-
-						<label for="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}">
-							<img src="{{ image|theme }}" alt="" id="imgAvailability{{ availability_of_work.idAvailability_of_Work }}" class="{{ isActive }} imgAvailability"/>
-						</label><br/>
-						{{ availability_of_work.Name_TH }}
-					</div>
-					{% endfor %}
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidAvailability_of_Work">
-					<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
-					{% for availability_of_work in availability_of_works %}
-					<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
-					{% endfor %}
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidSources_Type">
-					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
-					{% for source_type in source_types %}
-					<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
-						{% set isChecked = '' %}
-						{% set isActive = 'grayscaled' %}
-						{% set image = 'assets/img/CV/'~source_type.Image~'.png' %}
-						{% if source_type.Image == "" %}
-							{% set image = 'assets/img/CV/other.png' %}
-						{% endif %}
-						{% if source_type.isSelect == "selected" %}
-							{% set isChecked = 'checked' %}
-							{% set isActive = '' %}
-						{% endif %}
-						<input type="radio" class="source_type" name="idSources_Type" id="SourcesType_{{ source_type.idSources_Type }}" value="{{ source_type.idSources_Type }}" {{ isChecked }}/>
-						<label for="SourcesType_{{ source_type.idSources_Type }}">
-							<img src="{{ image|theme }}" alt="" id="imgSourceType{{ source_type.idSources_Type }}" class="{{ isActive }} imgSourceType"/>
-						</label><br/>
-						{{ source_type.Name_TH }}
-					</div>
-					{% endfor %}
-				</div>
-				<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidSources_Type">
-					<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
-					{% for source_type in source_types %}
-				<a class="btn btn-info btn-rounded btn-sm {% if source_type.idSources_Type != candidates.idSources_Type %} btn-outline {%endif%} source_type" id="sourcetype_{{ source_type.idSources_Type}}" href="javascript:void(0)">
-					{{ source_type.Name_TH}}
-				</a>
-				{% endfor %}
-				</div>
-				<div class="form-group col-md-12 col-xs-12 hidden" id="boxidSources_TypeOther">
-					<input type="text" class="form-control" name="OtherType" id="OtherType" placeholder="ระบุ" value="" >
-				</div>
-			</fieldset>
-		</div>
-		<div class="col-md-12  col-xs-12 transportation">
-			<fieldset>
-				<h4>สถานที่ต้องการทำงาน</h4>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="boxLocation_of_Work_Provinces">
-					<label class="control-label">จังหวัด</label>
-					<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
-						<option value="0">ทุกจังหวัด</option>
-						{% for province in provinces %}
-						{% set selected = '' %}
-						{% if province.idProvinces == requirement_of_works.Location_of_Work_Provinces %}
-						{% set selected = 'selected' %}
-						{% endif %}
-						<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
-						{% endfor %}
-					</select>
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_Districts">
-					<label class="control-label">อำเภอ/เขต</label>
-					<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
-						<option value="0">ทุกอำเภอ/เขต</option>
-					</select>
-					<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
-					<span class="help-block"></span>
-				</div>
-				<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_SubDistricts">
-					<label class="control-label">ตำบล/แขวง</label>
-					<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
-						<option value="0">ทุกตำบล/แขวง</option>
-					</select>
-					<input type="hidden" id="temSubdistricts" value="{{ requirement_of_works.Location_of_Work_Subdistricts }}">
-					<span class="help-block"></span>
-				</div>
-				<h4>ความคาดหวังในการเดินทาง</h4>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="MRT" value="{{ transportation_of_works_mrts.idTransportation_Detail }}" {% if transportation_of_works_mrts.idTransportation_Detail!="" %}checked{%endif%} />
-						<label for="MRT">
-							<img src="{{ 'assets/img/CV/MRT.png'|theme }}" alt="MRT" id=""/>
-						</label><br/>
-						MRT
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxMRT_Station">
-						<select name="MRT_Station" id="MRT_Station" class="form-control chosen chooseTran">
-							<option value="">สถานี</option>
-							{% for transportation_mrt in transportation_mrts %}
-							<optgroup label="{{transportation_mrt.Name_TH}}">
-								{% for station in transportation_mrt.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_mrts.idTransportation_Detail %}
-									{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{ station.idTransportation_Detail }}" {{ selected }}>{{ station.Station_TH }}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="BTS" value="{{ transportation_of_works_btss.idTransportation_Detail }}" {% if transportation_of_works_btss.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="BTS">
-							<img src="{{ 'assets/img/CV/BTS.png'|theme }}" alt="BTS" id=""/>
-						</label><br/>
-						BTS
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxBTS_Station">
-						<select name="BTS_Station" id="BTS_Station" class="form-control chosen chooseTran">
-							<option value="">สถานี</option>
-							{% for transportation_bts in transportation_btss %}
-							<optgroup label="{{transportation_bts.Name_TH}}">
-								{% for station in transportation_bts.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_btss.idTransportation_Detail %}
-									{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="BRT" value="{{ transportation_of_works_brts.idTransportation_Detail }}" {% if transportation_of_works_brts.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="BRT">
-							<img src="{{ 'assets/img/CV/BRT.png'|theme }}" alt="BRT" id=""/>
-						</label><br/>
-						BRT
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxBRT_Station">
-						<select name="BRT_Station" id="BRT_Station" class="form-control chosen chooseTran">
-							<option value="">สถานี</option>
-							{% for transportation_brt in transportation_brts %}
-							<optgroup label="{{transportation_brt.Name_TH}}">
-								{% for station in transportation_brt.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_brts.idTransportation_Detail %}
-									{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="BUS" value="{{ transportation_of_works_buss.idTransportation_Detail }}" {% if transportation_of_works_buss.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="BUS">
-							<img src="{{ 'assets/img/CV/BUS.png'|theme }}" alt="BUS" id=""/>
-						</label><br/>
-						รถโดยสารสาธารณะ
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxBUS_Station">
-						<select name="BUS_Station" id="BUS_Station" class="form-control chosen chooseTran">
-							<option value="">ป้าย</option>
-							{% for transportation_bus in transportation_buss %}
-							<optgroup label="{{transportation_bus.Name_TH}}">
-								{% for station in transportation_bus.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_buss.idTransportation_Detail %}
-									{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-						&nbsp;
-					</div>
-				</div>
-				<div style="clear:both;"></div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="Ferry" value="{{ transportation_of_works_ferrys.idTransportation_Detail }}" {% if transportation_of_works_ferrys.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="Ferry">
-							<img src="{{ 'assets/img/CV/Boat.png'|theme }}" alt="Boat" id=""/>
-						</label><br/>
-						เรือ
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxFerry_Station">
-						<select name="Ferry_Station" id="Ferry_Station" class="form-control chosen chooseTran">
-							<option value="">ท่าเรือ</option>
-							{% for transportation_ferry in transportation_ferrys %}
-							<optgroup label="{{transportation_ferry.Name_TH}}">
-								{% for station in transportation_ferry.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_ferrys.idTransportation_Detail %}
-									{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="AirportRailLink" value="{{ transportation_of_works_airports.idTransportation_Detail }}" {% if transportation_of_works_airports.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="AirportRailLink">
-							<img src="{{ 'assets/img/CV/AirportRailLink.png'|theme }}" alt="AirportRailLink" id=""/>
-						</label><br/>
-						รถไฟฟ้าเชื่อมท่าอากาศยาน
-					</div>
-					<div class="col-sm-12 col-xs-12" id="boxAirportRailLink_Station">
-						<select name="AirportRailLink_Station" id="AirportRailLink_Station" class="form-control chosen chooseTran">
-							<option value="">สถานี</option>
-							{% for transportation_airlink in transportation_airlinks %}
-							<optgroup label="{{transportation_airlink.Name_TH}}">
-								{% for station in transportation_airlink.Station %}
-									{% set selected = '' %}
-									{% if station.idTransportation_Detail == transportation_of_works_airports.idTransportation_Detail %}
+						<div class="col-md-6 m-t-40">
+							<fieldset>
+								<div class="form-group col-md-6 col-sm-6" id="boxidPrefix">
+									<label class="control-label">คำนำหน้าชื่อ <span class="text-danger">*</span></label>
+									<select class="form-control chosen " name="idPrefix" id="idPrefix">
+										<option value="">เลือก</option>
+										{% for prefix in prefixs %}
+										{% set selected = '' %}
+										{% if prefix.idPrefix == candidates.idPrefix %}
 										{% set selected = 'selected' %}
-									{% endif %}
-									<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
-								{% endfor %}
-							</optgroup>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="Train" value="152" {% if transportation_of_works_trains.idTransportation_Detail=="152" %}checked{%endif%}/>
-						<label for="Train">
-							<img src="{{ 'assets/img/CV/Train.png'|theme }}" alt="Train" id=""/>
-						</label><br/>
-						รถไฟฉึกฉัก
-					</div>
-					<div class="col-sm-12 col-xs-12">
-					</div>
-				</div>
-				<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
-					<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
-						<input type="checkbox" name="idTransportation_Detail[]" id="Car" value="153" {% if transportation_of_works_personals.idTransportation_Detail!="" %}checked{%endif%}/>
-						<label for="Car">
-							<img src="{{ 'assets/img/CV/Car.png'|theme }}" alt="Car" id=""/>
-						</label><br/>
-						รถส่วนตัว
-					</div>
-					<div class="col-sm-12 col-xs-12">
+										{% endif %}
+										<option value="{{prefix.idPrefix}}" {{ selected }}>{{prefix.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div style="clear:both"></div>
+								<div class="form-group col-md-6 col-sm-6">
+									<label class="control-label">ชื่อ <span class="text-danger">*</span></label>
+									<input type="text" name="FirstName_TH" id="FirstName_TH" class="form-control" placeholder="" value="{{ candidates.FirstName_TH }}">
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6">
+									<label class="control-label">นามสกุล <span class="text-danger">*</span></label>
+									<input type="text" name="LastName_TH" id="LastName_TH" class="form-control" placeholder="" value="{{ candidates.LastName_TH }}">
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6">
+									<label class="control-label">วัน เดือน ปี เกิด <span class="text-danger">*</span></label>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										<input type="text" name="Date_of_Birth" id="Date_of_Birth" class="form-control dateMobile BirthDate" value="{{ candidates.Date_of_Birth!='00/00/0000' ? candidates.Date_of_Birth : '' }}">
+										<span class="help-block"></span>
+									</div>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-4 hidden" id="boxidReligion">
+									<label class="control-label">ศาสนา <span class="text-danger">*</span></label>
+									<select class="form-control chosen " name="idReligion" id="idReligion">
+										<option value="">เลือก</option>
+										{% for religion in religions %}
+										{% set selected = '' %}
+										{% if religion.idReligion == '' %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{religion.idReligion}}" {{ selected }}>{{religion.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6" id="boxNationality">
+									<label class="control-label">สัญชาติ <span class="text-danger">*</span></label>
+									<select name="Nationality" id="Nationality" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for countrycallingcode in countrycallingcodes %}
+										{% set selected = '' %}
+										{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.Nationality == "" %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										{% if countrycallingcode.idCountry_Calling_Code == candidates.Nationality %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>{{countrycallingcode.Nationality_TH}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6">
+									<label class="control-label">อีเมล์ <span class="text-danger">*</span></label>
+									<input type="text" name="Email" id="Email" class="form-control" placeholder="" value="{{ user.email }}" {% if user.email !='' %} readonly="readonly"{% endif %}>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6">
+									<label class="control-label">ไลน์ไอดี</label>
+									<input type="text" name="Line_ID" id="Line_ID" class="form-control" placeholder="" value="{{ candidates.Line_ID }}">
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-8 col-sm-6" id="boxidCountry_Calling_Code">
+									<label class="control-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label><br/>
+									<div class="col-md-4 col-sm-4 col-xs-4 no-padding-left">
+										<select class="form-control chosen" name="idCountry_Calling_Code" id="idCountry_Calling_Code">
+											<option value="0">เลือก</option>
+											{% for countrycallingcode in countrycallingcodes %}
+											{% set selected = '0' %}
+											{% if countrycallingcode.idCountry_Calling_Code == '83' and candidates.idCountry_Calling_Code == "" %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											{% if countrycallingcode.idCountry_Calling_Code == candidates.idCountry_Calling_Code %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{countrycallingcode.idCountry_Calling_Code}}" {{ selected }}>+{{countrycallingcode.Code}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="col-sm-8 col-xs-8 no-padding">
+										<input type="text" class="form-control" name="TelephoneNumber" id="TelephoneNumber" placeholder="Ex.0999999999" value="{{ candidates.TelephoneNumber }}" maxlength="10">
+										<span class="help-block"></span>
+									</div>
+								</div>
+								<div class="form-group col-md-4 col-sm-6" id="boxidCommunication_Provider">
+									<label class="control-label">เครือข่าย <span class="text-danger">*</span></label>
+									<select class="form-control chosen" name="idCommunication_Provider" id="idCommunication_Provider">
+										<option value="">เลือก</option>
+										{% for communication_provider in communication_providers %}
+										{% set selected = '' %}
+										{% if candidates.idCommunication_Provider != "5" and candidates.idCommunication_Provider == communication_provider.idCommunication_Provider %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{ communication_provider.idCommunication_Provider }}" {{ selected }}>{{communication_provider.Name}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-12 col-sm-6 boxComunication hidden">
+									<label class="control-label">ระบุเครือข่าย <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="Communication_Provider" id="Communication_Provider" placeholder="" value="">
+								</div>
+							</fieldset>
+						</div>
+						<div style="clear:both;"></div>
+						<div class="col-md-6">
+							<fieldset>
+								<h3>การศึกษา / ประสบการณ์ทำงาน</h3>
+								<div class="col-md-6 col-sm-6 col-xs-6 text-right">
+									<a href="javascript:void(0);" id="newGraduate" class="Type_Candidate">
+										{% if candidates.Type_Candidate == '1' %}
+										<img src="{{ 'assets/img/CV/NewGrad_hover.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
+										{% else %}
+										<img src="{{ 'assets/img/CV/NewGrad.png'|theme }}" alt="Education" id="ImgNewGrad" class="img-responsive" />
+										{% endif %}
+									</a>
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-6 text-left">
+									<a href="javascript:void(0);" id="haveExp" class="Type_Candidate">
+										{% if candidates.Type_Candidate == '' or candidates.Type_Candidate == '2' %}
+										<img src="{{ 'assets/img/CV/Exp_hover.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
+										{% else %}
+										<img src="{{ 'assets/img/CV/Exp.png'|theme }}" alt="Expericence" id="ImgExp"  class="img-responsive"/>
+										{% endif %}
+									</a>
+									<input type="hidden" name="Type_Candidate" value="{{ candidates.Type_Candidate!="" ? candidates.Type_Candidate : '2' }}"/>
+								</div>
+								<div class="form-group col-md-6 col-sm-4 col-xs-12 m-t-20" id="boxidEducation_Level">
+									<label class="control-label">ระดับการศึกษา <span class="text-danger">*</span></label>
+									<select name="idEducation_Level" id="idEducation_Level" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for education_level in education_levels %}
+										{% set selected = '' %}
+										{% if education_level.idEducation_Level == '2' and educations.idEducation_Level=="" %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										{% if education_level.idEducation_Level == educations.idEducation_Level %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{education_level.idEducation_Level}}" {{ selected }}>{{education_level.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" id="tempidEducation_Level" value="{{ educations.idEducation_Level?educations.idEducation_Level:'2' }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 m-t-20 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidGeography">
+									<label class="control-label">ที่ตั้งสถาบัน <span class="text-danger">*</span></label>
+									<select name="idGeography" id="idGeography" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for geography in geographys %}
+										{% set selected = '' %}
+										{% if geography.idGeography == educations.idGeography %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{geography.idGeography}}" {{ selected }}>{{geography.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxtype_of_institue">
+									<label class="control-label">ประเภทสถาบัน <span class="text-danger">*</span></label>
+									<select name="type_of_institue" id="type_of_institue" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for type_of_institue in type_of_institues %}
+										{% set selected = '' %}
+										{% if type_of_institue.idType_of_Institute == educations.idType_of_Institute %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{type_of_institue.idType_of_Institute}}" {{ selected }}>{{type_of_institue.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 {{ educations.idEducation_Level == 1 ? 'hidden' : ''}}" id="boxidInstitute_Detail">
+									<label class="control-label">ชื่อสถาบัน <span class="text-danger">*</span></label>
+									<select name="idInstitute_Detail" id="idInstitute_Detail" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for institute_all in institute_alls %}
+										{% set selected = '0' %}
+										{% if institute_all.idInstitute_Detail == '' %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{institute_all.idInstitute_Detail}}" {{ selected }}>{{institute_all.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" id="tempidInstitute_Detail" value="{{ educations.idInstitute_Detail }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 Faculty_Detail {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidFaculty_Detail">
+									<label class="control-label">คณะ</label>
+									<select name="idFaculty_Detail" id="idFaculty_Detail" class="form-control chosen">
+										<option value="0">เลือก</option>
+									</select>
+									<input type="hidden" id="tempidFaculty_Detail" value="{{ educations.idFaculty_Detail }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 Department {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidDepartment">
+									<label class="control-label">ภาควิชา / สาขาวิชา</label>
+									<select name="idDepartment" id="idDepartment" class="form-control chosen">
+										<option value="0">เลือก</option>
+									</select>
+									<input type="hidden" id="tempidDepartment" value="{{ educations.idDepartment }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-6 col-xs-12 Major_Subject {{ educations.idEducation_Level != 1 and educations.idEducation_Level != '' ? '' : 'hidden'}}" id="boxidMajor_Subject">
+									<label class="control-label">วิชาเอก</label>
+									<select name="idMajor_Subject" id="idMajor_Subject" class="form-control chosen">
+										<option value="0">เลือก</option>
+									</select>
+									<input type="hidden" id="tempidMajor_Subject" value="{{ educations.idMajor_Subject }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div style="clear:both;"></div>
+								<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxidDegree_and_Certificate">
+									<label class="control-label">วุฒิการศึกษา <span class="text-danger">*</span></label>
+									<select name="idDegree_and_Certificate" id="idDegree_and_Certificate" class="form-control chosen">
+										<option value="">เลือก</option>
+										{% for degree_certifidate in degree_certifidates %}
+										{% set selected = '' %}
+										{% if degree_certifidate.idDegree_and_Certificate == '' %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{degree_certifidate.idDegree_and_Certificate}}" {{ selected }}>{{degree_certifidate.Name_TH}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" id="tempidDegree_and_Certificate" value="{{ educations.idDegree_and_Certificate }}"/>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group col-md-6 col-sm-4 col-xs-12" id="boxGPA">
+									<label class="control-label">เกรดเฉลี่ย <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="GPA" id="GPA" placeholder="Ex. 4.00" value="{{ educations.GPA }}" maxlength="4">
+									<span class="help-block"></span>
+								</div>
+								<div style="clear:both;"></div>
+								<span class="hidden boxRefExperience">
+									<h4>ประสบการณ์ทำงานล่าสุด</h4>
+									<div class="form-group col-md-6 col-sm-6 col-xs-12" id="boxLastSeniority">
+										<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
+										<select name="LastSeniority" id="LastSeniority" class="form-control chosen">
+											<option value="">เลือก</option>
+											{% for seniority in senioritys %}
+											{% set selected = '0' %}
+											{% if seniority.idSeniority == experiences.idSeniority %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-xs-12">
+										<label class="control-label">ชื่อตำแหน่งงาน  <span class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="LastJob_Title" id="LastJob_Title" value="{{ experiences.Job_Title }}">
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12">
+										<label class="control-label">ชื่อบริษัท</label>
+										<input type="text" class="form-control" name="Company_Name_TH" id="Company_Name_TH" value="{{ experiences.Company_Name_TH }}">
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-lg visible-md visible-sm">
+										<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
+										{% for experience_work_status in experience_work_statuss %}
+										<div class="radio radio-info col-md-6 col-sm-6 col-xs-6 text-center no-padding radioCV">
+											{% set checked = '' %}
+											{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'.png' %}
+											{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
+											{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
+											{% set checked = 'checked' %}
+											{% endif %}
 
-					</div>
+											{% if experiences.idExperience_Work_Status == "" and experience_work_status.idExperience_Work_Status == "2" %}
+											{% set image = 'assets/img/CV/'~experience_work_status.Name_EN~'_hover.png' %}
+											{% set checked = 'checked' %}
+											{% endif %}
+											<input type="radio" name="ExperienceWorkStatus" id="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}" value="{{ experience_work_status.idExperience_Work_Status }}" {{ checked }} />
+											<label for="ExperienceWorkStatus{{ experience_work_status.idExperience_Work_Status }}">
+												<img src="{{ image|theme }}" alt="{{ experience_work_status.Name_EN }}" id="ImageWorkStatus{{ experience_work_status.idExperience_Work_Status }}" class="ImageWorkStatus"/>
+											</label><br/>
+											{{ experience_work_status.Name_TH }}
+										</div>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-12 col-sm-4 col-xs-12 visible-xs">
+										<label class="control-label">สถานะการทำงาน <span class="text-danger">*</span></label><br/>
+										{% for experience_work_status in experience_work_statuss %}
+										{% set noselect = 'btn-outline' %}
+										{% if experiences.idExperience_Work_Status == "" %}
+										{% if experience_work_status.idExperience_Work_Status == 2 %}
+										{% set noselect = '' %}
+										{% endif %}
+										{% else %}
+										{% if experience_work_status.idExperience_Work_Status == experiences.idExperience_Work_Status %}
+										{% set noselect = '' %}
+										{% endif %}
+										{% endif %}
+										<a class="btn btn-info btn-rounded btn-sm {{ noselect }} ExperienceWorkStatus" id="ExperienceWorkStatus_{{ experience_work_status.idExperience_Work_Status }}" href="javascript:void(0)">
+											{{experience_work_status.Name_TH}}
+										</a>
+										{% endfor %}
+										<input type="hidden" name="idExperience_Work_Status" value="{{ experiences.idExperience_Work_Status ? experiences.idExperience_Work_Status : 2 }}"/>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-6 col-sm-4 col-xs-12">
+										<label class="control-label">วันที่เริ่ม <span class="text-danger">*</span></label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" name="Date_Start" id="Date_Start" class="form-control dateMobile dateMobileStart" value="{{ experiences.Date_Start }}">
+											<span class="help-block"></span>
+										</div>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-6 col-sm-4 col-xs-12 DateEnd {% if experiences.idExperience_Work_Status == 1 %} hidden {% endif %}">
+										<label class="control-label">วันที่สิ้นสุด <span class="text-danger">*</span></label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+											<input type="text" name="Date_End" id="Date_End" class="form-control dateMobile dateMobileEnd" value="{{ experiences.Date_End!='00/00/0000'?experiences.Date_End:'' }}">
+											<span class="help-block"></span>
+										</div>
+										<span class="help-block"></span>
+									</div>
+								</span>
+							</fieldset>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<fieldset>
+								<h3>ความสามารถ</h3>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 m-t-20" id="boxLangidCountry_Calling_Code">
+									<label class="control-label">ภาษาที่ถนัดที่สุด <small>(รองจากภาษาหลัก)</label>
+									<select class="form-control chosen" name="LangidCountry_Calling_Code" id="LangidCountry_Calling_Code">
+										<option value="">เลือก</option>
+										{% for language in languages %}
+										{% set selected = '' %}
+										{% if language.idCountry_Calling_Code == '185' or language.idCountry_Calling_Code == skilllangs.idCountry_Calling_Code %}
+										{% set selected = 'selected' %}
+										{% endif %}
+										<option value="{{language.idCountry_Calling_Code}}" {{ selected }}>{{language.Language_TH}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgListen.png'|theme }}" alt="LanguageSkillListening" id="imgListen"/>
+										ฟัง
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="ionrangeListenLevel"></div>
+										<input type="hidden" name="ionrangeListenLevel" class=""  value="{{ skilllangs.Listening_Level ? skilllangs.Listening_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgSpeaking.png'|theme }}" alt="LanguageSkillSpeaking" id="imgSpeaking"/>
+										พูด
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="ionrangeSpeakingLevel"></div>
+										<input type="hidden" name="ionrangeSpeakingLevel" class=""  value="{{ skilllangs.Speaking_Level ? skilllangs.Speaking_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgReading.png'|theme }}" alt="LanguageSkillReading" id="imgReading"/>
+										อ่าน
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="ionrangeReadingLevel"></div>
+										<input type="hidden" name="ionrangeReadingLevel" class=""  value="{{ skilllangs.Reading_Level ? skilllangs.Reading_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgWriting.png'|theme }}" alt="LanguageSkillWriting" id="imgWriting"/>
+										เขียน
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="ionrangeWritingLevel"></div>
+										<input type="hidden" name="ionrangeWritingLevel" class=""  value="{{ skilllangs.Writing_Level ? skilllangs.Writing_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<h4>ความสามารถพื้นฐานด้านคอมพิวเตอร์</h4>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgWord.png'|theme }}" alt="ComputerSkillWord" id="imgWord"/>
+										Word
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="Word_Level"></div>
+										<input type="hidden" class="" name="Word_Level" value="{{ skill_basic_coms.Word_Level ? skill_basic_coms.Word_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgExcel.png'|theme }}" alt="ComputerSkillExcel" id="imgExcel"/>
+										Excel
+									</label>
+									<div class="col-md-10 col-sm-10 col-xs-10">
+										<div id="Excel_Level"></div>
+										<input type="hidden" class="" name="Excel_Level" value="{{ skill_basic_coms.Excel_Level ? skill_basic_coms.Excel_Level-1 : 0 }}" />
+									</div>
+								</div>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+									<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+										<img src="{{ 'assets/img/CV/imgPowerpoint.png'|theme }}" alt="ComputerSkillPowerpoint" id="imgPowerpoint"/>
+										Power<br class="visible-xs"/>point</label>
+										<div class="col-md-10 col-sm-10 col-xs-10">
+											<div id="Powerpoint_Level"></div>
+											<input type="hidden" class="" name="Powerpoint_Level" value="{{ skill_basic_coms.Powerpoint_Level ? skill_basic_coms.Powerpoint_Level-1 : 0 }}" />
+										</div>
+									</div>
+									<h4>ความสามารถด้านการพิมพ์ (คำต่อนาที)</h4>
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+										<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+											<img src="{{ 'assets/img/CV/imgTypingThai.png'|theme }}" alt="TypingSkillThai" id="imgTypingThai"/><br/>
+											การพิมพ์ไทย
+										</label>
+										<div class="col-md-10 col-sm-10 col-xs-10">
+											<div id="Typing_Thai_Level"></div>
+											<input type="hidden" name="Typing_Thai_Level" value="{{ skill_basic_coms.Typing_Thai_Level ? skill_basic_coms.Typing_Thai_Level-1 : 0 }}" />
+										</div>
+									</div>
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 no-padding">
+										<label class="col-md-2 col-sm-2 col-xs-2 control-label text-center">
+											<img src="{{ 'assets/img/CV/imgTypingEnglish.png'|theme }}" alt="TypingSkillEnglish" id="imgTypingEnglish"/><br/>
+											การพิมพ์อังกฤษ
+										</label>
+										<div class="col-md-10 col-sm-10 col-xs-10">
+											<div id="Typing_English_Level"></div>
+											<input type="hidden" name="Typing_English_Level" value="{{ skill_basic_coms.Typing_English_Level ? skill_basic_coms.Typing_English_Level-1 : 0 }}" />
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<div class="col-md-12 col-sm-6 col-xs-12">
+								<fieldset>
+									<h3>2.ข้อมูลความต้องการในการทำงาน</h3>
+								</fieldset>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<fieldset>
+									<h4>ตำแหน่งงานที่คาดหวัง</h4>
+									<div class="form-group col-md-6 col-xs-12" id="boxjob_CategoryNew">
+										<label class="control-label">หมวดหมู่งาน  <span class="text-danger">*</span></label>
+										<select name="job_CategoryNew" id="job_CategoryNew" class="form-control chosen">
+											<option value="">เลือก</option>
+											{% for job_category in job_categorys %}
+											{% set selected = '' %}
+											{% if job_category.idJob_Category == requirement_of_works.idJob_Category %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{job_category.idJob_Category}}" {{ selected }}>{{job_category.Name_TH}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-6 col-xs-12 boxSeniority" id="boxSeniority">
+										<label class="control-label">ระดับการทำงาน <span class="text-danger">*</span></label>
+										<select name="Seniority" id="Seniority" class="form-control chosen">
+											<option value="">เลือก</option>
+											{% for seniority in senioritys %}
+											{% set selected = '0' %}
+											{% if seniority.idSeniority == requirement_of_works.idSeniority %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{seniority.idSeniority}}" {{ selected }}>{{seniority.Name_TH}}</option>
+											{% endfor %}
+										</select>
+										<input type="hidden" name="temSeniority" value="{{ requirement_of_works.idSeniority }}"/>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12" id="boxJob_TitleRequire">
+										<label class="control-label">ชื่อตำแหน่ง <span class="text-danger">*</span></label>
+										<select name="Job_TitleRequire" id="Job_TitleRequire" class="form-control chosen">
+											<option value="">เลือก</option>
+										</select>
+										<input type="hidden" name="tempJob_TitleRequire" value="{{ requirement_of_works.idJob_Title }}"/>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 hidden" id="boxJob_TitleRequireOther">
+										<label class="control-label">ระบุตำแหน่งที่คุณคาดหวัง <span class="text-danger">*</span></label>
+										<input type="text" name="Job_TitleRequireOther" id="Job_TitleRequireOther" class="form-control">
+									</div>
+									<input type="hidden" name="chkValidateSkill" value="no"/>
+									<div class="form-group col-md-12 col-xs-12 hidden  boxSkillList" id="boxidSkill_List">
+										<label class="control-label">ทักษะที่ถนัดที่สุด  <span class="text-danger">*</span></label>
+										<select class="form-control chosen" name="idSkill_List" id="idSkill_List">
+											<option value="">ไม่ระบุ</option>
+											
+										</select>
+										<input type="hidden" name="tempidSkill_List" value="{{ skillspecifics.idSkill_List }}"/>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 hidden" id="boxSkill_ListOther">
+										<label class="control-label">ระบุทักษะที่คุณถนัดที่สุด <span class="text-danger">*</span></label>
+										<input type="text" name="Skill_ListOther" id="Skill_ListOther" class="form-control">
+									</div>
+									<div class="form-group col-md-12 col-xs-12 hidden boxSkillList">
+										<label class="control-label">ระดับ</label>
+										<div id="ionrangeSkillListLevel"></div>
+										<input type="hidden" name="ionrangeSkillListLevel" class=""  value="{{ skillspecifics.idSkill_Level_Detail ? skillspecifics.idSkill_Level_Detail-1 : 0 }}" />
+									</div>
+									<div class="form-group col-md-5 col-xs-12" id="boxExpected_Salary">
+										<label class="control-label">เงินเดือนที่ต้องการ <span class="text-danger">*</span></label>
+										<select name="Expected_Salary" id="Expected_Salary" class="form-control chosen">
+											<option value="">เลือก</option>
+											{% for salary_range in salary_ranges %}
+											{% set selected = '0' %}
+											{% if salary_range.idSalary_Range == requirement_of_works.Expected_Salary %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{salary_range.idSalary_Range}}" {{ selected }}>{{salary_range.Name}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+								</fieldset>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<fieldset>
+									<h4 class="hidden-xs">&nbsp;</h4>
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidType_of_Employment">
+										<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
+										{% for type_of_employment in type_of_employments %}
+										<div class="checkbox checkbox-info col-md-4 col-sm-4 col-xs-4 text-center no-padding checkboxCV">
+											{% set isChecked = '' %}
+											{% set isActive = 'grayscaled' %}
+											{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
+											{% if type_of_employment.isSelect == "selected" %}
+											{% set isChecked = 'checked' %}
+											{% set isActive = '' %}
+											{% endif %}
+											<input type="checkbox" class="TypeofEmployment" name="idType_of_Employment[]" id="idTypeofEmployment_{{ type_of_employment.idType_of_Employment }}" value="{{ type_of_employment.idType_of_Employment }}" {{ isChecked }}/>
+
+											<label for="idTypeofEmployment_{{ type_of_employment.idType_of_Employment }}">
+												<img src="{{ image|theme }}" alt="" id="imgTypeEmp{{ type_of_employment.idType_of_Employment }}" class="{{ isActive }}"/>
+											</label><br/>
+											{{type_of_employment.Name_TH}}
+										</div>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-7 col-sm-12 col-xs-12 visible-xs" id="boxidType_of_Employment">
+										<label class="control-label">ประเภทการจ้างงาน <span class="text-danger">*</span></label><br/>
+										{% for type_of_employment in type_of_employments %}
+										{% set isActive = 'btn-outline' %}
+										{% set image = 'assets/img/CV/'~type_of_employment.Image~'_hover.png' %}
+										{% if type_of_employment.isSelect == "selected" %}
+										{% set isActive = '' %}
+										{% endif %}
+										
+										<a class="btn btn-info btn-rounded btn-sm {{ isActive }} idTypeofEmployment nohover" id="TypeofEmployment_{{ type_of_employment.idType_of_Employment }}" href="javascript:void(0)">
+											{{ type_of_employment.Name_TH}}
+										</a>
+										{% endfor %}
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 {{ type_of_employments[0].isSelect == 'selected' ? '' : 'hidden' }}" id="boxWelFares">
+										<label class="control-label">เลือกสวัสดิการบริษัทที่ต้องการ</label>
+										<select class="select2_demo_2 form-control" name="Welfares[]" multiple="multiple">
+											{% for welfare_type in welfare_types %}
+											<option value="{{welfare_type.idWelfare_Type}}" {{ welfare_type.selected }}>{{welfare_type.Name_TH}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidJob_Seeking_Status">
+										<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+										{% for job_seeker_status in job_seeker_statuses %}
+										<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+											{% set isChecked = '' %}
+											{% set isActive = 'grayscaled' %}
+											{% set image = 'assets/img/CV/'~job_seeker_status.Image~'_hover.png' %}
+											{% if job_seeker_status.isSelect == "selected" %}
+											{% set isChecked = 'checked' %}
+											{% set isActive = '' %}
+											{% endif %}
+											<input type="radio" class="JobSeeking" name="idJob_Seeking_Status" id="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}" value="{{ job_seeker_status.idJob_Seeking_Status }}" {{ isChecked }}/>
+
+											<label for="JobSeekingStatus_{{ job_seeker_status.idJob_Seeking_Status }}">
+												<img src="{{ image|theme }}" alt="" id="imgJobSeek{{ job_seeker_status.idJob_Seeking_Status }}" class="{{ isActive }} imgJobSeek"/>
+											</label><br/>
+											{{ job_seeker_status.Name_TH }}
+										</div>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidJob_Seeking_Status">
+										<label class="control-label">สถานะการค้นหางาน <span class="text-danger">*</span></label><br/>
+										{% for job_seeker_status in job_seeker_statuses %}
+										<a class="btn btn-info btn-rounded btn-sm {% if job_seeker_status.idJob_Seeking_Status != requirement_of_works.idJob_Seeking_Status %} btn-outline {%endif%} JobSeeking" id="JobSeeking_{{ job_seeker_status.idJob_Seeking_Status}}" href="javascript:void(0)">
+											{{ job_seeker_status.Name_TH}}
+										</a>
+										{% endfor %}
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidAvailability_of_Work">
+										<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
+										{% for availability_of_work in availability_of_works %}
+										<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+											{% set isChecked = '' %}
+											{% set isActive = 'grayscaled' %}
+											{% set image = 'assets/img/CV/'~availability_of_work.Image~'_hover.png' %}
+											{% if availability_of_work.isSelect == "selected" %}
+											{% set isChecked = 'checked' %}
+											{% set isActive = '' %}
+											{% endif %}
+											<input type="radio" class="Availability" name="idAvailability_of_Work" id="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}" value="{{ availability_of_work.idAvailability_of_Work }}" {{ isChecked }}/>
+
+											<label for="AvailabilityofWork_{{ availability_of_work.idAvailability_of_Work }}">
+												<img src="{{ image|theme }}" alt="" id="imgAvailability{{ availability_of_work.idAvailability_of_Work }}" class="{{ isActive }} imgAvailability"/>
+											</label><br/>
+											{{ availability_of_work.Name_TH }}
+										</div>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidAvailability_of_Work">
+										<label class="control-label">ความพร้อมในการเริ่มงาน <span class="text-danger">*</span></label><br/>
+										{% for availability_of_work in availability_of_works %}
+										<a class="btn btn-info btn-rounded btn-sm {% if availability_of_work.idAvailability_of_Work != requirement_of_works.idAvailability_of_Work %} btn-outline {% endif %} Availability" id="Availability_{{availability_of_work.idAvailability_of_Work}}" href="javascript:void(0)">{{availability_of_work.Name_TH}}</a>
+										{% endfor %}
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-lg visible-md visible-sm" id="boxidSources_Type">
+										<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
+										{% for source_type in source_types %}
+										<div class="radio radio-info col-md-4 col-sm-4 col-xs-4 text-center no-padding radioCV">
+											{% set isChecked = '' %}
+											{% set isActive = 'grayscaled' %}
+											{% set image = 'assets/img/CV/'~source_type.Image~'.png' %}
+											{% if source_type.Image == "" %}
+											{% set image = 'assets/img/CV/other.png' %}
+											{% endif %}
+											{% if source_type.isSelect == "selected" %}
+											{% set isChecked = 'checked' %}
+											{% set isActive = '' %}
+											{% endif %}
+											<input type="radio" class="source_type" name="idSources_Type" id="SourcesType_{{ source_type.idSources_Type }}" value="{{ source_type.idSources_Type }}" {{ isChecked }}/>
+											<label for="SourcesType_{{ source_type.idSources_Type }}">
+												<img src="{{ image|theme }}" alt="" id="imgSourceType{{ source_type.idSources_Type }}" class="{{ isActive }} imgSourceType"/>
+											</label><br/>
+											{{ source_type.Name_TH }}
+										</div>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-12 col-xs-12 visible-xs" id="boxidSources_Type">
+										<label class="control-label">คุณรู้จัก aSearcher ได้อย่างไร <span class="text-danger">*</span></label><br/>
+										{% for source_type in source_types %}
+										<a class="btn btn-info btn-rounded btn-sm {% if source_type.idSources_Type != candidates.idSources_Type %} btn-outline {%endif%} source_type" id="sourcetype_{{ source_type.idSources_Type}}" href="javascript:void(0)">
+											{{ source_type.Name_TH}}
+										</a>
+										{% endfor %}
+									</div>
+									<div class="form-group col-md-12 col-xs-12 hidden" id="boxidSources_TypeOther">
+										<input type="text" class="form-control" name="OtherType" id="OtherType" placeholder="ระบุ" value="" >
+									</div>
+								</fieldset>
+							</div>
+							<div class="col-md-12  col-xs-12 transportation">
+								<fieldset>
+									<h4>สถานที่ต้องการทำงาน</h4>
+									<div class="form-group col-md-4 col-sm-12 col-xs-12" id="boxLocation_of_Work_Provinces">
+										<label class="control-label">จังหวัด</label>
+										<select name="Location_of_Work_Provinces" id="Provinces" class="form-control chosen">
+											<option value="0">ทุกจังหวัด</option>
+											{% for province in provinces %}
+											{% set selected = '' %}
+											{% if province.idProvinces == requirement_of_works.Location_of_Work_Provinces %}
+											{% set selected = 'selected' %}
+											{% endif %}
+											<option value="{{province.idProvinces}}" {{ selected }}>{{province.Name_TH}}</option>
+											{% endfor %}
+										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_Districts">
+										<label class="control-label">อำเภอ/เขต</label>
+										<select name="Location_of_Work_Districts" id="District" class="form-control chosen">
+											<option value="0">ทุกอำเภอ/เขต</option>
+										</select>
+										<input type="hidden" id="temDistrict" value="{{ requirement_of_works.Location_of_Work_Districts }}">
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group col-md-4 col-sm-12 col-xs-12" id="Location_of_Work_SubDistricts">
+										<label class="control-label">ตำบล/แขวง</label>
+										<select name="Location_of_Work_SubDistricts" id="SubDistrict" class="form-control chosen">
+											<option value="0">ทุกตำบล/แขวง</option>
+										</select>
+										<input type="hidden" id="temSubdistricts" value="{{ requirement_of_works.Location_of_Work_Subdistricts }}">
+										<span class="help-block"></span>
+									</div>
+									<h4>ความคาดหวังในการเดินทาง</h4>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="MRT" value="{{ transportation_of_works_mrts.idTransportation_Detail }}" {% if transportation_of_works_mrts.idTransportation_Detail!="" %}checked{%endif%} />
+											<label for="MRT">
+												<img src="{{ 'assets/img/CV/MRT.png'|theme }}" alt="MRT" id=""/>
+											</label><br/>
+											MRT
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxMRT_Station">
+											<select name="MRT_Station" id="MRT_Station" class="form-control chosen chooseTran">
+												<option value="">สถานี</option>
+												{% for transportation_mrt in transportation_mrts %}
+												<optgroup label="{{transportation_mrt.Name_TH}}">
+													{% for station in transportation_mrt.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_mrts.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{ station.idTransportation_Detail }}" {{ selected }}>{{ station.Station_TH }}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="BTS" value="{{ transportation_of_works_btss.idTransportation_Detail }}" {% if transportation_of_works_btss.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="BTS">
+												<img src="{{ 'assets/img/CV/BTS.png'|theme }}" alt="BTS" id=""/>
+											</label><br/>
+											BTS
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxBTS_Station">
+											<select name="BTS_Station" id="BTS_Station" class="form-control chosen chooseTran">
+												<option value="">สถานี</option>
+												{% for transportation_bts in transportation_btss %}
+												<optgroup label="{{transportation_bts.Name_TH}}">
+													{% for station in transportation_bts.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_btss.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="BRT" value="{{ transportation_of_works_brts.idTransportation_Detail }}" {% if transportation_of_works_brts.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="BRT">
+												<img src="{{ 'assets/img/CV/BRT.png'|theme }}" alt="BRT" id=""/>
+											</label><br/>
+											BRT
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxBRT_Station">
+											<select name="BRT_Station" id="BRT_Station" class="form-control chosen chooseTran">
+												<option value="">สถานี</option>
+												{% for transportation_brt in transportation_brts %}
+												<optgroup label="{{transportation_brt.Name_TH}}">
+													{% for station in transportation_brt.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_brts.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="BUS" value="{{ transportation_of_works_buss.idTransportation_Detail }}" {% if transportation_of_works_buss.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="BUS">
+												<img src="{{ 'assets/img/CV/BUS.png'|theme }}" alt="BUS" id=""/>
+											</label><br/>
+											รถโดยสารสาธารณะ
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxBUS_Station">
+											<select name="BUS_Station" id="BUS_Station" class="form-control chosen chooseTran">
+												<option value="">ป้าย</option>
+												{% for transportation_bus in transportation_buss %}
+												<optgroup label="{{transportation_bus.Name_TH}}">
+													{% for station in transportation_bus.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_buss.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+											&nbsp;
+										</div>
+									</div>
+									<div style="clear:both;"></div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="Ferry" value="{{ transportation_of_works_ferrys.idTransportation_Detail }}" {% if transportation_of_works_ferrys.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="Ferry">
+												<img src="{{ 'assets/img/CV/Boat.png'|theme }}" alt="Boat" id=""/>
+											</label><br/>
+											เรือ
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxFerry_Station">
+											<select name="Ferry_Station" id="Ferry_Station" class="form-control chosen chooseTran">
+												<option value="">ท่าเรือ</option>
+												{% for transportation_ferry in transportation_ferrys %}
+												<optgroup label="{{transportation_ferry.Name_TH}}">
+													{% for station in transportation_ferry.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_ferrys.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="AirportRailLink" value="{{ transportation_of_works_airports.idTransportation_Detail }}" {% if transportation_of_works_airports.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="AirportRailLink">
+												<img src="{{ 'assets/img/CV/AirportRailLink.png'|theme }}" alt="AirportRailLink" id=""/>
+											</label><br/>
+											รถไฟฟ้าเชื่อมท่าอากาศยาน
+										</div>
+										<div class="col-sm-12 col-xs-12" id="boxAirportRailLink_Station">
+											<select name="AirportRailLink_Station" id="AirportRailLink_Station" class="form-control chosen chooseTran">
+												<option value="">สถานี</option>
+												{% for transportation_airlink in transportation_airlinks %}
+												<optgroup label="{{transportation_airlink.Name_TH}}">
+													{% for station in transportation_airlink.Station %}
+													{% set selected = '' %}
+													{% if station.idTransportation_Detail == transportation_of_works_airports.idTransportation_Detail %}
+													{% set selected = 'selected' %}
+													{% endif %}
+													<option value="{{station.idTransportation_Detail}}" {{ selected }}>{{station.Station_TH}}</option>
+													{% endfor %}
+												</optgroup>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="Train" value="152" {% if transportation_of_works_trains.idTransportation_Detail=="152" %}checked{%endif%}/>
+											<label for="Train">
+												<img src="{{ 'assets/img/CV/Train.png'|theme }}" alt="Train" id=""/>
+											</label><br/>
+											รถไฟฉึกฉัก
+										</div>
+										<div class="col-sm-12 col-xs-12">
+										</div>
+									</div>
+									<div class="form-group col-md-3 col-sm-3 col-xs-6 no-padding">
+										<div class="checkbox checkbox-info col-sm-12 col-xs-12 text-center no-padding">
+											<input type="checkbox" name="idTransportation_Detail[]" id="Car" value="153" {% if transportation_of_works_personals.idTransportation_Detail!="" %}checked{%endif%}/>
+											<label for="Car">
+												<img src="{{ 'assets/img/CV/Car.png'|theme }}" alt="Car" id=""/>
+											</label><br/>
+											รถส่วนตัว
+										</div>
+										<div class="col-sm-12 col-xs-12">
+
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<div class="col-sm-12 col-xs-12 text-center m-t-md">
+								<button type="submit" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
+							</div>
+						</div>
+					</form>
 				</div>
-			</fieldset>
-		</div>
-		<div class="col-sm-12 col-xs-12 text-center m-t-md">
-			<button type="submit" class="btn btn-info btn-rounded btn-sm save">อัพเดทโปรไฟล์</button>
-		</div>
-	</div>
-</form>
 			</div>
 		</div>
 	</div>
-</div>

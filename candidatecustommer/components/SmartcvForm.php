@@ -303,7 +303,6 @@ class SmartcvForm extends ComponentBase
         $users=Users::find(Auth::getUser()->id);
         $users->name = Input::get('FirstName_TH');
         $users->surname = Input::get('LastName_TH');
-        $users->surname = Input::get('LastName_TH');
         $users->save();
         if(Input::get('idCommunication_Provider')=="5"){
             $communicattions = new CommunicationProvider();
@@ -336,7 +335,7 @@ class SmartcvForm extends ComponentBase
         $candidate->idCountry_Calling_Code = Input::get('idCountry_Calling_Code');
         $candidate->TelephoneNumber = Input::get('TelephoneNumber');
         $candidate->idCommunication_Provider = $idCommunication_Provider;
-        $candidate->Email = Input::get('Email');
+        //$candidate->Email = Input::get('Email');
         $candidate->Line_ID = Input::get('Line_ID');
         $candidate->Type_Candidate = Input::get('Type_Candidate');
         $candidate->Nationality = Input::get('Nationality');
@@ -385,6 +384,7 @@ class SmartcvForm extends ComponentBase
             $education->Year_of_Admission = NULL;
             $education->Year_of_Graduation = NULL;
         }
+        $education->Setting_Edu_CV = '1';
         $education->idDegree_and_Certificate = Input::get('idDegree_and_Certificate');
         $education->GPA = Input::get('GPA');
         $education->save();
@@ -900,7 +900,7 @@ class SmartcvForm extends ComponentBase
     public function chkExpectedSelected($idExpected_Detail)
     {
 
-        $chk=Db::table('expectation_of_work')->where('idCandidate',Session::get('idCandidate'));
+        $chk=Db::table('expectation_of_work')->where('idUser',Auth::getUser()->id);
         if($chk->count() == 0){
             return "selected";
         }
@@ -925,7 +925,8 @@ class SmartcvForm extends ComponentBase
 
     public function loadLanguate()
     {
-        return CountryCallingCode::where('Language_TH','!=','')->get();
+        $get = CountryCallingCode::where('Language_TH','!=','');
+        return $get->get();
     }
 
     public function onGetPrefix()
@@ -1034,7 +1035,7 @@ class SmartcvForm extends ComponentBase
 
     public function loadEducation()
     {
-        $get=Education::where('idUser',Auth::getUser()->id);
+        $get=Education::where('idUser',Auth::getUser()->id)->where('Setting_Edu_CV','1');
         if($get->count() > 0 and $get->first()->idEducation_Level!=1){
             $get->join('institute_detail','education.idInstitute_Detail','=','institute_detail.idInstitute_Detail')
             ->join('geography','institute_detail.idGeography','=','geography.idGeography');

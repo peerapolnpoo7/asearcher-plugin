@@ -1,0 +1,49 @@
+.bootstrap-tagsinput {
+     width: 100%;
+     height: 60px;
+}
+.progress-bar-info {
+  background-color: #5bc0de !important;
+}
+.btn-success, .btn-warning{
+	color:#fff !important;
+}
+
+.bg-lang{
+	background:none !important;
+}
+
+.skill-lang{
+	background:none !important;
+	border-color: #e7eaec !important;
+}
+
+.lang-title{
+	/* background-color: #f3f3f4 !important; */
+	border-width:1px 1px 1px;
+	border-color: #e7eaec !important;
+}
+.lang-detail{
+	border-width:0px 1px 1px 1px;
+	border-style: solid solid solid;
+	margin-bottom: 20px;
+}
+
+.genaral-skill .btn-soundcloud, .genaral-skill .btn-tumblr, .genaral-skill .btn-vk {
+	float: left !important;
+	margin:2px;
+}
+.center{
+	text-align: center !important;
+}
+.modal .radio{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.modal table{
+	margin-bottom: 0px;
+}
+
+.modal .btn-group{
+	margin-bottom:4px !important;
+}

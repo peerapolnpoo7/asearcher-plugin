@@ -12,16 +12,23 @@
 			<strong class="font-bold">{{ user.name }} {{ str_limit(user.surname, 1,'.') }}</strong>
 		</span> 
 		<span class="text-muted text-xs block">{{ profiles.JobTitle }} <b class="caret"></b></span> 
-		<span class="text-muted text-xs block"><i class="fa fa-circle text-danger"></i> อาจจะสนใจ เมื่อมีข้อเสนอที่ดี</span> 
+		{% if profiles.idJob_Seeking_Status == 1 %}
+			{% set textColor = 'text-navy' %}
+		{% elseif profiles.idJob_Seeking_Status == 2 %}
+			{% set textColor = 'text-warning' %}
+		{% else %}
+			{% set textColor = 'text-danger' %}
+		{% endif %}
+		<span class="text-muted text-xs block txtiJobSeekingStatus"><i class="fa fa-circle {{ textColor }}"></i> {{ profiles.JobSeekStatus }}</span> 
 	</span> 
 </a>
-	<ul class="dropdown-menu animated fadeInRight m-t-xs">
+	<!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
 		<li><a href="profile.html">Profile</a></li>
 		<li><a href="contacts.html">Contacts</a></li>
 		<li><a href="mailbox.html">Mailbox</a></li>
 		<li class="divider"></li>
 		<li><a data-request="onLogout" data-request-data="redirect: '/'">Sign out</a></li>
-	</ul>
+	</ul> -->
 </div> 
 <div class="logo-element">
 	CV+

@@ -1,0 +1,640 @@
+{% set skillLists = __SELF__.skillLists %}
+<div class="" id="ibox-content">
+	<div id="vertical-timeline" class="vertical-container light-timeline">
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon lazur-bg">
+				<i class="fa fa-file-text"></i>
+			</div>
+			<div class="vertical-timeline-content col-md-6">
+				<h2>ทักษะเฉพาะทาง</h2>
+				<div class="project-list">
+					<div>
+						<span>PHP</span>
+						<small class="pull-right">ขั้นสูง</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 80%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>MySQL</span>
+						<small class="pull-right">ปานกลาง</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 50%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>Laravel</span>
+						<small class="pull-right">ชำนาญ</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 100%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>CSS</span>
+						<small class="pull-right">เริ่มต้น</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 20%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>Javascript</span>
+						<small class="pull-right">ขั้นพื้นฐาน</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 40%;" class="progress-bar progress-bar-info"></div>
+					</div>
+				</div>
+				<a href="javascript:void(0)" class="btn btn-sm lazur-bg btn-master-skill"> เลือก</a>
+				<div class="modal inmodal" id="masterModal" tabindex="-1" role="dialog"  aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content animated fadeIn">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								<h4 class="modal-title">ทักษะเฉพาะทาง</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-hover">
+						<thead>
+							<tr>
+								
+								<th>ทักษะ</th>
+								<th class="text-center">ระดับ</th>
+								<th class="text-center">ที่ถนัดที่สุด</th>
+								<th style="width: 1%" class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td> OctoberCMS
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ขึ้นสูง <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }} checked>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> Laravel
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ชำนาญ <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> AngularJS
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">เริ่มต้น <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> React</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ปานกลาง <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td>Go</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ขั้นพื้นฐาน <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+						</tbody>
+					</table>
+							</div>
+							<div class="modal-footer center">
+								<div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-search"></i></span> <input type="text" placeholder="ค้นหา.." class="form-control"></div>
+								{% for skillList in skillLists %}
+								<div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">{{ skillList.Name_TH }} <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div>
+								{% endfor %}
+								<!-- <div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">PHP <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">HTML <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div> -->
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">ยกเลิก</button>
+								<button type="button" class="btn btn-primary">บันทึก</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon blue-bg">
+				<i class="fa fa-laptop"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-6">
+				<h2>ความสามารถพื้นฐานด้านคอมพิวเตอร์</h2>
+				<div class="project-list">
+					<div>
+						<span>Word</span>
+						<small class="pull-right">ชำนาญ</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 100%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>Excel</span>
+						<small class="pull-right">เริ่มต้น</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 20%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>Powerpoint</span>
+						<small class="pull-right">ขั้นพื้นฐาน</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 40%;" class="progress-bar progress-bar-info"></div>
+					</div>
+				</div>
+				<a href="#" class="btn btn-sm btn-success"> แก้ไข </a>
+			</div>
+		</div>
+
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon lazur-bg">
+				<i class="fa fa-keyboard-o"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-6">
+				<h2>ความสามารถด้านการพิมพ์</h2>
+				<div class="project-list">
+					<div>
+						<span>การพิมพ์ไทย</span>
+						<small class="pull-right">51-75 (คำต่อนาที)</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 50%;" class="progress-bar progress-bar-info"></div>
+					</div>
+
+					<div>
+						<span>การพิมพ์อังกฤษ</span>
+						<small class="pull-right">70-100 (คำต่อนาที)</small>
+					</div>
+					<div class="progress progress-small">
+						<div style="width: 80%;" class="progress-bar progress-bar-info"></div>
+					</div>
+				</div>
+				<a href="#" class="btn btn-sm lazur-bg">แก้ไข</a>
+			</div>
+		</div>
+
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon blue-bg">
+				<i class="fa fa-language"></i>
+			</div>
+
+			<div class="vertical-timeline-content">
+				<h2>ทักษะด้านภาษา</h2>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="ibox-title lang-title">
+							<h5>ไทย</h5>
+							<div class="ibox-tools">
+								<a href="" class="btn btn-warning btn-xs">แก้ไข</a>
+							</div>
+						</div>
+						<div class="ibox-content lang-detail">
+							<div>
+								<div>
+									<span>ฟัง</span>
+									<small class="pull-right">ดี</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 60%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>พูด</span>
+									<small class="pull-right">ดีมาก</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 100%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>อ่าน</span>
+									<small class="pull-right">ปานกลาง</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 40%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>เขียน</span>
+									<small class="pull-right">พอใช้</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 20%;" class="progress-bar progress-bar-info"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="ibox-title lang-title">
+							<h5>อังกฤษ</h5>
+							<div class="ibox-tools">
+								<a href="" class="btn btn-warning btn-xs">แก้ไข</a>
+							</div>
+						</div>
+						<div class="ibox-content lang-detail">
+							<div>
+								<div>
+									<span>ฟัง</span>
+									<small class="pull-right">ดี</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 60%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>พูด</span>
+									<small class="pull-right">ดีมาก</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 100%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>อ่าน</span>
+									<small class="pull-right">ปานกลาง</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 40%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>เขียน</span>
+									<small class="pull-right">พอใช้</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 20%;" class="progress-bar progress-bar-info"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="ibox-title lang-title">
+							<h5>ญี่ปุ่น</h5>
+							<div class="ibox-tools">
+								<a href="" class="btn btn-warning btn-xs">แก้ไข</a>
+							</div>
+						</div>
+						<div class="ibox-content lang-detail">
+							<div>
+								<div>
+									<span>ฟัง</span>
+									<small class="pull-right">ดี</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 60%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>พูด</span>
+									<small class="pull-right">ดีมาก</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 100%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>อ่าน</span>
+									<small class="pull-right">ปานกลาง</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 40%;" class="progress-bar progress-bar-info"></div>
+								</div>
+
+								<div>
+									<span>เขียน</span>
+									<small class="pull-right">พอใช้</small>
+								</div>
+								<div class="progress progress-small">
+									<div style="width: 20%;" class="progress-bar progress-bar-info"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a href="#" class="btn btn-sm blue-bg">เพิ่ม</a>
+			</div>
+		</div>
+
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon lazur-bg">
+				<i class="fa fa-paint-brush"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-8 genaral-skill">
+				<h2>ความสามารถทั่วไป</h2>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-bug"></span> ทักษะในการแก้ไขปัญหา
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-handshake-o"></span> ทักษะในด้านการสื่อสารและมนุษยสัมพันธ์
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-sitemap"></span> ทักษะในการวางแผน
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-laptop"></span> ทักษะในด้านเทคโนโลยีและคอมพิวเตอร์
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-language"></span> ทักษะและความสามารถทางด้านภาษา
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-puzzle-piece"></span> ทักษะในการบริหารการทำงาน
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-random"></span> ทักษะในการลำดับความสำคัญของงาน
+				</a>
+				<a class="btn btn-social btn-vk">
+					<span class="fa fa-lightbulb-o"></span> ทักษะในการนำเสนองาน
+				</a>
+				<div style="clear:both;"></div>
+				<a href="#" class="btn btn-sm lazur-bg">เพิ่ม</a>
+			</div>
+		</div>
+
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon blue-bg">
+				<i class="fa fa-archive"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-8 genaral-skill">
+				<h2>ความสามารถพิเศษ</h2>
+				<a class="btn btn-tumblr">
+					ความจำดี
+				</a>
+				<a class="btn btn-tumblr">
+					วิ่งเร็วมากกก
+				</a>
+				<a class="btn btn-tumblr">
+					คิดเลขเร็ว
+				</a>
+				<div style="clear:both;"></div>
+				<a href="#" class="btn btn-sm blue-bg">เพิ่ม</a>
+			</div>
+		</div>
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon lazur-bg">
+				<i class="fa fa-futbol-o"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-8 genaral-skill">
+				<h2>ทักษะด้านกีฬา</h2>
+				<a class="btn btn-vk">
+					ฟุตบอล / ฟุตซอล
+				</a>
+				<a class="btn btn-vk">
+					 มวย
+				</a>
+				<a class="btn btn-vk">
+					แบดมินตัน
+				</a>
+				<a class="btn btn-vk">
+					บาสเกตบอล
+				</a>
+				<a class="btn btn-vk">
+					ว่ายน้ำ
+				</a>
+				<a class="btn btn-vk">
+					ปั่นจักรยาน
+				</a>
+				<a class="btn btn-vk">
+					วอลเลย์บอล
+				</a>
+				<a class="btn btn-vk">
+					กรีฑา
+				</a>
+				<div style="clear:both;"></div>
+				<a href="#" class="btn btn-sm lazur-bg">เพิ่ม</a>
+			</div>
+		</div>
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon blue-bg">
+				<i class="fa fa-gamepad"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-8 genaral-skill">
+				<h2>งานอดิเรก</h2>
+				<a class="btn btn-tumblr">
+					การขี่ม้า
+				</a>
+				<a class="btn btn-tumblr">
+					 กายกรรม
+				</a>
+				<a class="btn btn-tumblr">
+					การถัก
+				</a>
+				<a class="btn btn-tumblr">
+					การทำสวน
+				</a>
+				<a class="btn btn-tumblr">
+					การอ่าน
+				</a>
+				<a class="btn btn-tumblr">
+					การวาดภาพและระบายสี
+				</a>
+				<a class="btn btn-tumblr">
+					ดูการแสดงละครเวที
+				</a>
+				<a class="btn btn-tumblr">
+					เขียนโปรแกรม
+				</a>
+				<div style="clear:both;"></div>
+				<a href="#" class="btn btn-sm blue-bg">เพิ่ม</a>
+			</div>
+		</div>
+		<div class="vertical-timeline-block">
+			<div class="vertical-timeline-icon lazur-bg">
+				<i class="fa fa-address-card-o"></i>
+			</div>
+
+			<div class="vertical-timeline-content col-md-8">
+				<h2>เกณฑ์การสอบ</h2>
+				<div class="col-lg-12">
+					<table class="table table-hover margin bottom">
+						<thead>
+							<tr>
+								
+								<th>ประเภท</th>
+								<th class="text-center">วันที่สอบ</th>
+								<th class="text-center">คะแนน</th>
+								<th style="width: 1%" class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td> TOEFL
+								</td>
+								<td class="text-center small">16 Jun 2014</td>
+								<td class="text-center">120</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+							<tr>
+								<td> TOElC
+								</td>
+								<td class="text-center small">10 Jun 2014</td>
+								<td class="text-center">990</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+							<tr>
+								<td> IELTS
+								</td>
+								<td class="text-center small">12 Jun 2014</td>
+								<td class="text-center">9</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+							<tr>
+								<td> CU-TEP</td>
+								<td class="text-center small">22 Jun 2013</td>
+								<td class="text-center">120</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+							<tr>
+								<td>TU-GET</td>
+								<td class="text-center small">24 Jun 2013</td>
+								<td class="text-center">1000</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+							<tr>
+								<td>TETET</td>
+								<td class="text-center small">26 Jun 2013</td>
+								<td class="text-center">8</td>
+								<td class="text-center small">แก้ไข</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div style="clear:both;"></div>
+				<a href="#" class="btn btn-sm lazur-bg">เพิ่ม</a>
+			</div>
+		</div>
+	</div>
+</div>

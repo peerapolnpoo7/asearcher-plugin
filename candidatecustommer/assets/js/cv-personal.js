@@ -1,5 +1,14 @@
 $(document).ready(function(){
 	$('.dateMobile').scroller({ theme: 'android-ics light' });
+    var now = new Date();
+    $('.BirthDate').scroller({ 
+        theme: 'android-ics light',
+        startYear: (now.getFullYear()+543)-70,
+        endYear: (now.getFullYear()+543)-18,
+        setText: 'เลือก',
+        cancelText: 'ยกเลิก',
+        monthNamesShort:['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+    });
 	var lines = 6;
     var linesUsed = $('#linesUsed');
 
@@ -19,11 +28,11 @@ $(document).ready(function(){
     });
 
     $('body').on('click','button.save',function(){
-        $('form').request('onSave', {
+        /*$('form').request('onSave', {
             success: function(data) {
                 console.log(data);
             }
-        });
+        });*/
     }).on('click','#upImage',function(){
         $('#PhotoFile').trigger('click'); 
     }).on('change','#PhotoFile',function(){
