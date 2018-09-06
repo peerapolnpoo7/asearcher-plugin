@@ -1,11 +1,10 @@
+{% set skillLists = __SELF__.skillLists %}
 <div class="" id="ibox-content">
-
 	<div id="vertical-timeline" class="vertical-container light-timeline">
 		<div class="vertical-timeline-block">
 			<div class="vertical-timeline-icon lazur-bg">
 				<i class="fa fa-file-text"></i>
 			</div>
-
 			<div class="vertical-timeline-content col-md-6">
 				<h2>ทักษะเฉพาะทาง</h2>
 				<div class="project-list">
@@ -58,14 +57,181 @@
 								<h4 class="modal-title">ทักษะเฉพาะทาง</h4>
 							</div>
 							<div class="modal-body">
+								<table class="table table-hover">
+						<thead>
+							<tr>
 								
+								<th>ทักษะ</th>
+								<th class="text-center">ระดับ</th>
+								<th class="text-center">ที่ถนัดที่สุด</th>
+								<th style="width: 1%" class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td> OctoberCMS
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ขึ้นสูง <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }} checked>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> Laravel
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ชำนาญ <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> AngularJS
+								</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">เริ่มต้น <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td> React</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ปานกลาง <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+							<tr>
+								<td>Go</td>
+								<td class="text-center small">
+									<div class="btn-group">
+										<button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" aria-expanded="false" style="background-color: transparent;">ขั้นพื้นฐาน <i class="fa fa-angle-down"></i></button>
+										<ul class="dropdown-menu">
+											<li><a href="#">เริ่มต้น</a></li>
+											<li><a href="#">ขั้นพื้นฐาน</a></li>
+											<li><a href="#">ปานกลาง</a></li>
+											<li><a href="#">ขึ้นสูง</a></li>
+											<li><a href="#">ชำนาญ</a></li>
+										</ul>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="radio radio-info">
+										<input type="radio" name="idBlood_Group" id="bloodgroup" value="1" {{ checked }}>
+										<label for="bloodgroup">
+											
+										</label>
+									</div>
+								</td>
+								<td class="text-center small">X</td>
+							</tr>
+						</tbody>
+					</table>
 							</div>
-							<div class="modal-body">
-								
+							<div class="modal-footer center">
+								<div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-search"></i></span> <input type="text" placeholder="ค้นหา.." class="form-control"></div>
+								{% for skillList in skillLists %}
+								<div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">{{ skillList.Name_TH }} <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div>
+								{% endfor %}
+								<!-- <div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">PHP <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button data-toggle="dropdown" class="btn btn-vk dropdown-toggle" aria-expanded="false">HTML <i class="fa fa-plus"></i></button>
+									<ul class="dropdown-menu">
+										<li><a href="#">เริ่มต้น</a></li>
+										<li><a href="#">ขั้นพื้นฐาน</a></li>
+										<li><a href="#">ปานกลาง</a></li>
+										<li><a href="#">ขึ้นสูง</a></li>
+										<li><a href="#">ชำนาญ</a></li>
+									</ul>
+								</div> -->
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
+								<button type="button" class="btn btn-white" data-dismiss="modal">ยกเลิก</button>
+								<button type="button" class="btn btn-primary">บันทึก</button>
 							</div>
 						</div>
 					</div>
